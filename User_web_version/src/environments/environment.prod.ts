@@ -8,8 +8,8 @@
 */
 export const environment = {
   production: true,
-  baseURL: 'http://api.bunitas/public/api/',
-  mediaURL: 'http://api.bunitas/public/storage/images/',
+  baseURL: 'http://192.168.107.110:8000/api/',
+  mediaURL: 'http://192.168.107.110:8000/storage/images/',
   // baseURL: 'https://your-api-domain.com/public/api/',
   // mediaURL: 'https://your-api-domain.com/public/storage/images/',
   app_name: 'Ultimate Salon',

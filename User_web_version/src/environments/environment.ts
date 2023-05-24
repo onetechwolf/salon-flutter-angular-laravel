@@ -8,8 +8,8 @@
 */
 export const environment = {
   production: false,
-  baseURL: 'http://127.0.0.1:8000/public/api/',
-  mediaURL: 'http://127.0.0.1:8000/public/storage/images/',
+  baseURL: 'http://192.168.107.110:8000/api/',
+  mediaURL: 'http://192.168.107.110:8000/storage/images/',
   // baseURL: 'https://your-api-domain.com/public/api/',
   // mediaURL: 'https://your-api-domain.com/public/storage/images/',
   app_name: 'Ultimate Salon',
