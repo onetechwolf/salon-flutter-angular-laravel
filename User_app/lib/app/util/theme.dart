@@ -40,7 +40,8 @@ TextTheme txtTheme = Typography.whiteMountainView.copyWith(
 
 ThemeData light = ThemeData(
     fontFamily: 'regular',
-    primaryColor: ThemeProvider.appColor,
+    // primaryColor: ThemeProvider.appColor,
+    primaryColor: const Color(0xFF9C0278),
     secondaryHeaderColor: ThemeProvider.secondaryAppColor,
     disabledColor: const Color(0xFFBABFC4),
     brightness: Brightness.light,
