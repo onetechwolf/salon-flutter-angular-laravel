@@ -8,6 +8,8 @@
 */
 export const environment = {
   production: false,
-  baseUrl: 'https://api.bunitas.com/public/api/',
-  imageUrl: 'https://api.bunitas.com/public/storage/images/',
+  // baseUrl: 'https://api.bunitas.com/public/api/',
+  // imageUrl: 'https://api.bunitas.com/public/storage/images/',
+  baseUrl: 'http://127.0.0.1/api/',
+  imageUrl: 'http://127.0.0.1/storage/images/',
 };
