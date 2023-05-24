@@ -9,5 +9,6 @@
 class Environments {
   static const String appName = 'Ultimate Owner Salon & Shop';
   static const String companyName = 'Cosonas';
-  static const String apiBaseURL = 'https://api.bunitas.com/public/';
+  // static const String apiBaseURL = 'https://api.bunitas.com/public/';
+  static const String apiBaseURL = 'http://192.168.107.110:8000/';
 }

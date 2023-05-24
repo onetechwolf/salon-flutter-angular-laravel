@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1022022823127',
     projectId: 'ultimate-salon-flutter',
     storageBucket: 'ultimate-salon-flutter.appspot.com',
-    iosClientId: '1022022823127-fchj97baoac3hp1fv77oapku1tgjbvds.apps.googleusercontent.com',
+    iosClientId:
+        '1022022823127-fchj97baoac3hp1fv77oapku1tgjbvds.apps.googleusercontent.com',
     iosBundleId: 'io.initappz.ultimate.salon.owner',
   );
 
@@ -77,7 +78,26 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1022022823127',
     projectId: 'ultimate-salon-flutter',
     storageBucket: 'ultimate-salon-flutter.appspot.com',
-    iosClientId: '1022022823127-hnhpldn8et4cg470pahddaqrbuj99moj.apps.googleusercontent.com',
+    iosClientId:
+        '1022022823127-hnhpldn8et4cg470pahddaqrbuj99moj.apps.googleusercontent.com',
     iosBundleId: 'com.example.ultimateSalonOwnerFlutter',
   );
+
+  // static const FirebaseOptions web = FirebaseOptions(
+  //   apiKey: 'AIzaSyAfBs7FYMllMm4239aWaOII-OBtS6tcOkM',
+  //   appId: '1:564593729355:web:bd88803166d101c48a12ce',
+  //   messagingSenderId: '564593729355',
+  //   projectId: 'bunitas',
+  //   authDomain: 'bunitas.firebaseapp.com',
+  //   storageBucket: 'bunitas.appspot.com',
+  //   measurementId: 'G-W21WL776TY',
+  // );
+
+  // static const FirebaseOptions android = FirebaseOptions(
+  //   apiKey: 'AIzaSyAfBs7FYMllMm4239aWaOII-OBtS6tcOkM',
+  //   appId: '1:564593729355:android:cfa64181698c3ebe8a12ce',
+  //   messagingSenderId: '564593729355',
+  //   projectId: 'bunitas',
+  //   storageBucket: 'bunitas.appspot.com',
+  // );
 }
