@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('dob')->nullable();
+            $table->integer('cid')->nullable();
             $table->string('country_code');
             $table->string('mobile');
             $table->string('cover')->nullable();

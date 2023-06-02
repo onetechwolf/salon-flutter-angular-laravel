@@ -58,10 +58,11 @@ class RegisterRequestController extends Controller
             'address' => 'required',
             'lat' => 'required',
             'lng' => 'required',
-            'name' => 'required',
+            // 'name' => 'required',
             'about' => 'required',
             'fee_start' => 'required',
             'cid' => 'required',
+            'dob' => 'required',
         ]);
         if ($validator->fails()) {
             $response = [

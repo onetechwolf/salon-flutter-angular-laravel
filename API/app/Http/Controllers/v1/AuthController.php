@@ -80,7 +80,9 @@ class AuthController extends Controller
             return response()->json($response, 404);
         }
 
-        $user = DB::table('users')->select('first_name','last_name','cover','email','country_code','mobile')->where('id',$request->id)->first();
+        $user = User::select('first_name','last_name','cover','email','country_code','mobile','cities.name as cid','dob')
+                    ->leftJoin('cities', 'users.cid', '=', 'cities.id')
+                    ->where('users.id',$request->id)->first();
         $address = DB::table('address')->where('uid',$request->id)->get();
         $appointments = Appointments::where('uid',$request->id)->orderBy('id','desc')->get();
         foreach($appointments as $loop){
@@ -175,6 +177,8 @@ class AuthController extends Controller
             'mobile'=>'required',
             'country_code'=>'required',
             'password' => 'required',
+            'dob' => 'required',
+            'cid' => 'required',
         ]);
         if ($validator->fails()) {
             $response = [
@@ -190,20 +194,23 @@ class AuthController extends Controller
             $matchThese = ['country_code' => $request->country_code, 'mobile' => $request->mobile];
             $data = User::where($matchThese)->first();
             if (is_null($data) || !$data) {
-
                 $user = User::create([
                     'email' => $request->email,
                     'first_name'=>$request->first_name,
                     'last_name'=>$request->last_name,
                     'type'=>'user',
+                    'dob'=>$request->dob,
+                    'cid'=>$request->cid,
                     'status'=>1,
                     'mobile'=>$request->mobile,
                     'cover'=>'NA',
                     'country_code'=>$request->country_code,
                     'gender'=>1,
                     'password' => Hash::make($request->password),
+                    // 'id_card' => !empty($request->id_card) ? $request->id_card:null,
+                    // 'qualification' => !empty($request->qualification) ? $request->qualification:null,
                 ]);
-
+                info($user);
                 $token = JWTAuth::fromUser($user);
                 function clean($string) {
                     $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
@@ -379,6 +386,8 @@ class AuthController extends Controller
             'password' => 'required',
             'gender' => 'required',
             'cover' => 'required',
+            'dob' => 'required',
+            'cid' => 'required',
         ]);
         if ($validator->fails()) {
             $response = [
@@ -405,6 +414,8 @@ class AuthController extends Controller
                     'country_code'=>$request->country_code,
                     'gender'=>$request->gender,
                     'password' => Hash::make($request->password),
+                    'dob' => $request->dob,
+                    'cid' => $request->cid,
                 ]);
                 return response()->json(['user'=>$user,'status'=>200], 200);
             }
@@ -433,6 +444,8 @@ class AuthController extends Controller
             'password' => 'required',
             'gender' => 'required',
             'cover' => 'required',
+            'cid' => 'required',
+            'dob' => 'required',
         ]);
         if ($validator->fails()) {
             $response = [
@@ -459,6 +472,8 @@ class AuthController extends Controller
                     'country_code'=>$request->country_code,
                     'gender'=>$request->gender,
                     'password' => Hash::make($request->password),
+                    'cid'=>$request->cid,
+                    'dob'=>$request->dob,
                 ]);
                 return response()->json(['user'=>$user,'status'=>200], 200);
             }

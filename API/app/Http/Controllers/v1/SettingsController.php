@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Settings;
 use App\Models\User;
+use App\Models\Cities;
+use App\Models\Category;
 use Validator;
 use DB;
 
@@ -188,9 +190,13 @@ class SettingsController extends Controller
     public function getDefault(Request $request){
         $settings = Settings::first();
         $support = User::select('id','first_name','last_name')->where('type','admin')->first();
+        $cities = Cities::all();
+        $categories = Category::all();
         $data = [
             'settings'=>$settings,
             'support'=>$support,
+            'cities'=>$cities,
+            'categories'=>$categories
         ];
 
         $response = [

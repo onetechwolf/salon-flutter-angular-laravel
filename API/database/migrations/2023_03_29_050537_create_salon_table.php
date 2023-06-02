@@ -36,6 +36,8 @@ return new class extends Migration
             $table->tinyInteger('popular')->default(1);
             $table->tinyInteger('have_shop')->default(1);
             $table->tinyInteger('have_stylist')->default(1);
+            $table->string('id_card')->nullable();
+            $table->string('qualification')->nullable();
             $table->text('extra_field')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

@@ -34,6 +34,10 @@ class User extends Authenticatable implements JWTSubject, Wallet
         'status',
         'email',
         'password',
+        'dob',
+        'cid',
+        'id_card',
+        'qualification',
     ];
 
     /**

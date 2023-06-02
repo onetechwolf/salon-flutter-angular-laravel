@@ -33,6 +33,9 @@ class RegisterRequest extends Model
         'name',
         'about',
         'fee_start',
-        'cid'
+        'dob',
+        'cid',
+        'id_card',
+        'qualification',
     ];
 }

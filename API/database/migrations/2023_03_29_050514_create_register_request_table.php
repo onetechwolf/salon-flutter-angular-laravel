@@ -33,6 +33,9 @@ return new class extends Migration
             $table->text('about')->nullable();
             $table->double('fee_start',10,2)->default(0);
             $table->string('cid')->nullable();
+            $table->string('dob')->nullable();
+            $table->string('id_card')->nullable();
+            $table->string('qualification')->nullable();
             $table->text('extra_field')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

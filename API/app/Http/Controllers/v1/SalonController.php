@@ -46,6 +46,7 @@ class SalonController extends Controller
             'popular'=>'required',
             'have_shop'=>'required',
             'rate' => 'required',
+            'id_card' => 'required',
         ]);
         if ($validator->fails()) {
             $response = [
