@@ -252,7 +252,7 @@ export class ProductCheckoutComponent implements OnInit {
         console.log(data);
         this.deliveryAddress.hide();
         this.getAddress();
-        this.util.suucessMessage(this.util.translate(this.util.translate('Address Added')));
+        this.util.successMessage(this.util.translate(this.util.translate('Address Added')));
       }
     }, error => {
       console.log('Error', error);
@@ -308,7 +308,7 @@ export class ProductCheckoutComponent implements OnInit {
         this.deliveryAddress.hide();
         this.getAddress();
         console.log(data);
-        this.util.suucessMessage(this.util.translate('Address Updated'));
+        this.util.successMessage(this.util.translate('Address Updated'));
       }
     }, error => {
       console.log('Error', error);
@@ -669,7 +669,7 @@ export class ProductCheckoutComponent implements OnInit {
     }
     this.util.start();
     this.api.post_private('v1/payments/addStripeCards', param).then((data: any) => {
-      this.util.suucessMessage(this.util.translate('Card Information Saved'));
+      this.util.successMessage(this.util.translate('Card Information Saved'));
       this.util.stop();
       this.addCardModal.hide();
       this.stripeModal.show();
@@ -711,7 +711,7 @@ export class ProductCheckoutComponent implements OnInit {
     this.util.start();
     this.api.post_private('v1/profile/update', param).then((data: any) => {
       this.util.stop();
-      this.util.suucessMessage(this.util.translate('Card Information Saved'));
+      this.util.successMessage(this.util.translate('Card Information Saved'));
       this.addCardModal.hide();
       this.stripeModal.show();
       this.getStripeCard();

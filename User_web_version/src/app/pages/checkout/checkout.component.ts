@@ -255,7 +255,7 @@ export class CheckoutComponent implements OnInit {
         console.log(data);
         this.deliveryAddress.hide();
         this.getAddress();
-        this.util.suucessMessage(this.util.translate('Address Added'));
+        this.util.successMessage(this.util.translate('Address Added'));
       }
     }, error => {
       console.log('Error', error);
@@ -311,7 +311,7 @@ export class CheckoutComponent implements OnInit {
         this.deliveryAddress.hide();
         this.getAddress();
         console.log(data);
-        this.util.suucessMessage(this.util.translate('Address Updated'));
+        this.util.successMessage(this.util.translate('Address Updated'));
       }
     }, error => {
       console.log('Error', error);
@@ -1064,7 +1064,7 @@ export class CheckoutComponent implements OnInit {
     }
     this.util.start();
     this.api.post_private('v1/payments/addStripeCards', param).then((data: any) => {
-      this.util.suucessMessage('Card Information Saved');
+      this.util.successMessage('Card Information Saved');
       this.util.stop();
       this.addCardModal.hide();
       this.stripeModal.show();
@@ -1105,7 +1105,7 @@ export class CheckoutComponent implements OnInit {
     const param = { 'id': localStorage.getItem('uid'), 'stripe_key': id };
     this.util.start();
     this.api.post_private('v1/profile/update', param).then((data: any) => {
-      this.util.suucessMessage('Card Information Saved');
+      this.util.successMessage('Card Information Saved');
       this.addCardModal.hide();
       this.stripeModal.show();
       this.getStripeCard();

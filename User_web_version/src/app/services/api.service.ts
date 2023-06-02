@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import * as firebase from 'firebase';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -259,5 +260,11 @@ export class ApiService {
         reject(error);
       });
     });
+  }
+
+  public getLatLngFromPostcode(postcode: string): Observable<any> {
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${postcode}&key=${environment.googleMapsKeys}`;
+
+    return this.http.get(url);
   }
 }

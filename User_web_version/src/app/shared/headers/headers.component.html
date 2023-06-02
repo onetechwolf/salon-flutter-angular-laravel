@@ -41,7 +41,12 @@
           <label [class.active]="activeTab == 'account'">{{util.translate('Signup')}}</label>
         </a>
 
-        <a class="nav-link waves-light" mdbWavesEffect (click)="goToHelp();" *ngIf="haveSigned() == false">
+        <a class="nav-link waves-light" mdbWavesEffect (click)="util.publishModalPopup('registerJoin')"
+          *ngIf="haveSigned() ==false">
+          <label [class.active]="activeTab == 'account'">{{util.translate('Join as Partner')}}</label>
+        </a>
+
+        <!-- <a class="nav-link waves-light" mdbWavesEffect (click)="goToHelp();" *ngIf="haveSigned() == false">
           <label [class.active]="activeTab == 'help'">{{util.translate('Help')}} </label>
         </a>
 
@@ -57,7 +62,7 @@
               *ngFor="let item of util.allLanguages"> {{item.name}}
             </a>
           </div>
-        </div>
+        </div> -->
         <div class="nav-item avatar dropdown" dropdown *ngIf="haveSigned()">
           <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
             <img [src]="util.userInfo && util.userInfo.cover  ?  api.mediaURL + util.userInfo.cover:''"

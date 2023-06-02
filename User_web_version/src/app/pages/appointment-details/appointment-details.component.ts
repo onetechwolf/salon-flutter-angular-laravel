@@ -144,7 +144,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.api.post_private('v1/appoinments/update', { id: this.id, status: 5 }).then((data: any) => {
       console.log(data);
       this.util.stop();
-      this.util.suucessMessage('Updated');
+      this.util.successMessage('Updated');
       this.navCtrl.back();
     }, error => {
       this.util.stop();
@@ -238,7 +238,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.isLogin = true;
     this.api.post_private('v1/packages_reviews/save', param).then((data: any) => {
       this.isLogin = false;
-      this.util.suucessMessage('Review saved');
+      this.util.successMessage('Review saved');
       this.addReviews.hide();
       this.rate = 2;
       this.cover = '';
@@ -268,7 +268,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.isLogin = true;
     this.api.post_private('v1/service_reviews/save', param).then((data: any) => {
       this.isLogin = false;
-      this.util.suucessMessage('Review saved');
+      this.util.successMessage('Review saved');
       this.addReviews.hide();
       this.rate = 2;
       this.cover = '';
@@ -308,7 +308,7 @@ export class AppointmentDetailsComponent implements OnInit {
         };
         this.api.post_private('v1/owner_reviews/updateOwnerReviews', updateParam).then((updates: any) => {
           this.isLogin = false;
-          this.util.suucessMessage('Review saved');
+          this.util.successMessage('Review saved');
           this.rate = 2;
           this.cover = '';
           this.notes = '';

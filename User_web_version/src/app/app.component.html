@@ -407,7 +407,7 @@
     <form #loginForm="ngForm" novalidate>
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">{{util.translate('Signup')}}</h4>
+          <h4 class="modal-title w-100 font-weight-bold">{{util.translate('Customer Registration')}}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="registerModal.hide()">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -439,13 +439,26 @@
               <p [hidden]="lname.valid || submitted == false" class="redAlert">
                 {{util.translate('Last Name is required')}}
               </p>
+              <input type="date" [(ngModel)]="registerForm.dob" name="dob" #dob="ngModel" autocomplete="cc-exp" ccExp
+                [ngModelOptions]="{standalone: true}" mdbInput class="form-control frm" required>
+              <p [hidden]="dob.valid || submitted == false" class="redAlert">
+                {{util.translate('Dob Date is required')}}
+              </p>
+
+              <select [(ngModel)]="registerForm.gender" required style="border: 1px solid lightgray;width: 100%;"
+                [ngModelOptions]="{standalone: true}">
+                <option value="1"> {{util.translate('Male')}}</option>
+                <option value="0"> {{util.translate('Female')}} </option>
+                <option value="2"> {{util.translate('Others')}} </option>
+              </select>
               <div class="row">
                 <div class="col-3" style="display: flex; flex-direction: row;  align-items: center;">
                   <select [(ngModel)]="registerForm.cc" type="text" name="ccode" #ccode="ngModel" spellcheck="false"
                     autocapitalize="off" required style="border: 1px solid lightgray;width: 100%;">
-                    <option *ngFor="let item of util.countrys" [value]="item.dialling_code"> +{{item.dialling_code}}
+                    <!-- <option *ngFor="let item of util.countrys" [value]="item.dialling_code"> +{{item.dialling_code}}
                       {{item.country_name}}
-                    </option>
+                    </option> -->
+                    <option [value]="+44"> +44 United Kingdom</option>
                   </select>
                 </div>
                 <div class="col-9">
@@ -457,18 +470,19 @@
                   </p>
                 </div>
               </div>
-              <select [(ngModel)]="registerForm.gender" required style="border: 1px solid lightgray;width: 100%;"
-                [ngModelOptions]="{standalone: true}">
-                <option value="1"> {{util.translate('Male')}}</option>
-                <option value="0"> {{util.translate('Female')}} </option>
-                <option value="2"> {{util.translate('Others')}} </option>
+
+              <label>{{util.translate('Location/City')}} <span style="color: red;">*</span> </label>
+              <select [(ngModel)]="registerForm.location" required style="border: 1px solid lightgray;width: 100%;"
+                [ngModelOptions]="{standalone: true}" #location="ngModel">
+                <option *ngFor="let item of util.cities" [value]="item.id">{{item.name}}</option>
               </select>
+              <p [hidden]="location.valid || submitted == false" class="redAlert">
+                {{util.translate('Location/City is required')}}
+              </p>
               <input type="text" [placeholder]="util.translate('Referral Code(optional)')"
                 [(ngModel)]="registerForm.referral" name="referral" #referral="ngModel" spellcheck="false"
                 autocapitalize="off" [ngModelOptions]="{standalone: true}" class="form-control frm">
-
               <div style="margin: 0px 20px; font-size: 10px;">
-
                 <mdb-checkbox [checked]="registerForm.check" [(ngModel)]="registerForm.check" name="checkls"
                   #checkls="ngModel" color="light">
                   <p style="margin: 0px !important;margin-top: 10px !important; "><span class="span_term">
@@ -496,7 +510,7 @@
         </div>
         <div class="modal-footer d-flex justify-content-center">
           <button mdbBtn color="default" class="waves-light" [disabled]="isLogin"
-            (click)="onRegister(loginForm,registerModal,verifyModal)" mdbWavesEffect>
+            (click)="onRegister(loginForm, registerModal, verifyModal, 0)" mdbWavesEffect>
             <span *ngIf="!isLogin"> {{util.translate('Signup')}}</span>
             <div class="spinner-border" *ngIf="isLogin" role="status"></div>
           </button>
@@ -505,6 +519,213 @@
     </form>
   </div>
 </div>
+
+
+<div mdbModal #registerPartnerModal="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 999999;">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <form #loginForm="ngForm" novalidate>
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">{{util.translate('Join As Partner')}}</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="registerPartnerModal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body location_body">
+          <div>
+            <div class="form_div">
+              <div class="row">
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <label>{{util.translate('Logo')}} <span style="color: red;">*</span> </label>
+                        <input class="form-control file_ip" type="file"
+                            (change)="preview_banner($event.target.files)" accept="image/*">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <div class="image_div">
+                            <div class="image_box">
+                                <img class="img-responsive" style="height: 80px;width: 80px; object-fit: cover;"
+                                    [src]="api.mediaURL + registerPartnerForm.cover" onError="this.src='assets/imgs/dummy.jpeg'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <input type="email" [placeholder]="util.translate('Email')" name="partner_email" #partner_email="ngModel"
+                spellcheck="false" autocapitalize="off" required [(ngModel)]="registerPartnerForm.email"
+                class="form-control frm" [ngModelOptions]="{standalone: true}">
+              <p [hidden]="partner_email.valid || submitted == false" class="redAlert">
+                {{util.translate('Email is required')}}
+              </p>
+              <div class="row">
+                <div class="col-3" style="display: flex; flex-direction: row;  align-items: center;">
+                  <select [(ngModel)]="registerPartnerForm.cc" type="text" name="partner_ccode" #partner_ccode="ngModel" spellcheck="false"
+                    autocapitalize="off" required style="border: 1px solid lightgray;width: 100%;">
+                    <option *ngFor="let item of util.countrys" [value]="item.dialling_code"> +{{item.dialling_code}}
+                      {{item.country_name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-9">
+                  <input [(ngModel)]="registerPartnerForm.mobile" type="number" [placeholder]="util.translate('Mobile Number')"
+                    name="partner_mobile" #partner_mobile="ngModel" spellcheck="false" autocapitalize="off" required
+                    class="form-control frm">
+                  <p [hidden]="partner_mobile.valid || submitted == false" class="redAlert">
+                    {{util.translate('Phone number is required')}}
+                  </p>
+                </div>
+              </div>
+              <select [(ngModel)]="registerPartnerForm.type" required style="border: 1px solid lightgray;width: 100%;"
+                [ngModelOptions]="{standalone: true}" #type="ngModel">
+                <option value="0"> {{util.translate('Salon Owner')}}</option>
+                <option value="1"> {{util.translate('Mobile Beautifician')}} </option>
+              </select>
+              <p [hidden]="type.valid || submitted == false" class="redAlert">
+                {{util.translate('Type of Partner is required')}}
+              </p>
+
+              <input [(ngModel)]="registerPartnerForm.salon_name" type="text" [placeholder]="util.translate('Salon Name')"
+                name="salon_name" #salon_name="ngModel" spellcheck="false" autocapitalize="off" *ngIf="registerPartnerForm.type==0"
+                class="form-control frm">
+
+              <input [(ngModel)]="registerPartnerForm.first_name" type="text" [placeholder]="util.translate('First Name')"
+                name="partner_first_name" #partner_first_name="ngModel" spellcheck="false" autocapitalize="off" required
+                class="form-control frm">
+              <p [hidden]="partner_first_name.valid || submitted == false" class="redAlert">
+                {{util.translate('First Name is required')}}
+              </p>
+              <input type="text" [placeholder]="util.translate('Last Name')" [(ngModel)]="registerPartnerForm.last_name"
+                name="partner_last_name" #partner_last_name="ngModel" spellcheck="false" autocapitalize="off" required
+                class="form-control frm">
+              <p [hidden]="partner_last_name.valid || submitted == false" class="redAlert">
+                {{util.translate('Last Name is required')}}
+              </p>
+              <input name="partner_password" [placeholder]="util.translate('Password')" type="password" #partner_password="ngModel"
+                required [(ngModel)]="registerPartnerForm.password" class="form-control frm"
+                [ngModelOptions]="{standalone: true}">
+              <p [hidden]="partner_password.valid || submitted == false" class="redAlert">
+                {{util.translate('Password is required')}}
+              </p>
+              <select [(ngModel)]="registerPartnerForm.gender" required style="border: 1px solid lightgray;width: 100%;"
+                [ngModelOptions]="{standalone: true}">
+                <option value="1"> {{util.translate('Male')}}</option>
+                <option value="0"> {{util.translate('Female')}} </option>
+                <option value="2"> {{util.translate('Others')}} </option>
+              </select>
+              <input type="date" [(ngModel)]="registerPartnerForm.dob" name="partner_dob" #partner_dob="ngModel" autocomplete="cc-exp" ccExp
+                [ngModelOptions]="{standalone: true}" mdbInput class="form-control frm" required>
+              <p [hidden]="partner_dob.valid || submitted == false" class="redAlert">
+                {{util.translate('Dob Date is required')}}
+              </p>
+              <input name="fee_start" [placeholder]="util.translate('Fee Started Price')" type="number" #fee_start="ngModel"
+                required [(ngModel)]="registerPartnerForm.fee_start" class="form-control frm"
+                [ngModelOptions]="{standalone: true}">
+              <p [hidden]="fee_start.valid || submitted == false" class="redAlert">
+                {{util.translate('Fee Started Price is required')}}
+              </p>
+              <input name="about" [placeholder]="util.translate('Description')" type="text" #about="ngModel"
+                required [(ngModel)]="registerPartnerForm.about" class="form-control frm"
+                [ngModelOptions]="{standalone: true}">
+              <p [hidden]="about.valid || submitted == false" class="redAlert">
+                {{util.translate('Description is required')}}
+              </p>
+              <ng-multiselect-dropdown [placeholder]="util.translate('Category')" [ngModelOptions]="{standalone: true}"
+                  maxHeight="100" [data]="util.categories" [(ngModel)]="registerPartnerForm.category"
+                  [settings]="dropdownSettings" #category="ngModel" >
+              </ng-multiselect-dropdown>
+              <p [hidden]="category.valid || submitted == false" class="redAlert">
+                {{util.translate('Category is required')}}
+              </p>
+
+              <label>{{util.translate('Location/City')}} <span style="color: red;">*</span> </label>
+              <select [(ngModel)]="registerPartnerForm.cid" required style="border: 1px solid lightgray;width: 100%;margin-top: 10px"
+                [ngModelOptions]="{standalone: true}" #cid="ngModel">
+                <option *ngFor="let item of util.cities" [value]="item.id">{{item.name}}</option>
+              </select>
+              <p [hidden]="cid.valid || submitted == false" class="redAlert">
+                {{util.translate('Location/City is required')}}
+              </p>
+              <input name="address" [placeholder]="util.translate('Address')" type="text" #address="ngModel"
+                required [(ngModel)]="registerPartnerForm.address" class="form-control frm"
+                [ngModelOptions]="{standalone: true}">
+              <p [hidden]="address.valid || submitted == false" class="redAlert">
+                {{util.translate('Address is required')}}
+              </p>
+              <input name="zipcode" [placeholder]="util.translate('Post Code')" type="text" #zipcode="ngModel"
+                required [(ngModel)]="registerPartnerForm.zipcode" class="form-control frm"
+                [ngModelOptions]="{standalone: true}" (change)="getLatLngWithPostCode($event)">
+              <p [hidden]="zipcode.valid || submitted == false" class="redAlert">
+                {{util.translate('Post Code is required')}}
+              </p>
+
+              <label>{{util.translate('ID Card')}} <span style="color: red;">*</span> </label>
+              <input type="file" accept="image/*" name="idCard" required class="form-control file_ip"
+                (change)="changeAttachment($event.target.files, 0)">
+              <label>{{util.translate('Qualification')}}</label>
+              <input type="file" accept="image/*" name="qualification" class="form-control file_ip"
+                (change)="changeAttachment($event.target.files, 1)" >
+
+              <input type="text" [placeholder]="util.translate('Referral Code(optional)')"
+                [(ngModel)]="registerPartnerForm.referral" name="partner_referral" #partner_referral="ngModel" spellcheck="false"
+                autocapitalize="off" [ngModelOptions]="{standalone: true}" class="form-control frm">
+              <!-- <div class="row">
+                <div class="col-6">
+                  <input name="lat" [placeholder]="util.translate('Your Latitude')" type="number" #lat="ngModel"
+                    [(ngModel)]="registerPartnerForm.lat" class="form-control frm" [ngModelOptions]="{standalone: true}" required>
+                  <p [hidden]="lat.valid || submitted == false" class="redAlert">
+                    {{util.translate('Latitude is required')}}
+                  </p>
+                </div>
+                <div class="col-6">
+                  <input name="lng" [placeholder]="util.translate('Your Longitude')" type="number" #lng="ngModel"
+                    [(ngModel)]="registerPartnerForm.lng" class="form-control frm" [ngModelOptions]="{standalone: true}" required>
+                  <p [hidden]="lng.valid || submitted == false" class="redAlert">
+                    {{util.translate('Langitude is required')}}
+                  </p>
+                </div>
+              </div> -->
+
+              <div style="margin: 0px 20px; font-size: 10px;">
+                <mdb-checkbox [checked]="registerPartnerForm.check" [(ngModel)]="registerPartnerForm.check" name="checkls"
+                  #checkls="ngModel" color="light">
+                  <p style="margin: 0px !important;margin-top: 10px !important; "><span class="span_term">
+                      {{
+                      util.translate('By clicking on the I agree button click, download or if you use the Application,
+                      you agree to be bound by the')}}
+                    </span>
+                    <u> <a style="color:blue" (click)="openLink('eula')">
+                        {{util.translate('EULA certificate')}}
+                      </a> </u>
+                    {{util.translate('and')}}
+                    <u> <a style="color: blue" (click)="openLink('privacy')">
+                        {{util.translate('Privacy Policy')}}
+                      </a> </u>
+                    {{util.translate('of this app')}}.
+                  </p>
+                </mdb-checkbox>
+              </div>
+            </div>
+            <p class="creatAc" (click)="registerPartnerModal.hide();loginModal.show();">{{util.translate('or')}} <span
+                class="colored">
+                {{util.translate('login to your account')}}</span>
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button mdbBtn color="default" class="waves-light" [disabled]="isLogin"
+            (click)="onRegister(loginForm, registerPartnerModal, verifyModal, 1)" mdbWavesEffect>
+            <span *ngIf="!isLogin"> {{util.translate('Signup')}}</span>
+            <div class="spinner-border" *ngIf="isLogin" role="status"></div>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
 
 <div mdbModal #forgotPwd="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
   aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 999999;">
@@ -560,9 +781,6 @@
         </button>
 
       </div>
-
-
-
     </div>
   </div>
 </div>

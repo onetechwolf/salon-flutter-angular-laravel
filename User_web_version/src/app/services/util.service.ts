@@ -57,6 +57,8 @@ export class UtilService {
   public sms_name: any = '0';
   public home_type: any = '0';
   public deviceType: any = 'desktop';
+  public cities: any;
+  public categories: any;
 
   public facebook_link: any;
   public instagram_link: any;
@@ -279,7 +281,7 @@ export class UtilService {
     });
   }
 
-  suucessMessage(str) {
+  successMessage(str) {
     const Toast = Swal.mixin({
       toast: true,
       position: 'bottom-end',

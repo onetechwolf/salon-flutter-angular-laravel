@@ -1,4 +1,4 @@
-/*
+  /*
   Authors : initappz (Rahul Jograna)
   Website : https://initappz.com/
   App Name : Ultimate Salon Full App Flutter
@@ -6,7 +6,7 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2022-present initappz.
 */
-export interface register {
+export interface registerPartner {
   email: string;
   password: string;
   first_name: string;
@@ -14,9 +14,9 @@ export interface register {
   dob: string;
   gender: string;
   mobile: string;
-  location: string;
+  cid: string;
   fcm_token: string;
-  type: string;
+  type: number;
   lat: string;
   lng: string;
   cover: string;
@@ -28,4 +28,12 @@ export interface register {
   referral: string;
   cc: string;
   check: boolean;
+  idCard: string;
+  qualification: string;
+  salon_name: string;
+  fee_start: number,
+  about: string,
+  category: any[],
+  address: string,
+  zipcode: string,
 }

@@ -132,7 +132,7 @@ export class OrdersDetailsComponent implements OnInit {
     this.api.post_private('v1/product_order/update', { id: this.id, status: 5 }).then((data: any) => {
       console.log(data);
       this.util.stop();
-      this.util.suucessMessage('Updated');
+      this.util.successMessage('Updated');
       this.navCtrl.back();
     }, error => {
       this.util.stop();
@@ -217,7 +217,7 @@ export class OrdersDetailsComponent implements OnInit {
         };
         this.api.post_private('v1/products/update', updateParam).then((updates: any) => {
           this.isLogin = false;
-          this.util.suucessMessage('Review saved');
+          this.util.successMessage('Review saved');
           this.rate = 2;
           this.cover = '';
           this.notes = '';
@@ -305,7 +305,7 @@ export class OrdersDetailsComponent implements OnInit {
         };
         this.api.post_private('v1/owner_reviews/updateOwnerReviews', updateParam).then((updates: any) => {
           this.isLogin = false;
-          this.util.suucessMessage('Review saved');
+          this.util.successMessage('Review saved');
           this.rate = 2;
           this.cover = '';
           this.notes = '';

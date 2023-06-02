@@ -5029,12 +5029,26 @@ neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
+ng-multiselect-dropdown@^0.3.9:
+  version "0.3.9"
+  resolved "https://registry.yarnpkg.com/ng-multiselect-dropdown/-/ng-multiselect-dropdown-0.3.9.tgz#b7336ae67f41f3662087686273f41eefec72eade"
+  integrity sha512-y5fb8SVz8c59vEJGVe5XZ5ov6LZNoO8FqMxCBvpZKqw9tY1+f7UCDfILleOWPy8QMxO2Fpr8b+B+Az0zOS6b9g==
+  dependencies:
+    tslib "^1.9.0"
+
 ng-otp-input@^1.8.5:
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/ng-otp-input/-/ng-otp-input-1.8.5.tgz#adddb053f402c4e520f1d15882e611189e291836"
   integrity sha512-qIngq7Lx3KPOxpw30FIfG+jhhSYLFtpur62k0Qtg1f1UdavNfLu5Ca9PPI8jmPwGpQ63Ro0dCHi+LvFBsVLF2g==
   dependencies:
     tslib "^2.2.0"
+
+ngx-leaflet@^0.0.16:
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/ngx-leaflet/-/ngx-leaflet-0.0.16.tgz#6c442cc5c4ef501efac62b685cd79a29f560db8a"
+  integrity sha512-4cm06T9ZrD3i0VI+/fghrfx/Oe3UkOcYsDYKLFgh+XkoBvCt3oXIgdrABjoXIgMLcKtzS/oDHcVgRkDy/x5/MA==
+  dependencies:
+    tslib "^2.3.0"
 
 ngx-owl-carousel-o@^14.0.1:
   version "14.0.1"

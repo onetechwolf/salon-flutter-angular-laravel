@@ -17,6 +17,7 @@ import { login } from './interfaces/login';
 import { mobile } from './interfaces/mobile';
 import { mobileLogin } from './interfaces/mobileLogin';
 import { register } from './interfaces/register';
+import { registerPartner } from './interfaces/registerPartner';
 import { NgForm } from '@angular/forms';
 import * as moment from 'moment';
 import Swal from 'sweetalert2';
@@ -26,6 +27,7 @@ import { environment } from './../environments/environment';
 import * as firebase from 'firebase';
 import { ProductCartService } from './services/product-cart.service';
 import { ServiceCartService } from './services/service-cart.service';
+
 declare var google: any;
 
 @Component({
@@ -36,6 +38,7 @@ declare var google: any;
 export class AppComponent {
   @ViewChild('verifyModal', { static: false }) public verifyModal: ModalDirective;
   @ViewChild('registerModal', { static: false }) public registerModal: ModalDirective;
+  @ViewChild('registerPartnerModal', { static: false }) public registerPartnerModal: ModalDirective;
   @ViewChild('loginModal', { static: false }) public loginModal: ModalDirective;
   @ViewChild('otpModal', { static: false }) public otpModal: ModalDirective;
   @ViewChild('locationModal', { static: false }) public locationModal: ModalDirective;
@@ -52,11 +55,13 @@ export class AppComponent {
   mobileLogin: mobileLogin = { ccCode: this.api.default_country_code, phone: '' };
   registerForm: register = {
     email: '',
+    password: '',
     first_name: '',
     last_name: '',
-    password: '',
+    dob: '',
     gender: '1',
     mobile: '',
+    location: '',
     fcm_token: '',
     type: '',
     lat: '',
@@ -71,6 +76,49 @@ export class AppComponent {
     cc: this.api.default_country_code,
     check: false
   };
+
+  registerPartnerForm: registerPartner = {
+    email: '',
+    password: '',
+    first_name: '',
+    last_name: '',
+    dob: '',
+    gender: '1',
+    mobile: '',
+    cid: '',
+    fcm_token: '',
+    type: 0,
+    lat: '',
+    lng: '',
+    cover: '',
+    status: '',
+    verified: '',
+    others: '',
+    date: '',
+    stripe_key: '',
+    referral: '',
+    cc: this.api.default_country_code,
+    check: false,
+    idCard: '',
+    qualification: '',
+    salon_name: '',
+    fee_start: 0,
+    about: '',
+    category: [],
+    address: '',
+    zipcode: '',
+  };
+
+  dropdownSettings = {
+    singleSelection: false,
+    idField: 'id',
+    textField: 'name',
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    allowSearchFilter: false
+  };
+
+  registerType: number;
   viewAcc = false;
   autocomplete1: string;
   autocompleteItems1: any = [];
@@ -140,6 +188,8 @@ export class AppComponent {
       localStorage.setItem('direction', 'ltr');
     }
 
+    this.setDefaultLocationAsUk();
+
     this.translate.use(localStorage.getItem('selectedLanguage'));
     document.documentElement.dir = localStorage.getItem('direction');
     const selectedLanguages = this.util.allLanguages.filter(x => x.code == localStorage.getItem('selectedLanguage'));
@@ -179,6 +229,8 @@ export class AppComponent {
         this.registerModal.show();
       } else if (data && data == 'sideMenu') {
         this.sideMenu.show();
+      } else if (data && data == 'registerJoin') {
+        this.registerPartnerModal.show();
       }
     });
     this.api.getLocalAssets('country.json').then((data: any) => {
@@ -190,8 +242,6 @@ export class AppComponent {
     });
     this.initializeApp();
   }
-
-
 
   navigationInterceptor(event: RouterEvent): void {
 
@@ -301,7 +351,7 @@ export class AppComponent {
     console.log('%c Copyright and Good Faith Purchasers © 2020-present initappz. ', 'background: #222; color: #bada55');
     this.api.get('v1/settings/getDefault').then((data: any) => {
       console.log(data);
-      if (data && data.status && data.status == 200 && data.data && data.data.settings && data.data.support) {
+      if (data && data.status && data.status == 200 && data.data && data.data.settings && data.data.support && data.data.cities) {
         const settings = data.data.settings;
         const support = data.data.support;
 
@@ -320,6 +370,8 @@ export class AppComponent {
         this.productCart.orderTax = parseFloat(settings.tax);
         this.serviceCart.orderTax = parseFloat(settings.tax);
         document.documentElement.dir = this.util.direction;
+        this.util.cities = data.data.cities;
+        this.util.categories = data.data.categories;
 
         this.util.general = settings;
         if (((x) => { try { JSON.parse(x); return true; } catch (e) { return false } })(settings.social)) {
@@ -371,7 +423,6 @@ export class AppComponent {
         console.log(error);
       });
     }
-
   }
 
   locate(modal) {
@@ -430,7 +481,6 @@ export class AppComponent {
     this.autocomplete1 = item.description;
     this.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
       if (status == 'OK' && results[0]) {
-        console.log(status);
         localStorage.setItem('location', 'true');
         localStorage.setItem('lat', results[0].geometry.location.lat());
         localStorage.setItem('lng', results[0].geometry.location.lng());
@@ -441,6 +491,20 @@ export class AppComponent {
         this.router.navigate(['']);
       }
     });
+  }
+
+  /**
+   * @author onetechwolf
+   * @description set default location as UK
+   */
+  setDefaultLocationAsUk() {
+    if (!localStorage.getItem('addsSelected') || localStorage.getItem('addsSelected') == 'false') {
+      localStorage.setItem('addsSelected', 'true');
+      localStorage.setItem('location', 'true');
+      localStorage.setItem('lat', '51.5072178');
+      localStorage.setItem('lng', '-0.1275862');
+      localStorage.setItem('address', 'London, UK');
+    }
   }
 
   getAddressOf(lat, lng) {
@@ -863,35 +927,80 @@ export class AppComponent {
         console.log(data);
         this.isLogin = false;
         if (data && data.status == 200) {
-          const registerParam = {
-            first_name: this.registerForm.first_name,
-            last_name: this.registerForm.last_name,
-            email: this.registerForm.email,
-            password: this.registerForm.password,
-            gender: this.registerForm.gender,
-            mobile: this.registerForm.mobile,
-            country_code: '+' + this.registerForm.cc,
-          };
+          var registerParam = {};
+          var url = '';
+          if (this.registerType == 0) {
+            registerParam = {
+              first_name: this.registerForm.first_name,
+              last_name: this.registerForm.last_name,
+              email: this.registerForm.email,
+              password: this.registerForm.password,
+              gender: this.registerForm.gender,
+              mobile: this.registerForm.mobile,
+              country_code: '+' + this.registerForm.cc,
+              dob: this.registerForm.dob,
+              cid: this.registerForm.location,
+            };
+            url = 'v1/auth/create_user_account';
+          } else if (this.registerType == 1) {
+            let temp = this.registerPartnerForm.category.map((category) => category.id);
+            let categories = temp.join(',');
+            registerParam = {
+              email: this.registerPartnerForm.email,
+              password: this.registerPartnerForm.password,
+              first_name: this.registerPartnerForm.first_name,
+              last_name: this.registerPartnerForm.last_name,
+              gender: this.registerPartnerForm.gender,
+              mobile: this.registerPartnerForm.mobile,
+              country_code: '+' + this.registerPartnerForm.cc,
+              dob: this.registerPartnerForm.dob,
+              cid: this.registerPartnerForm.cid,
+              id_card: this.registerPartnerForm.idCard,
+              qualification: this.registerPartnerForm.qualification,
+              type: this.registerPartnerForm.type == 0 ? 'salon' : 'individual',
+              categories: categories,
+              lat: this.registerPartnerForm.lat,
+              lng: this.registerPartnerForm.lng,
+              fee_start: this.registerPartnerForm.fee_start,
+              about: this.registerPartnerForm.about,
+              zipcode: this.registerPartnerForm.zipcode,
+              address: this.registerPartnerForm.address,
+              extra_field: 'NA',
+              status: 0,
+              cover: this.registerPartnerForm.cover,
+              name: this.registerPartnerForm.salon_name,
+            };
+            url = 'v1/register_request/save';
+          }
 
           console.log('param', registerParam);
           this.util.start();
-          this.api.post('v1/auth/create_user_account', registerParam).then((data: any) => {
+          this.api.post(url, registerParam).then((data: any) => {
             this.isLogin = false;
             this.util.stop();
             console.log(data);
             if (data && data.status == 200) {
-              this.util.userInfo = data.user;
-              localStorage.setItem('uid', data.user.id);
-              localStorage.setItem('token', data.token);
-              localStorage.setItem('firstName', data.user.first_name);
-              localStorage.setItem('lastName', data.user.last_name);
-              localStorage.setItem('email', data.user.email);
-              localStorage.setItem('mobile', data.user.mobile);
-              this.redeemCode();
+              if (this.registerType == 0) {
+                this.util.userInfo = data.user;
+                localStorage.setItem('uid', data.user.id);
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('firstName', data.user.first_name);
+                localStorage.setItem('lastName', data.user.last_name);
+                localStorage.setItem('email', data.user.email);
+                localStorage.setItem('mobile', data.user.mobile);
+                this.redeemCode();
+              } else {
+                this.util.successMessage(this.util.translate('Registrated Successfully'));
+              }
               this.verifyModal.hide();
               this.registerModal.hide();
+              this.registerPartnerModal.hide();
             } else if (data && data.status == 500) {
-              this.util.errorMessage(data.error.error);
+              if (data.error.error != undefined) {
+                this.util.errorMessage(data.error.error);
+              } else if (data.error.message != undefined) {
+                this.util.errorMessage(data.error.message);
+              }
             } else {
               this.util.errorMessage(this.util.translate('Something went wrong'));
             }
@@ -927,9 +1036,15 @@ export class AppComponent {
   }
 
   redeemCode() {
-    if (this.registerForm.referral && this.registerForm.referral != '' && this.registerForm.referral != null) {
+    var referral = '';
+    if (this.registerType == 0) {
+      referral = this.registerForm.referral;
+    } else if (this.registerType == 1) {
+      referral = this.registerPartnerForm.referral;
+    }
+    if (referral && referral != '' && referral != null) {
       console.log('have redeem code');
-      const body = { "id": localStorage.getItem('uid'), "code": this.registerForm.referral };
+      const body = { "id": localStorage.getItem('uid'), "code": referral };
       this.util.start();
       this.api.post_private('v1/referral/redeemReferral', body).then((data: any) => {
         console.log(data);
@@ -983,139 +1098,167 @@ export class AppComponent {
     }
   }
 
-  onRegister(form: NgForm, registerModal, verification) {
+  /**
+   * @author onetechwolf
+   * @param form
+   * @param registerModal
+   * @param verification
+   * @param registerType 0: customer register, 1: partner register
+   * @returns
+   */
+  onRegister(form: NgForm, registerModal, verification, registerType) {
     console.log(form);
     console.log(this.util.user_verify_with);
-    console.log('form', this.registerForm, this.ccCode);
     console.log(this.util.twillo);
     this.submitted = true;
-    console.log(this.registerForm.check);
-    if (form.valid && this.registerForm.check && this.registerForm.email && this.registerForm.password && this.registerForm.first_name
-      && this.registerForm.last_name && this.registerForm.mobile && this.registerForm.cc) {
+    this.registerType = registerType;
+    if (form.valid &&
+      (this.registerType == 0 && this.registerForm.check && this.registerForm.email && this.registerForm.password && this.registerForm.first_name
+        && this.registerForm.last_name && this.registerForm.mobile && this.registerForm.cc && this.registerForm.dob && this.registerForm.location) ||
+      (this.registerType == 1 && this.registerPartnerForm.check && this.registerPartnerForm.email && this.registerPartnerForm.password && this.registerPartnerForm.first_name
+        && this.registerPartnerForm.last_name && this.registerPartnerForm.mobile && this.registerPartnerForm.cc && this.registerPartnerForm.dob && this.registerPartnerForm.cid
+        && this.registerPartnerForm.idCard)) {
       console.log('valid data');
       const emailfilter = /^[\w._-]+[+]?[\w._-]+@[\w.-]+\.[a-zA-Z]{2,6}$/;
-      if (!emailfilter.test(this.registerForm.email)) {
+      const email = this.registerType == 0?this.registerForm.email : this.registerPartnerForm.email;
+      const mobile = this.registerType == 0?this.registerForm.mobile : this.registerPartnerForm.mobile;
+      const cc = this.registerType == 0?this.registerForm.cc : this.registerPartnerForm.cc;
+      const dob =this.registerType == 0?this.registerForm.dob : this.registerPartnerForm.dob;
+      if (!emailfilter.test(email)) {
         this.util.errorMessage(this.util.translate('Please enter valid email'));
         return false;
       }
-      if (this.util.user_verify_with == 0) {
-        console.log('email verification');
-        const param = {
-          'email': this.registerForm.email,
-          'subject': this.util.translate('Verification'),
-          'header_text': this.util.translate('Use this code for verification'),
-          'thank_you_text': this.util.translate("Don't share this otp to anybody else"),
-          'mediaURL': this.api.baseUrl,
-          'country_code': '+' + this.registerForm.cc,
-          'mobile': this.registerForm.mobile
-        };
-        this.isLogin = true;
-        this.api.post('v1/sendVerificationOnMail', param).then((data: any) => {
-          console.log(data);
-          this.isLogin = false;
-          if (data && data.status == 200) {
-            verification.show();
-            this.otpId = data.otp_id;
-
-          } else if (data && data.status == 401) {
-            this.isLogin = false;
-            this.util.errorMessage(data.error.error);
-          } else if (data && data.status == 500) {
-            this.isLogin = false;
-            this.util.errorMessage(data.message);
-          } else {
-            this.isLogin = false;
-            this.util.errorMessage(this.util.translate('Something went wrong'));
-          }
-        }, error => {
-          console.log(error);
-          this.isLogin = false;
-          this.util.errorMessage(this.util.translate('Something went wrong'));
-        }).catch(error => {
-          console.log(error);
-          this.isLogin = false;
-          this.util.errorMessage(this.util.translate('Something went wrong'));
-        });
-      } else {
-        if (this.util.sms_name == '2') {
-          console.log('firebase verification');
-          const param = {
-            'country_code': '+' + this.registerForm.cc,
-            'mobile': this.registerForm.mobile,
-            'email': this.registerForm.email
-          };
-          this.api.post('v1/auth/verifyPhoneForFirebaseRegistrations', param).then((data: any) => {
-            console.log(data);
-
-            if (data && data.status == 200) {
-
-              this.api.signInWithPhoneNumber(this.recaptchaVerifier, '+' + this.registerForm.cc + this.registerForm.mobile).then(
-                success => {
-                  this.isLogin = false;
-                  this.registerModal.hide();
-                  this.firebaseOTPRegister.show();
-                }
-              ).catch(error => {
-                this.isLogin = false;
-                console.log(error);
-                this.util.errorMessage(error);
-              });
-
-            } else if (data && data.status == 401) {
-              this.isLogin = false;
-              this.util.errorMessage(data.error.error);
-            } else if (data && data.status == 500) {
-              this.isLogin = false;
-              this.util.errorMessage(data.message);
-            } else {
-              this.isLogin = false;
-              this.util.errorMessage(this.util.translate('Something went wrong'));
-            }
-          }, error => {
-            console.log(error);
-            this.isLogin = false;
-            this.util.errorMessage(this.util.translate('Something went wrong'));
-          }).catch(error => {
-            console.log(error);
-            this.isLogin = false;
-            this.util.errorMessage(this.util.translate('Something went wrong'));
-          });
-        } else {
-          console.log('other otp');
-          this.isLogin = true;
-          const param = {
-            'country_code': '+' + this.registerForm.cc,
-            'mobile': this.registerForm.mobile,
-            'email': this.registerForm.email
-          };
-          this.api.post('v1/verifyPhoneSignup', param).then((data: any) => {
-            console.log(data);
-            this.isLogin = false;
-            if (data && data.status == 200) {
-              verification.show();
-              this.otpId = data.otp_id;
-
-            } else if (data && data.status == 401) {
-              this.isLogin = false;
-              this.util.errorMessage(data.error.error);
-            } else if (data && data.status == 500) {
-              this.isLogin = false;
-              this.util.errorMessage(data.message);
-            } else {
-              this.isLogin = false;
-              this.util.errorMessage(this.util.translate('Something went wrong'));
-            }
-          }, error => {
-            console.log(error);
-            this.isLogin = false;
-            this.util.errorMessage(this.util.translate('Something went wrong'));
-          }).catch(error => {
-            console.log(error);
-            this.isLogin = false;
-            this.util.errorMessage(this.util.translate('Something went wrong'));
-          });
-        }
+      const dobDate = new Date(dob); // Convert the string value to a Date object
+      const dobYear = dobDate.getFullYear();
+      const currentYear = new Date().getFullYear()
+      if ((currentYear - dobYear) < 18) {
+        this.util.errorMessage(this.util.translate('Year of DOB must be greater than 18'));
+        return false;
       }
+      if (registerType == 1 && (this.registerPartnerForm.lat == '' || this.registerPartnerForm.lng == '' )) {
+        this.util.errorMessage(this.util.translate('Please enter valid Post Code'));
+        return false;
+      }
+      this.verifyRegisterFirebaseOTP();
+      // if (this.util.user_verify_with == 0) {
+      //   console.log('email verification');
+      //   const param = {
+      //     'email': email,
+      //     'subject': this.util.translate('Verification'),
+      //     'header_text': this.util.translate('Use this code for verification'),
+      //     'thank_you_text': this.util.translate("Don't share this otp to anybody else"),
+      //     'mediaURL': this.api.baseUrl,
+      //     'country_code': '+' + cc,
+      //     'mobile': mobile
+      //   };
+      //   this.isLogin = true;
+      //   this.api.post('v1/sendVerificationOnMail', param).then((data: any) => {
+      //     console.log(data);
+      //     this.isLogin = false;
+      //     if (data && data.status == 200) {
+      //       verification.show();
+      //       this.otpId = data.otp_id;
+
+      //     } else if (data && data.status == 401) {
+      //       this.isLogin = false;
+      //       this.util.errorMessage(data.error.error);
+      //     } else if (data && data.status == 500) {
+      //       this.isLogin = false;
+      //       this.util.errorMessage(data.message);
+      //     } else {
+      //       this.isLogin = false;
+      //       this.util.errorMessage(this.util.translate('Something went wrong'));
+      //     }
+      //   }, error => {
+      //     console.log(error);
+      //     this.isLogin = false;
+      //     this.util.errorMessage(this.util.translate('Something went wrong'));
+      //   }).catch(error => {
+      //     console.log(error);
+      //     this.isLogin = false;
+      //     this.util.errorMessage(this.util.translate('Something went wrong'));
+      //   });
+      // } else {
+      //   if (this.util.sms_name == '2') {
+      //     console.log('firebase verification');
+      //     const param = {
+      //       'country_code': '+' + cc,
+      //       'mobile': mobile,
+      //       'email': email
+      //     };
+      //     this.api.post('v1/auth/verifyPhoneForFirebaseRegistrations', param).then((data: any) => {
+      //       console.log(data);
+
+      //       if (data && data.status == 200) {
+
+      //         this.api.signInWithPhoneNumber(this.recaptchaVerifier, '+' + cc + mobile).then(
+      //           success => {
+      //             this.isLogin = false;
+      //             this.registerModal.hide();
+      //             this.registerPartnerModal.hide();
+      //             this.firebaseOTPRegister.show();
+      //           }
+      //         ).catch(error => {
+      //           this.isLogin = false;
+      //           console.log(error);
+      //           this.util.errorMessage(error);
+      //         });
+
+      //       } else if (data && data.status == 401) {
+      //         this.isLogin = false;
+      //         this.util.errorMessage(data.error.error);
+      //       } else if (data && data.status == 500) {
+      //         this.isLogin = false;
+      //         this.util.errorMessage(data.message);
+      //       } else {
+      //         this.isLogin = false;
+      //         this.util.errorMessage(this.util.translate('Something went wrong'));
+      //       }
+      //     }, error => {
+      //       console.log(error);
+      //       this.isLogin = false;
+      //       this.util.errorMessage(this.util.translate('Something went wrong'));
+      //     }).catch(error => {
+      //       console.log(error);
+      //       this.isLogin = false;
+      //       this.util.errorMessage(this.util.translate('Something went wrong'));
+      //     });
+      //   } else {
+      //     console.log('other otp');
+      //     this.isLogin = true;
+      //     const param = {
+      //       'country_code': '+' + cc,
+      //       'mobile': mobile,
+      //       'email': email
+      //     };
+      //     this.api.post('v1/verifyPhoneSignup', param).then((data: any) => {
+      //       console.log(data);
+      //       this.isLogin = false;
+      //       if (data && data.status == 200) {
+      //         verification.show();
+      //         this.otpId = data.otp_id;
+
+      //       } else if (data && data.status == 401) {
+      //         this.isLogin = false;
+      //         this.util.errorMessage(data.error.error);
+      //       } else if (data && data.status == 500) {
+      //         this.isLogin = false;
+      //         this.util.errorMessage(data.message);
+      //       } else {
+      //         this.isLogin = false;
+      //         this.util.errorMessage(this.util.translate('Something went wrong'));
+      //       }
+      //     }, error => {
+      //       console.log(error);
+      //       this.isLogin = false;
+      //       this.util.errorMessage(this.util.translate('Something went wrong'));
+      //     }).catch(error => {
+      //       console.log(error);
+      //       this.isLogin = false;
+      //       this.util.errorMessage(this.util.translate('Something went wrong'));
+      //     });
+      //   }
+      // }
 
     } else {
       console.log('not valid data...');
@@ -1123,43 +1266,118 @@ export class AppComponent {
     }
   }
 
-  verifyRegisterFirebaseOTP() {
-    if (this.firebaseOTPText == '' || !this.firebaseOTPText || this.firebaseOTPText == null) {
-      this.util.errorMessage('OTP Missing');
-      return false;
+  changeAttachment(files: any, attachementType) {
+    console.log('fle', files);
+    if (files.length == 0) {
+      return;
     }
-    this.util.start();
-    this.api.enterVerificationCode(this.firebaseOTPText).then(
-      userData => {
+    const mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      return;
+    }
+    if (files) {
+      this.util.start();
+      this.api.uploadFile(files).subscribe((data: any) => {
+        console.log('==>>>>>>', data.data);
+        this.util.stop();
+        if (data && data.data.image_name) {
+          if (attachementType == 0) {
+            this.registerPartnerForm.idCard = data.data.image_name;
+          } else if (attachementType == 1) {
+            this.registerPartnerForm.qualification = data.data.image_name;
+          }
+        }
+      }, error => {
+        this.util.stop();
+        this.util.apiErrorHandler(error);
+      });
+    } else {
+      console.log('no');
+    }
+  }
+
+  verifyRegisterFirebaseOTP() {
+    // if (this.firebaseOTPText == '' || !this.firebaseOTPText || this.firebaseOTPText == null) {
+    //   this.util.errorMessage('OTP Missing');
+    //   return false;
+    // }
+    // this.util.start();
+    // this.api.enterVerificationCode(this.firebaseOTPText).then(
+    //   userData => {
         this.util.stop();
         this.firebaseOTPRegister.hide();
-        const registerParam = {
-          first_name: this.registerForm.first_name,
-          last_name: this.registerForm.last_name,
-          email: this.registerForm.email,
-          password: this.registerForm.password,
-          gender: this.registerForm.gender,
-          mobile: this.registerForm.mobile,
-          country_code: '+' + this.registerForm.cc,
-        };
+        var registerParam = {};
+        var url = '';
+        if (this.registerType == 0) {
+          registerParam = {
+            first_name: this.registerForm.first_name,
+            last_name: this.registerForm.last_name,
+            email: this.registerForm.email,
+            password: this.registerForm.password,
+            gender: this.registerForm.gender,
+            mobile: this.registerForm.mobile,
+            country_code: '+' + this.registerForm.cc,
+            dob: this.registerForm.dob,
+            cid: this.registerForm.location,
+          };
+          url = 'v1/auth/create_user_account';
+        } else if (this.registerType == 1) {
+          let temp = this.registerPartnerForm.category.map((category) => category.id);
+          let categories = temp.join(',');
+
+          registerParam = {
+            email: this.registerPartnerForm.email,
+            password: this.registerPartnerForm.password,
+            first_name: this.registerPartnerForm.first_name,
+            last_name: this.registerPartnerForm.last_name,
+            gender: this.registerPartnerForm.gender,
+            mobile: this.registerPartnerForm.mobile,
+            country_code: '+' + this.registerPartnerForm.cc,
+            dob: this.registerPartnerForm.dob,
+            cid: this.registerPartnerForm.cid,
+            id_card: this.registerPartnerForm.idCard,
+            qualification: this.registerPartnerForm.qualification,
+            type: this.registerPartnerForm.type == 0 ? 'salon' : 'individual',
+            categories: categories,
+            lat: this.registerPartnerForm.lat,
+            lng: this.registerPartnerForm.lng,
+            fee_start: this.registerPartnerForm.fee_start,
+            about: this.registerPartnerForm.about,
+            zipcode: this.registerPartnerForm.zipcode,
+            address: this.registerPartnerForm.address,
+            extra_field: 'NA',
+            status: 0,
+            cover: this.registerPartnerForm.cover,
+            name: this.registerPartnerForm.salon_name,
+          };
+          url = 'v1/register_request/save';
+        }
 
         console.log('param', registerParam);
         this.util.start();
-        this.api.post('v1/auth/create_user_account', registerParam).then((data: any) => {
+        this.api.post(url, registerParam).then((data: any) => {
           this.isLogin = false;
           this.util.stop();
           console.log(data);
           if (data && data.status == 200) {
-            this.util.userInfo = data.user;
-            localStorage.setItem('uid', data.user.id);
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('firstName', data.user.first_name);
-            localStorage.setItem('lastName', data.user.last_name);
-            localStorage.setItem('email', data.user.email);
-            localStorage.setItem('mobile', data.user.mobile);
-            this.redeemCode();
+            if (this.registerType == 0) {
+              this.util.userInfo = data.user;
+              localStorage.setItem('uid', data.user.id);
+              localStorage.setItem('token', data.token);
+              localStorage.setItem('firstName', data.user.first_name);
+              localStorage.setItem('lastName', data.user.last_name);
+              localStorage.setItem('email', data.user.email);
+              localStorage.setItem('mobile', data.user.mobile);
+              this.redeemCode();
+            } else {
+              this.util.successMessage(this.util.translate('Registrated Successfully'));
+            }
           } else if (data && data.status == 500) {
-            this.util.errorMessage(data.error.error);
+            if (data.error.error != undefined) {
+              this.util.errorMessage(data.error.error);
+            } else if (data.error.message != undefined) {
+              this.util.errorMessage(data.error.message);
+            }
           } else {
             this.util.errorMessage(this.util.translate('Something went wrong'));
           }
@@ -1174,11 +1392,48 @@ export class AppComponent {
           this.isLogin = false;
           this.util.errorMessage(this.util.translate('Something went wrong'));
         });
+    //   }
+    // ).catch(error => {
+    //   console.log(error);
+    //   this.util.stop();
+    //   this.util.errorMessage(this.util.translate('Something went wrong'));
+    // });
+  }
+
+  preview_banner(files: any) {
+    console.log('fle', files);
+    if (files.length == 0) {
+      return;
+    }
+    const mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      return;
+    }
+    if (files) {
+      console.log('ok');
+      this.util.start();
+      this.api.uploadFile(files).subscribe((data: any) => {
+        console.log('==>>>>>>', data.data);
+        this.util.stop();
+        if (data && data.data.image_name) {
+          this.registerPartnerForm.cover = data.data.image_name;
+        }
+      }, error => {
+        console.log(error);
+        this.util.stop();
+        this.util.apiErrorHandler(error);
+      });
+    } else {
+      console.log('no');
+    }
+  }
+
+  getLatLngWithPostCode(event: KeyboardEvent) {
+    this.api.getLatLngFromPostcode(this.registerPartnerForm.zipcode).subscribe((response) => {
+      if (response && response.results instanceof Array && response.results.length > 0) {
+        this.registerPartnerForm.lat = response.results[0].geometry.location.lat;
+        this.registerPartnerForm.lng = response.results[0].geometry.location.lng;
       }
-    ).catch(error => {
-      console.log(error);
-      this.util.stop();
-      this.util.errorMessage(this.util.translate('Something went wrong'));
     });
   }
 
@@ -1290,7 +1545,7 @@ export class AppComponent {
       this.isLogin = false;
       if (data && data.status == 200) {
         this.isLogin = false;
-        this.util.suucessMessage(this.util.translate('Password Updated'));
+        this.util.successMessage(this.util.translate('Password Updated'));
         this.forgotPwd.hide();
       } else {
         if (data && data.status == 500 && data.error && data.error.message) {
@@ -1408,7 +1663,7 @@ export class AppComponent {
       this.isLogin = false;
       if (data && data.status == 200) {
         this.isLogin = false;
-        this.util.suucessMessage(this.util.translate('Password Updated'));
+        this.util.successMessage(this.util.translate('Password Updated'));
         this.forgotPwd.hide();
       } else {
         if (data && data.status == 500 && data.data && data.data.message) {
