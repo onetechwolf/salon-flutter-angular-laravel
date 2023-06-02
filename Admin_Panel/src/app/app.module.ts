@@ -1,11 +1,11 @@
 
 /*
-  Authors : initappz (Rahul Jograna)
-  Website : https://initappz.com/
+  Authors : cosonas (Rahul Jograna)
+  Website : https://cosonas.com/
   App Name : Ultimate Salon Full App Flutter
   This App Template Source code is licensed as per the
-  terms found in the Website https://initappz.com/license
-  Copyright and Good Faith Purchasers © 2022-present initappz.
+  terms found in the Website https://cosonas.com/license
+  Copyright and Good Faith Purchasers © 2022-present cosonas.
 */
 import { NgModule } from '@angular/core';
 import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';

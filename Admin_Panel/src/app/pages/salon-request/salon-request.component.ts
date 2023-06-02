@@ -1,10 +1,10 @@
 /*
-  Authors : initappz (Rahul Jograna)
-  Website : https://initappz.com/
+  Authors : cosonas (Rahul Jograna)
+  Website : https://cosonas.com/
   App Name : Ultimate Salon Full App Flutter
   This App Template Source code is licensed as per the
-  terms found in the Website https://initappz.com/license
-  Copyright and Good Faith Purchasers © 2022-present initappz.
+  terms found in the Website https://cosonas.com/license
+  Copyright and Good Faith Purchasers © 2022-present cosonas.
 */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
