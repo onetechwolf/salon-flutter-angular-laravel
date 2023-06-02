@@ -1,10 +1,10 @@
 /*
-  Authors : initappz (Rahul Jograna)
-  Website : https://initappz.com/
-  App Name : Ultimate Salon Full App Flutter
+  Authors : cosonas (Rahul Jograna)
+  Website : https://cosonas.com/
+  App Name : Bunitas Salon Full App Flutter
   This App Template Source code is licensed as per the
-  terms found in the Website https://initappz.com/license
-  Copyright and Good Faith Purchasers © 2022-present initappz.
+  terms found in the Website https://cosonas.com/license
+  Copyright and Good Faith Purchasers © 2022-present cosonas.
 */
 import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationExtras, NavigationStart, Router, RouterEvent } from '@angular/router';
@@ -134,7 +134,7 @@ export class AppComponent {
   firebaseOTPText: any = '';
 
   languageClicked: boolean = false;
-  title = 'Ultimate Salon';
+  title = 'Book Salon and Mobile Beautician - Bunitas';
   loaded: boolean;
   loading = true;
   loadingWidth: any = 70;
@@ -188,7 +188,7 @@ export class AppComponent {
       localStorage.setItem('direction', 'ltr');
     }
 
-    this.setDefaultLocationAsUk();
+    // this.setDefaultLocationAsUk();
 
     this.translate.use(localStorage.getItem('selectedLanguage'));
     document.documentElement.dir = localStorage.getItem('direction');
@@ -348,7 +348,7 @@ export class AppComponent {
 
   initializeApp() {
     this.util.cityAddress = localStorage.getItem('address');
-    console.log('%c Copyright and Good Faith Purchasers © 2020-present initappz. ', 'background: #222; color: #bada55');
+    console.log('%c Copyright and Good Faith Purchasers © 2020-present cosonas. ', 'background: #222; color: #bada55');
     this.api.get('v1/settings/getDefault').then((data: any) => {
       console.log(data);
       if (data && data.status && data.status == 200 && data.data && data.data.settings && data.data.support && data.data.cities) {
@@ -1452,9 +1452,9 @@ export class AppComponent {
 
   openLink(type) {
     if (type == 'eula') {
-      window.open('https://initappz.com/foodiesaagya/eula.html');
+      window.open('https://cosonas.com/foodiesaagya/eula.html');
     } else {
-      window.open('https://initappz.com/foodiesaagya/privacy.html');
+      window.open('https://cosonas.com/foodiesaagya/privacy.html');
     }
   }
 
@@ -1592,7 +1592,7 @@ export class AppComponent {
   }
 
   sendOTPForReset() {
-    const message = this.util.translate('Your Ultimate Salon app verification code : ');
+    const message = this.util.translate('Your Bunitas Salon app verification code : ');
     const param = {
       msg: message,
       to: '+' + this.reset_cc + this.reset_phone

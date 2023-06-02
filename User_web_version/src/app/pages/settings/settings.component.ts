@@ -1,10 +1,10 @@
 /*
-  Authors : initappz (Rahul Jograna)
-  Website : https://initappz.com/
-  App Name : Ultimate Salon Full App Flutter
+  Authors : cosonas (Rahul Jograna)
+  Website : https://cosonas.com/
+  App Name : Bunitas Salon Full App Flutter
   This App Template Source code is licensed as per the
-  terms found in the Website https://initappz.com/license
-  Copyright and Good Faith Purchasers © 2022-present initappz.
+  terms found in the Website https://cosonas.com/license
+  Copyright and Good Faith Purchasers © 2022-present cosonas.
 */
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router';
@@ -327,13 +327,13 @@ export class SettingsComponent implements OnInit {
       center: location,
       mapTypeControl: false,
       mapTypeControlOptions: {
-        mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'Ultimate Salon by initappz']
+        mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'Bunitas Salon by Cosonas']
       }
     };
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
     const mapType = new google.maps.StyledMapType(style, { name: 'Grayscale' });
-    this.map.mapTypes.set('Ultimate Salon by initappz', mapType);
-    this.map.setMapTypeId('Ultimate Salon by initappz');
+    this.map.mapTypes.set('Bunitas Salon by cosonas', mapType);
+    this.map.setMapTypeId('Bunitas Salon by cosonas');
     this.chmod.detectChanges();
     this.addMarker(location);
   }
