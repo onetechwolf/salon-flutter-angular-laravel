@@ -19,6 +19,7 @@ import Swal from 'sweetalert2';
 })
 export class SalonsComponent implements OnInit {
   @ViewChild('myModal2') public myModal2: ModalDirective;
+  @ViewChild('imageZoomModal') public imageZoomModal: ModalDirective;
   firstName: any = '';
   lastName: any = '';
   email: any = '';
@@ -41,6 +42,8 @@ export class SalonsComponent implements OnInit {
   website: any = '';
   cityID: any = '';
   zipcode: any = '';
+  zoomImage: any = '';
+  zoomTitle: any = '';
   dropdownSettings = {
     singleSelection: false,
     idField: 'id',
@@ -629,5 +632,14 @@ export class SalonsComponent implements OnInit {
       console.log('Err', error);
       this.util.apiErrorHandler(error);
     });
+  }
+
+  clickZoom(imageUrl: any, type: any) {
+    this.zoomImage = imageUrl;
+    if (type == 0)
+      this.zoomTitle = 'Id Card';
+    else
+      this.zoomTitle = 'Qualification';
+    this.imageZoomModal.show();
   }
 }

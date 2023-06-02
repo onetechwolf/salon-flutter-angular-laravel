@@ -19,6 +19,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 })
 export class FreelancerRequestComponent implements OnInit {
   @ViewChild('largeModal') public largeModal: ModalDirective;
+  @ViewChild('imageZoomModal') public imageZoomModal: ModalDirective;
   freelancers: any[] = [];
   dummyFreelacer: any[] = [];
   page: number = 1;
@@ -36,6 +37,7 @@ export class FreelancerRequestComponent implements OnInit {
   hourly: any = '';
   lat: any = '';
   lng: any = '';
+  dob: any = '';
   descriptions: any = '';
   cityID: any = '';
   zipcode: any = '';
@@ -44,6 +46,11 @@ export class FreelancerRequestComponent implements OnInit {
   rate: any = '';
   address: any = '';
   fee_start: any = '';
+  zoomImage: any = '';
+  zoomTitle: any = '';
+  id_card: any= '';
+  qualification: any='';
+
   constructor(
     public util: UtilService,
     public api: ApiService
@@ -132,6 +139,7 @@ export class FreelancerRequestComponent implements OnInit {
         this.country_code = item.country_code;
         this.mobile = item.mobile;
         this.cityID = item.cid;
+        this.dob = item.dob;
         this.cover = item.cover;
         this.descriptions = item.descriptions;
         this.gender = item.gender;
@@ -143,6 +151,8 @@ export class FreelancerRequestComponent implements OnInit {
         this.zipcode = item.zipcode;
         this.fee_start = item.fee_start;
         this.address = item.address;
+        this.id_card = item.id_card;
+        this.qualification = item.qualification;
         this.largeModal.show();
       }
     });
@@ -166,7 +176,9 @@ export class FreelancerRequestComponent implements OnInit {
       mobile: this.mobile,
       email: this.email,
       country_code: this.country_code,
-      password: this.password
+      password: this.password,
+      dob: this.dob,
+      cid: this.cityID,
     };
     this.util.show();
     this.api.post_private('v1/auth/createIndividualAccount', param).then((data: any) => {
@@ -245,7 +257,9 @@ export class FreelancerRequestComponent implements OnInit {
       in_home: 1,
       extra_field: 'NA',
       background: 'NA',
-      rate: this.rate
+      rate: this.rate,
+      id_card: this.id_card,
+      qualification: this.qualification
     };
     this.util.show();
     this.api.post_private('v1/individual/create', body).then((data: any) => {
@@ -276,5 +290,14 @@ export class FreelancerRequestComponent implements OnInit {
       console.log('Err', error);
       this.util.apiErrorHandler(error);
     });
+  }
+
+  clickZoom(imageUrl: any, type: any) {
+    this.zoomImage = imageUrl;
+    if (type == 0)
+      this.zoomTitle = 'Id Card';
+    else
+      this.zoomTitle = 'Qualification';
+    this.imageZoomModal.show();
   }
 }

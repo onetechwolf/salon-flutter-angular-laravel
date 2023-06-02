@@ -28,6 +28,9 @@
                                 <th scope="col">{{util.translate('City')}}</th>
                                 <th scope="col">{{util.translate('Categories')}}</th>
                                 <th scope="col">{{util.translate('Fee Start')}}</th>
+                                <th scope="col">{{util.translate('Dob')}}</th>
+                                <th scope="col">{{util.translate('Id Card')}}</th>
+                                <th scope="col">{{util.translate('Qualification')}}</th>
                                 <th scope="col">{{util.translate('Action')}}</th>
                             </tr>
                         </thead>
@@ -63,7 +66,15 @@
                                     </div>
                                 </td>
                                 <td>$ {{item.fee_start}}</td>
-
+                                <td>{{item.dob}}</td>
+                                <td>
+                                    <img class="img-responsive" style="height: 60px;width: 60px; object-fit: cover;" 
+                                        [src]="this.api.imageUrl + item.id_card" onError="this.src='assets/img/dummy.jpeg'" (click)="clickZoom(this.api.imageUrl + item.id_card, 0)"/>
+                                </td>
+                                <td>
+                                    <img class="img-responsive" style="height: 60px;width: 60px; object-fit: cover;" 
+                                        [src]="this.api.imageUrl + item.qualification" onError="this.src='assets/img/dummy.jpeg'"  (click)="clickZoom(this.api.imageUrl + item.qualification, 1)"/>
+                                </td>
                                 <td>
                                     <div class="d-flex align-items-center">
 
@@ -121,6 +132,31 @@
                     (click)="largeModal.hide()">{{util.translate('Close')}}</button>
                 <button type="button" class="btn btn-primary" (click)="acceptRequest()">
                     {{util.translate('Save Changes')}}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div bsModal #imageZoomModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{zoomTitle}}</h4>
+                <button type="button" class="close" (click)="imageZoomModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12" style="text-align: center;">
+                    <img class="img-responsive" style="height: 500px;width: 500px; object-fit: cover;" [src]="zoomImage"
+                        onError="this.src='assets/img/dummy.jpeg'"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    (click)="imageZoomModal.hide()">{{util.translate('Close')}}</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

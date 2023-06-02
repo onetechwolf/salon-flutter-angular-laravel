@@ -24,6 +24,8 @@ export class UsersDetailsComponent implements OnInit {
   cover: any = '';
   email: any = '';
   phone: any = '';
+  cid: any = '';
+  dob: any = '';
 
   appointments: any[] = [];
   productsOrders: any[] = [];
@@ -59,6 +61,8 @@ export class UsersDetailsComponent implements OnInit {
         this.cover = info.user.cover;
         this.email = info.user.email;
         this.phone = info.user.country_code + info.user.mobile;
+        this.cid = info.user.cid;
+        this.dob = info.user.dob;
         info.appointments.forEach((element: any) => {
           if (((x) => { try { JSON.parse(x); return true; } catch (e) { return false } })(element.items)) {
             element.items = JSON.parse(element.items);
