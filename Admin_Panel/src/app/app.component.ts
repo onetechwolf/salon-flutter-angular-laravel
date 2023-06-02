@@ -1,7 +1,7 @@
 /*
   Authors : cosonas (Rahul Jograna)
   Website : https://cosonas.com/
-  App Name : Ultimate Salon Full App Flutter
+  App Name : Bunitas Management Full App Flutter
   This App Template Source code is licensed as per the
   terms found in the Website https://cosonas.com/license
   Copyright and Good Faith Purchasers © 2022-present cosonas.
@@ -21,7 +21,7 @@ import { TranslateService } from '@ngx-translate/core';
   template: '<router-outlet></router-outlet>',
 })
 export class AppComponent implements OnInit {
-  title = 'Ultimate Salon';
+  title = 'Bunitas Management';
 
   constructor(
     private router: Router,

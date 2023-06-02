@@ -1,3 +1,5 @@
+.vscode
+
 # Logs
 Admin_Panel/logs
 Admin_Panel/*.log
@@ -107,6 +109,9 @@ Admin_Panel/.tern-port
 
 # API vendor directory
 API/vendor
+
+# API public/storage directory
+API/public/storage
 
 
 ########################### Owner APP ###################################
