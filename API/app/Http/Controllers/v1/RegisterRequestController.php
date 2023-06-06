@@ -4,9 +4,11 @@ namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\Models\RegisterRequest;
 use App\Models\Cities;
 use App\Models\Category;
+use App\Models\Settings;
 use Validator;
 
 class RegisterRequestController extends Controller
@@ -60,7 +62,7 @@ class RegisterRequestController extends Controller
             'lng' => 'required',
             // 'name' => 'required',
             'about' => 'required',
-            'fee_start' => 'required',
+            // 'fee_start' => 'required',
             'cid' => 'required',
             'dob' => 'required',
         ]);
@@ -88,6 +90,35 @@ class RegisterRequestController extends Controller
                 ];
                 return response()->json($response, 200);
                 }
+
+                $generalInfo = Settings::take(1)->first();
+                $subject = '';
+                if ($request->type == 'salon') {
+                    $subject = 'Salon Register Request';
+                } else if ($request->type == 'individual') {
+                    $subject = 'Mobile Beautician Register Request';
+                }
+                
+                $request->merge([
+                    'cover_src' =>base64_encode($this->curl_get_file_contents(env('APP_URL', 'http://api.bunitas.com') . '/storage/images/' . $request->cover))
+                ]);
+                $request->merge([
+                    'id_card_src' =>base64_encode($this->curl_get_file_contents(env('APP_URL', 'http://api.bunitas.com') . '/storage/images/' . $request->id_card))
+                ]);
+                if (isset($request->qualification)) {
+                    $request->merge([
+                        'qualification_src' =>base64_encode($this->curl_get_file_contents(env('APP_URL', 'http://api.bunitas.com') . '/storage/images/' . $request->qualification))
+                    ]);    
+                }
+                
+                $useremail = env('MAIL_USERNAME', 'verification@bunitas.com');
+                $mailTo = Mail::send('mails/notificationForRegister', $request->all()
+                , function($message) use($subject,$generalInfo, $useremail){
+                    $message->to($useremail, $useremail)
+                    ->subject($subject);
+                    $message->from($generalInfo->email,$generalInfo->name);
+                });
+
                 $response = [
                     'data'=>$data,
                     'success' => true,
@@ -124,6 +155,17 @@ class RegisterRequestController extends Controller
         //     'status' => 200,
         // ];
         // return response()->json($response, 200);
+    }
+    function curl_get_file_contents($URL)
+    {
+        $c = curl_init();
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($c, CURLOPT_URL, $URL);
+        $contents = curl_exec($c);
+        curl_close($c);
+    
+        if ($contents) return $contents;
+        else return FALSE;
     }
     public function update(Request $request){
         $validator = Validator::make($request->all(), [

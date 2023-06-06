@@ -76,7 +76,7 @@ export class UtilService {
   public deliveryCharge: any = 0;
   public deliveryType: any = 0;
 
-  public currencySymbol: any = '$';
+  public currencySymbol: any = '£';
   public currencySide: any = 'left';
 
   public paymentLeavve = new Subject<any>();

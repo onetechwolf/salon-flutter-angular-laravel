@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('zip')->nullable();
             $table->string('country')->nullable();
             $table->double('tax',10,2)->nullable();
+            $table->double('booking_fee',10,5)->default(3.5);
+            $table->integer('deposit_now')->default(0);
             $table->double('delivery_charge',10,2)->nullable();
             $table->string('currencySymbol');
             $table->string('currencySide');
@@ -46,6 +48,7 @@ return new class extends Migration
             $table->text('social')->nullable();
             $table->text('app_color');
             $table->tinyInteger('app_status')->default(1);
+            $table->tinyInteger('delivery_type')->default(1);
             $table->text('fcm_token')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->double('allowDistance');

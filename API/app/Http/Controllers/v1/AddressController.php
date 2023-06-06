@@ -15,7 +15,7 @@ class AddressController extends Controller
             'address' => 'required',
             'house' => 'required',
             'landmark' => 'required',
-            'pincode' => 'required',
+            // 'pincode' => 'required',
             'lat' => 'required',
             'lng' => 'required',
             'status' => 'required'
@@ -171,7 +171,8 @@ class AddressController extends Controller
     }
 
     public function getAll(){
-        $data = Address::all();
+        $data = Address::select('address.*', 'users.first_name', 'users.last_name')
+            ->join('users','users.id','=','address.uid')->get();
         if (is_null($data)) {
             $response = [
                 'success' => false,

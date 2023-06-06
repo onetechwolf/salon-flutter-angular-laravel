@@ -8,12 +8,74 @@
  -->
 <footer class="page-footer font-small back_footer" style="padding-top: 1px;">
 
+
+  <div class="container">
+    <div class="row" style="margin: 20px 0;">
+      <div class="col-md-3">
+        <a href="/"><img src="https://bunitas.co.uk/uploads/0000/1/2022/08/06/bunitaslogo.png" alt="Bunitas"
+            style="width: 150px"></a>
+        <div style="justify-content: space-between; line-height: 50px; margin-top: 20px">
+          <a [href]="util.apple_appstore" target="_blank">
+            <img src="assets/imgs/appstore.svg" alt="" style="height: 45px;">
+          </a>
+          <a [href]="util.google_playstore" target="_blank">
+            <img src="assets/imgs/google.svg" alt="" style="height: 45px;">
+          </a>
+        </div>
+      </div>      
+      <div class="col-md-3">
+        <label class="footer_lbl">{{util.translate('About Bunitas')}} </label>
+        <div class="flex_box" (click)="goToAbout()">
+          <a>{{util.translate('About Us')}}</a>
+        </div>
+        <div class="flex_box">
+          <a href="https://bunitas.co.uk/page/beinspired">{{util.translate('Be Inspired')}}</a>
+        </div>
+        <div class="flex_box">
+          <a href="https://support.bunitas.com/docs/how-to-become-our-brand-ambassador/" target="_blank"> Brand Ambassador </a>
+        </div>
+        <div class="flex_box">
+          <a href="https://support.bunitas.com/docs/what-is-the-bunitass-referral-program/;" target="_blank"> Referral Program </a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <label class="footer_lbl">{{util.translate('Legal')}} </label>
+        <div class="flex_box">
+          <a href="https://legal.bunitas.com/bunitas-privacy-policy/" target="_blank"> Privacy Policy </a>
+        </div>
+        <div class="flex_box">
+          <a href="https://legal.bunitas.com/bunitas-terms-of-use/" target="_blank"> Term of use </a>
+        </div>
+        <div class="flex_box">
+          <a href="https://legal.bunitas.com/cookie-notice/" target="_blank"> Cooking settings </a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <label class="footer_lbl">{{util.translate('Contact Us')}} </label>
+        <div class="flex_box">
+          <a href="https://support.bunitas.com/" target="_blank"> Customer Help Centre </a>
+        </div>
+        <div class="flex_box">
+          <a href="http://hc.bunitas.com/" target="_blank"> Partner Help Centre </a>
+        </div>
+        <div class="flex_box">
+          <a href="https://bunitas.co.uk/register" target="_blank"> Become Our Partner </a>
+        </div>
+        <div class="flex_box">
+          <a href="mailto:support@bunitas.co.uk"> support@bunitas.co.uk </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!--
   <div class="container text-center text-md-left mt-5">
     <div class="row" style="border-bottom: 1px solid white">
 
       <div class="col-md-4 col-lg-4 col-xl-3 mb-4" style="text-align: initial;">
 
-        <label class="footer_lbl">{{util.app_name}} </label>
+        <label class="footer_lbl">{{util.websiteName}} </label>
 
         <div style="display: flex;flex-direction: column ;justify-content: space-between;">
           <a [href]="util.apple_appstore" target="_blank">
@@ -68,7 +130,7 @@
       </div>
     </div>
 
-  </div>
+  </div> -->
 
   <div class="footer-copyright text-center py-3" style="background: rgba(0,0,0,0.5); text-align: initial;">
     <div class="container">
