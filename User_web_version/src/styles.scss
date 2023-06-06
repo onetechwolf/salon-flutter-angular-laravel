@@ -10,26 +10,22 @@
 
 @font-face {
   font-family: "regular";
-  src: url(assets/fonts/Roboto-Regular.ttf);
+  src: url(assets/fonts/Poppins-Regular.ttf);
 }
 
 @font-face {
   font-family: "medium";
-  src: url(assets/fonts/Roboto-Medium.ttf);
+  src: url(assets/fonts/Poppins-Medium.ttf);
 }
 
 @font-face {
   font-family: "bold";
-  src: url(assets/fonts/Roboto-Bold.ttf);
+  src: url(assets/fonts/Poppins-Bold.ttf);
 }
 
 :root {
   --ng-color-primary: #9C0278;
   --ng-color-secondary: #FF8A44;
-}
-
-.f-primary {
-  color: var(--ng-color-primary) !important;
 }
 
 .f-secondary {
@@ -84,9 +80,9 @@ label {
   left: -55px;
 }
 
-* {
-  font-family: "regular";
-}
+// * {
+//   font-family: "regular";
+// }
 
 html,
 body {
@@ -95,6 +91,9 @@ body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
+  font-family: Poppins,sans-serif !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
 }
 
 .page_header_dynamics {
@@ -274,6 +273,9 @@ p {
   color: var(--ng-color-secondary) !important;
 }
 
+.f-third {
+  color: black !important;
+}
 
 .btn-color {
   background: var(--ng-color-primary) !important;
@@ -1003,6 +1005,11 @@ span.c-number {
   font-family: 'bold';
 }
 
+.salon-head-text {
+  font-size: 19px;
+  font-family: 'medium';
+}
+
 .sub-text {
   font-size: 12px;
 }
@@ -1236,4 +1243,61 @@ span.c-number {
   .checkmark {
     padding: 0px;
   }
+}
+
+
+.newsletter-section .btn-submit {
+  position: relative;
+  background: #99047a;
+  border-radius: 5px !important;
+  height: 50px;
+  border-width: 0px;
+  line-height: 55px;
+  color: #fff;
+  padding-left: 25px;
+  padding-right: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-left: 10px;
+}
+
+.email-input {
+  border: 1px solid #dae1e7;
+  border-radius: 3px !important;
+  margin-left: 10px;
+}
+
+
+.file-input-container {
+  position: relative;
+  height: 45px;
+}
+
+.custom-file-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  background-color: #fff;
+  color: #000;
+  padding: 0.5rem 0.7rem;
+  // border-radius: 0.25rem;
+  border: 1px solid grey;
+  cursor: pointer;
+  line-height: 30px;
+}
+
+/* Optional styles to make the button look like a regular button */
+.custom-file-button:hover,
+.custom-file-button:focus {
+  background-color: #eee;
+  color: #000;
+  text-decoration: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.multiselect-dropdown[_ngcontent-nji-c111] .dropdown-btn[_ngcontent-nji-c111] {
+  padding: 6px 6px !important;
 }

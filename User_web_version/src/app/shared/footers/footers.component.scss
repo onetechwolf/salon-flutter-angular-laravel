@@ -7,15 +7,16 @@
   Copyright and Good Faith Purchasers © 2022-present initappz.
 */
 .back_footer {
-  background: #101010;
+  background: #fff;
 }
 
 .footer_lbl {
   padding-bottom: 5px;
   width: max-content;
-  color: grey;
-  font-weight: bold;
-  font-size: 16px;
+  color: #1a2b48;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.2;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
@@ -40,6 +41,7 @@
   a {
     font-weight: 500;
     font-size: 16px;
+    color: #9C0278;
   }
 
   a:hover {

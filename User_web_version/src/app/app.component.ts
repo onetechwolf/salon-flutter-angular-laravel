@@ -134,7 +134,7 @@ export class AppComponent {
   firebaseOTPText: any = '';
 
   languageClicked: boolean = false;
-  title = 'Book Salon and Mobile Beautician - Bunitas';
+  title = 'Bunitas - Book Salon and Mobile Beautician';
   loaded: boolean;
   loading = true;
   loadingWidth: any = 70;
@@ -172,6 +172,10 @@ export class AppComponent {
   router$: Subscription;
   authToken: any;
   recaptchaVerifier: firebase.default.auth.RecaptchaVerifier;
+  idCardTitle: any = 'Choose Id Card File';
+  qualificationTitle: any = 'Choose Qualification File';
+
+
   constructor(
     public api: ApiService,
     public util: UtilService,
@@ -1139,126 +1143,126 @@ export class AppComponent {
         this.util.errorMessage(this.util.translate('Please enter valid Post Code'));
         return false;
       }
-      this.verifyRegisterFirebaseOTP();
-      // if (this.util.user_verify_with == 0) {
-      //   console.log('email verification');
-      //   const param = {
-      //     'email': email,
-      //     'subject': this.util.translate('Verification'),
-      //     'header_text': this.util.translate('Use this code for verification'),
-      //     'thank_you_text': this.util.translate("Don't share this otp to anybody else"),
-      //     'mediaURL': this.api.baseUrl,
-      //     'country_code': '+' + cc,
-      //     'mobile': mobile
-      //   };
-      //   this.isLogin = true;
-      //   this.api.post('v1/sendVerificationOnMail', param).then((data: any) => {
-      //     console.log(data);
-      //     this.isLogin = false;
-      //     if (data && data.status == 200) {
-      //       verification.show();
-      //       this.otpId = data.otp_id;
+      // this.verifyRegisterFirebaseOTP();
+      if (this.util.user_verify_with == 1) {
+        console.log('email verification');
+        const param = {
+          'email': email,
+          'subject': this.util.translate('Verification'),
+          'header_text': this.util.translate('Use this code for verification'),
+          'thank_you_text': this.util.translate("Don't share this otp to anybody else"),
+          'mediaURL': this.api.baseUrl,
+          'country_code': '+' + cc,
+          'mobile': mobile
+        };
+        this.isLogin = true;
+        this.api.post('v1/sendVerificationOnMail', param).then((data: any) => {
+          console.log(data);
+          this.isLogin = false;
+          if (data && data.status == 200) {
+            verification.show();
+            this.otpId = data.otp_id;
 
-      //     } else if (data && data.status == 401) {
-      //       this.isLogin = false;
-      //       this.util.errorMessage(data.error.error);
-      //     } else if (data && data.status == 500) {
-      //       this.isLogin = false;
-      //       this.util.errorMessage(data.message);
-      //     } else {
-      //       this.isLogin = false;
-      //       this.util.errorMessage(this.util.translate('Something went wrong'));
-      //     }
-      //   }, error => {
-      //     console.log(error);
-      //     this.isLogin = false;
-      //     this.util.errorMessage(this.util.translate('Something went wrong'));
-      //   }).catch(error => {
-      //     console.log(error);
-      //     this.isLogin = false;
-      //     this.util.errorMessage(this.util.translate('Something went wrong'));
-      //   });
-      // } else {
-      //   if (this.util.sms_name == '2') {
-      //     console.log('firebase verification');
-      //     const param = {
-      //       'country_code': '+' + cc,
-      //       'mobile': mobile,
-      //       'email': email
-      //     };
-      //     this.api.post('v1/auth/verifyPhoneForFirebaseRegistrations', param).then((data: any) => {
-      //       console.log(data);
+          } else if (data && data.status == 401) {
+            this.isLogin = false;
+            this.util.errorMessage(data.error.error);
+          } else if (data && data.status == 500) {
+            this.isLogin = false;
+            this.util.errorMessage(data.message);
+          } else {
+            this.isLogin = false;
+            this.util.errorMessage(this.util.translate('Something went wrong'));
+          }
+        }, error => {
+          console.log(error);
+          this.isLogin = false;
+          this.util.errorMessage(this.util.translate('Something went wrong'));
+        }).catch(error => {
+          console.log(error);
+          this.isLogin = false;
+          this.util.errorMessage(this.util.translate('Something went wrong'));
+        });
+      } else {
+        if (this.util.sms_name == '2') {
+          console.log('firebase verification');
+          const param = {
+            'country_code': '+' + cc,
+            'mobile': mobile,
+            'email': email
+          };
+          this.api.post('v1/auth/verifyPhoneForFirebaseRegistrations', param).then((data: any) => {
+            console.log(data);
 
-      //       if (data && data.status == 200) {
+            if (data && data.status == 200) {
 
-      //         this.api.signInWithPhoneNumber(this.recaptchaVerifier, '+' + cc + mobile).then(
-      //           success => {
-      //             this.isLogin = false;
-      //             this.registerModal.hide();
-      //             this.registerPartnerModal.hide();
-      //             this.firebaseOTPRegister.show();
-      //           }
-      //         ).catch(error => {
-      //           this.isLogin = false;
-      //           console.log(error);
-      //           this.util.errorMessage(error);
-      //         });
+              this.api.signInWithPhoneNumber(this.recaptchaVerifier, '+' + cc + mobile).then(
+                success => {
+                  this.isLogin = false;
+                  this.registerModal.hide();
+                  this.registerPartnerModal.hide();
+                  this.firebaseOTPRegister.show();
+                }
+              ).catch(error => {
+                this.isLogin = false;
+                console.log(error);
+                this.util.errorMessage(error);
+              });
 
-      //       } else if (data && data.status == 401) {
-      //         this.isLogin = false;
-      //         this.util.errorMessage(data.error.error);
-      //       } else if (data && data.status == 500) {
-      //         this.isLogin = false;
-      //         this.util.errorMessage(data.message);
-      //       } else {
-      //         this.isLogin = false;
-      //         this.util.errorMessage(this.util.translate('Something went wrong'));
-      //       }
-      //     }, error => {
-      //       console.log(error);
-      //       this.isLogin = false;
-      //       this.util.errorMessage(this.util.translate('Something went wrong'));
-      //     }).catch(error => {
-      //       console.log(error);
-      //       this.isLogin = false;
-      //       this.util.errorMessage(this.util.translate('Something went wrong'));
-      //     });
-      //   } else {
-      //     console.log('other otp');
-      //     this.isLogin = true;
-      //     const param = {
-      //       'country_code': '+' + cc,
-      //       'mobile': mobile,
-      //       'email': email
-      //     };
-      //     this.api.post('v1/verifyPhoneSignup', param).then((data: any) => {
-      //       console.log(data);
-      //       this.isLogin = false;
-      //       if (data && data.status == 200) {
-      //         verification.show();
-      //         this.otpId = data.otp_id;
+            } else if (data && data.status == 401) {
+              this.isLogin = false;
+              this.util.errorMessage(data.error.error);
+            } else if (data && data.status == 500) {
+              this.isLogin = false;
+              this.util.errorMessage(data.message);
+            } else {
+              this.isLogin = false;
+              this.util.errorMessage(this.util.translate('Something went wrong'));
+            }
+          }, error => {
+            console.log(error);
+            this.isLogin = false;
+            this.util.errorMessage(this.util.translate('Something went wrong'));
+          }).catch(error => {
+            console.log(error);
+            this.isLogin = false;
+            this.util.errorMessage(this.util.translate('Something went wrong'));
+          });
+        } else {
+          console.log('other otp');
+          this.isLogin = true;
+          const param = {
+            'country_code': '+' + cc,
+            'mobile': mobile,
+            'email': email
+          };
+          this.api.post('v1/verifyPhoneSignup', param).then((data: any) => {
+            console.log(data);
+            this.isLogin = false;
+            if (data && data.status == 200) {
+              verification.show();
+              this.otpId = data.otp_id;
 
-      //       } else if (data && data.status == 401) {
-      //         this.isLogin = false;
-      //         this.util.errorMessage(data.error.error);
-      //       } else if (data && data.status == 500) {
-      //         this.isLogin = false;
-      //         this.util.errorMessage(data.message);
-      //       } else {
-      //         this.isLogin = false;
-      //         this.util.errorMessage(this.util.translate('Something went wrong'));
-      //       }
-      //     }, error => {
-      //       console.log(error);
-      //       this.isLogin = false;
-      //       this.util.errorMessage(this.util.translate('Something went wrong'));
-      //     }).catch(error => {
-      //       console.log(error);
-      //       this.isLogin = false;
-      //       this.util.errorMessage(this.util.translate('Something went wrong'));
-      //     });
-      //   }
-      // }
+            } else if (data && data.status == 401) {
+              this.isLogin = false;
+              this.util.errorMessage(data.error.error);
+            } else if (data && data.status == 500) {
+              this.isLogin = false;
+              this.util.errorMessage(data.message);
+            } else {
+              this.isLogin = false;
+              this.util.errorMessage(this.util.translate('Something went wrong'));
+            }
+          }, error => {
+            console.log(error);
+            this.isLogin = false;
+            this.util.errorMessage(this.util.translate('Something went wrong'));
+          }).catch(error => {
+            console.log(error);
+            this.isLogin = false;
+            this.util.errorMessage(this.util.translate('Something went wrong'));
+          });
+        }
+      }
 
     } else {
       console.log('not valid data...');
@@ -1267,7 +1271,6 @@ export class AppComponent {
   }
 
   changeAttachment(files: any, attachementType) {
-    console.log('fle', files);
     if (files.length == 0) {
       return;
     }
@@ -1278,13 +1281,14 @@ export class AppComponent {
     if (files) {
       this.util.start();
       this.api.uploadFile(files).subscribe((data: any) => {
-        console.log('==>>>>>>', data.data);
         this.util.stop();
         if (data && data.data.image_name) {
           if (attachementType == 0) {
             this.registerPartnerForm.idCard = data.data.image_name;
+            this.idCardTitle = files[0].name;
           } else if (attachementType == 1) {
             this.registerPartnerForm.qualification = data.data.image_name;
+            this.qualificationTitle = files[0].name;
           }
         }
       }, error => {
@@ -1297,13 +1301,13 @@ export class AppComponent {
   }
 
   verifyRegisterFirebaseOTP() {
-    // if (this.firebaseOTPText == '' || !this.firebaseOTPText || this.firebaseOTPText == null) {
-    //   this.util.errorMessage('OTP Missing');
-    //   return false;
-    // }
-    // this.util.start();
-    // this.api.enterVerificationCode(this.firebaseOTPText).then(
-    //   userData => {
+    if (this.firebaseOTPText == '' || !this.firebaseOTPText || this.firebaseOTPText == null) {
+      this.util.errorMessage('OTP Missing');
+      return false;
+    }
+    this.util.start();
+    this.api.enterVerificationCode(this.firebaseOTPText).then(
+      userData => {
         this.util.stop();
         this.firebaseOTPRegister.hide();
         var registerParam = {};
@@ -1392,16 +1396,15 @@ export class AppComponent {
           this.isLogin = false;
           this.util.errorMessage(this.util.translate('Something went wrong'));
         });
-    //   }
-    // ).catch(error => {
-    //   console.log(error);
-    //   this.util.stop();
-    //   this.util.errorMessage(this.util.translate('Something went wrong'));
-    // });
+      }
+    ).catch(error => {
+      console.log(error);
+      this.util.stop();
+      this.util.errorMessage(this.util.translate('Something went wrong'));
+    });
   }
 
   preview_banner(files: any) {
-    console.log('fle', files);
     if (files.length == 0) {
       return;
     }
@@ -1410,7 +1413,6 @@ export class AppComponent {
       return;
     }
     if (files) {
-      console.log('ok');
       this.util.start();
       this.api.uploadFile(files).subscribe((data: any) => {
         console.log('==>>>>>>', data.data);

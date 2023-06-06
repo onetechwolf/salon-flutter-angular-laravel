@@ -143,11 +143,21 @@
               <mdb-icon fas icon="user-circle"></mdb-icon>
               <label>{{util.translate('Login')}} </label>
             </div>
+            <div class="app_btns" mdbWavesEffect (click)="sideMenu.hide();util.publishModalPopup('register')"
+              *ngIf="haveSigned() ==false">
+              <mdb-icon fas icon="user-circle"></mdb-icon>
+              <label>{{util.translate('Signup')}} </label>
+            </div>
+            <div class="app_btns" mdbWavesEffect (click)="sideMenu.hide();util.publishModalPopup('registerJoin')"
+              *ngIf="haveSigned() ==false">
+              <mdb-icon fas icon="user-circle"></mdb-icon>
+              <label>{{util.translate('Join as Partner')}} </label>
+            </div>
             <div class="app_btns" mdbWavesEffect (click)="onProfile('address')" *ngIf="haveSigned()">
               <mdb-icon fas icon="location-arrow"></mdb-icon>
               <label>{{util.translate('Address')}} </label>
             </div>
-            <div class="app_btns" mdbWavesEffect (click)="languageClicked = !languageClicked">
+            <!-- <div class="app_btns" mdbWavesEffect (click)="languageClicked = !languageClicked">
               <mdb-icon fas icon="language"></mdb-icon>
               <label>{{util.translate('Language')}} </label>
             </div>
@@ -171,7 +181,7 @@
             <div class="app_btns" mdbWavesEffect (click)="onPage('help')">
               <mdb-icon fas icon="question"></mdb-icon>
               <label>{{util.translate('Help')}} </label>
-            </div>
+            </div> -->
             <div class="app_btns" mdbWavesEffect (click)="logout()" *ngIf="haveSigned()">
               <mdb-icon fas icon="sign-out-alt"></mdb-icon>
               <label>{{util.translate('Logout')}} </label>
@@ -455,9 +465,9 @@
                 <div class="col-3" style="display: flex; flex-direction: row;  align-items: center;">
                   <select [(ngModel)]="registerForm.cc" type="text" name="ccode" #ccode="ngModel" spellcheck="false"
                     autocapitalize="off" required style="border: 1px solid lightgray;width: 100%;">
-                    <!-- <option *ngFor="let item of util.countrys" [value]="item.dialling_code"> +{{item.dialling_code}}
+                    <option *ngFor="let item of util.countrys" [value]="item.dialling_code"> +{{item.dialling_code}}
                       {{item.country_name}}
-                    </option> -->
+                    </option>
                     <option [value]="+44"> +44 United Kingdom</option>
                   </select>
                 </div>
@@ -509,7 +519,7 @@
           </div>
         </div>
         <div class="modal-footer d-flex justify-content-center">
-          <button mdbBtn color="default" class="waves-light" [disabled]="isLogin"
+          <button mdbBtn color="default" class="waves-light" style="background-color: #9C0278 !important" [disabled]="isLogin"
             (click)="onRegister(loginForm, registerModal, verifyModal, 0)" mdbWavesEffect>
             <span *ngIf="!isLogin"> {{util.translate('Signup')}}</span>
             <div class="spinner-border" *ngIf="isLogin" role="status"></div>
@@ -537,10 +547,10 @@
             <div class="form_div">
               <div class="row">
                 <div class="col-sm-8">
-                    <div class="form-group">
-                        <label>{{util.translate('Logo')}} <span style="color: red;">*</span> </label>
-                        <input class="form-control file_ip" type="file"
-                            (change)="preview_banner($event.target.files)" accept="image/*">
+                    <div class="form-group file-input-container" style="margin-top: 15px;">
+                      <input type="file" id="logo" name="logo" style="display: none;" accept="image/*"  required  class="form-control file_ip"
+                        (change)="preview_banner($event.target.files)">
+                      <label for="logo" class="custom-file-button">{{util.translate('Choose Logo File')}}</label>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -573,12 +583,12 @@
                   <input [(ngModel)]="registerPartnerForm.mobile" type="number" [placeholder]="util.translate('Mobile Number')"
                     name="partner_mobile" #partner_mobile="ngModel" spellcheck="false" autocapitalize="off" required
                     class="form-control frm">
-                  <p [hidden]="partner_mobile.valid || submitted == false" class="redAlert">
-                    {{util.translate('Phone number is required')}}
-                  </p>
                 </div>
               </div>
-              <select [(ngModel)]="registerPartnerForm.type" required style="border: 1px solid lightgray;width: 100%;"
+              <p [hidden]="partner_mobile.valid || submitted == false" class="redAlert">
+                {{util.translate('Phone number is required')}}
+              </p>
+              <select [(ngModel)]="registerPartnerForm.type" required style="border: 1px solid lightgray;width: 100%;padding: 0 8px 0 8px;"
                 [ngModelOptions]="{standalone: true}" #type="ngModel">
                 <option value="0"> {{util.translate('Salon Owner')}}</option>
                 <option value="1"> {{util.translate('Mobile Beautifician')}} </option>
@@ -609,28 +619,28 @@
               <p [hidden]="partner_password.valid || submitted == false" class="redAlert">
                 {{util.translate('Password is required')}}
               </p>
-              <select [(ngModel)]="registerPartnerForm.gender" required style="border: 1px solid lightgray;width: 100%;"
+              <select [(ngModel)]="registerPartnerForm.gender" required style="border: 1px solid lightgray;width: 100%;padding: 0 8px 0 8px;"
                 [ngModelOptions]="{standalone: true}">
                 <option value="1"> {{util.translate('Male')}}</option>
                 <option value="0"> {{util.translate('Female')}} </option>
                 <option value="2"> {{util.translate('Others')}} </option>
               </select>
               <input type="date" [(ngModel)]="registerPartnerForm.dob" name="partner_dob" #partner_dob="ngModel" autocomplete="cc-exp" ccExp
-                [ngModelOptions]="{standalone: true}" mdbInput class="form-control frm" required>
+                [ngModelOptions]="{standalone: true}" mdbInput class="form-control frm" required style="padding: 0 8px 0 11px;">
               <p [hidden]="partner_dob.valid || submitted == false" class="redAlert">
                 {{util.translate('Dob Date is required')}}
               </p>
-              <input name="fee_start" [placeholder]="util.translate('Fee Started Price')" type="number" #fee_start="ngModel"
+              <!-- <input name="fee_start" [placeholder]="util.translate('Fee Started Price')" type="number" #fee_start="ngModel"
                 required [(ngModel)]="registerPartnerForm.fee_start" class="form-control frm"
                 [ngModelOptions]="{standalone: true}">
               <p [hidden]="fee_start.valid || submitted == false" class="redAlert">
                 {{util.translate('Fee Started Price is required')}}
-              </p>
-              <input name="about" [placeholder]="util.translate('Description')" type="text" #about="ngModel"
+              </p> -->
+              <input name="about" [placeholder]="util.translate('About you / your salon')" type="text" #about="ngModel"
                 required [(ngModel)]="registerPartnerForm.about" class="form-control frm"
                 [ngModelOptions]="{standalone: true}">
               <p [hidden]="about.valid || submitted == false" class="redAlert">
-                {{util.translate('Description is required')}}
+                {{util.translate('About you / your salon required')}}
               </p>
               <ng-multiselect-dropdown [placeholder]="util.translate('Category')" [ngModelOptions]="{standalone: true}"
                   maxHeight="100" [data]="util.categories" [(ngModel)]="registerPartnerForm.category"
@@ -640,9 +650,9 @@
                 {{util.translate('Category is required')}}
               </p>
 
-              <label>{{util.translate('Location/City')}} <span style="color: red;">*</span> </label>
-              <select [(ngModel)]="registerPartnerForm.cid" required style="border: 1px solid lightgray;width: 100%;margin-top: 10px"
+              <select [(ngModel)]="registerPartnerForm.cid" required style="border: 1px solid lightgray;width: 100%;margin-top: 10px;padding: 0 8px 0 8px;"
                 [ngModelOptions]="{standalone: true}" #cid="ngModel">
+                <option disabled selected value="" style="display: none">{{util.translate('Location/City')}}</option>
                 <option *ngFor="let item of util.cities" [value]="item.id">{{item.name}}</option>
               </select>
               <p [hidden]="cid.valid || submitted == false" class="redAlert">
@@ -660,13 +670,19 @@
               <p [hidden]="zipcode.valid || submitted == false" class="redAlert">
                 {{util.translate('Post Code is required')}}
               </p>
-
-              <label>{{util.translate('ID Card')}} <span style="color: red;">*</span> </label>
-              <input type="file" accept="image/*" name="idCard" required class="form-control file_ip"
-                (change)="changeAttachment($event.target.files, 0)">
-              <label>{{util.translate('Qualification')}}</label>
-              <input type="file" accept="image/*" name="qualification" class="form-control file_ip"
-                (change)="changeAttachment($event.target.files, 1)" >
+              <div class="file-input-container">
+                <input type="file" id="idCard" name="idCard" style="display: none;" accept="image/*"  required  class="form-control file_ip"
+                  (change)="changeAttachment($event.target.files, 0)" #idcard="ngModel" [(ngModel)]="registerPartnerForm.idCard">
+                <label for="idCard" class="custom-file-button">{{this.idCardTitle}}</label>
+              </div>
+              <p [hidden]="idcard.valid || submitted == false" class="redAlert">
+                {{util.translate('Id Card is required')}}
+              </p>
+              <div class="file-input-container" style="margin-top: 12px;">
+                <input type="file" id="qualification" name="qualification" style="display: none;" accept="image/*"  required  class="form-control file_ip"
+                  (change)="changeAttachment($event.target.files, 1)">
+                <label for="qualification" class="custom-file-button">{{this.qualificationTitle}}</label>
+              </div>
 
               <input type="text" [placeholder]="util.translate('Referral Code(optional)')"
                 [(ngModel)]="registerPartnerForm.referral" name="partner_referral" #partner_referral="ngModel" spellcheck="false"
@@ -715,7 +731,7 @@
           </div>
         </div>
         <div class="modal-footer d-flex justify-content-center">
-          <button mdbBtn color="default" class="waves-light" [disabled]="isLogin"
+          <button mdbBtn color="default" class="waves-light" [disabled]="isLogin" style="background-color: #9C0278 !important" 
             (click)="onRegister(loginForm, registerPartnerModal, verifyModal, 1)" mdbWavesEffect>
             <span *ngIf="!isLogin"> {{util.translate('Signup')}}</span>
             <div class="spinner-border" *ngIf="isLogin" role="status"></div>

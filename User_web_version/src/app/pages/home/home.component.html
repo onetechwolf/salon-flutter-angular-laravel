@@ -25,8 +25,8 @@
 
   <div class="container">
     <div class="mb-4">
-      <h1 class="h5-responsive ff-bold f-primary text-center">{{util.translate('Services')}}</h1>
-      <h1 class="h4-responsive ff-bold text-center">{{util.translate('We Providing Helpful Services')}}</h1>
+      <h1 class="h5-responsive ff-medium f-third text-center" style="font-size: 25px !important">{{util.translate('Treatments')}}</h1>
+      <!-- <h1 class="h4-responsive ff-bold text-center">{{util.translate('We Providing Helpful Treatments')}}</h1> -->
     </div>
 
     <div class="slider_row">
@@ -46,8 +46,8 @@
 
   <div class="container">
     <div class="my-5">
-      <h1 class="h5 ff-bold f-primary text-center">{{util.translate('Top Salons')}}</h1>
-      <h1 class="h4-responsive ff-bold text-center">{{util.translate('We Providing Helpful Services')}}</h1>
+      <h1 class="h5 ff-medium f-third text-center" style="font-size: 25px !important">{{util.translate('Latest Salons')}}</h1>
+      <!-- <h1 class="h4-responsive ff-bold text-center">{{util.translate('We Providing Helpful Services')}}</h1> -->
     </div>
 
     <div>
@@ -59,9 +59,9 @@
                 <div
                   [ngStyle]="{'background-image': 'url('+ api.mediaURL + item.cover +'),url(assets/images/placeholder.png)'}"
                   class="bg-img mb-3 "></div>
-                <h6 class="text-black ff-medium px-2 text-overflow head-text">{{item.name}}</h6>
+                <h6 class="text-black ff-medium px-2 text-overflow salon-head-text">{{item.name}}</h6>
 
-                <div style="font-size: 12px;">
+                <div style="font-size: 15px;">
                   <span *ngFor="let cates of item.categories;let j = index;"> {{cates.name}} <span
                       *ngIf="(item.categories.length - 1) != j">,</span> </span>
                 </div>
@@ -90,8 +90,8 @@
 
   <div class="container">
     <div class="my-5">
-      <h1 class="h5 ff-bold f-primary text-center">{{util.translate('Top Individuals')}}</h1>
-      <h1 class="h4-responsive ff-bold text-center">{{util.translate('We Providing Helpful Services')}}</h1>
+      <h1 class="h5 ff-medium f-third text-center" style="font-size: 25px !important">{{util.translate('Latest Mobile Beauticians')}}</h1>
+      <!-- <h1 class="h4-responsive ff-bold text-center">{{util.translate('We Providing Helpful Services')}}</h1> -->
     </div>
 
     <div>
@@ -136,8 +136,8 @@
 
   <div class="container">
     <div class="my-5">
-      <h1 class="h5 ff-bold f-primary text-center">{{util.translate('Top Products')}}</h1>
-      <h1 class="h4-responsive ff-bold text-center">{{util.translate('We Providing Best Quality Products')}}</h1>
+      <h1 class="h5 ff-medium f-third text-center" style="font-size: 25px !important">{{util.translate('Latest Products')}}</h1>
+      <!-- <h1 class="h4-responsive ff-bold text-center">{{util.translate('We Providing Best Quality Products')}}</h1> -->
     </div>
 
     <div class="row">
@@ -207,6 +207,8 @@
   </div>
 </div>
 
+
+
 <div *ngIf="apiCalled == false" class="container">
   <ngx-skeleton-loader appearance="line" [theme]="{  height: '20px',width:'150px'}">
   </ngx-skeleton-loader>
@@ -266,5 +268,34 @@
   <div class="no_data" *ngIf="haveData ==false">
     <div class="empty" [ngStyle]="{'background-image':'url(assets/nodata.jpg)'}"></div>
     <p> {{util.translate('Opps.. nothing found near')}} {{getAddressName()}}</p>
+  </div>
+</div>
+
+<div style="background: #f5f5f5;">
+  <div class="container" style="padding-top: 65px;padding-bottom: 40px;">
+    <div class="row">
+      <div class="col-lg-6 col-md-12 col-xs-12">
+        <div style="margin-bottom: 20px;flex-direction: column;align-items: center;display: flex;">
+          <div style="padding-right: 30px;">
+            <i class="icofont-island-alt"></i>
+          </div>
+          <div class="media-body" style="text-align: center;flex: 1;">
+            <h4 class="media-heading" style="font-size: 24px!important;">Get Updates &amp; More</h4>
+            <p style="font-size: 16px!important;color: #5e6d77!important;">Thoughtful thoughts to your inbox</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12 col-xs-12">
+        <form action="https://bunitas.co.uk/newsletter/subscribe" class="subcribe-form bravo-subscribe-form bravo-form"> 
+          <input type="hidden" name="_token" value="l6yNkXDsH3KWWyqfRFB4i4fP7HdjFmP3o1cSvoGr"> 
+          <div class="form-group newsletter-section" style="display: flex;margin-bottom: 15px;">
+            <input type="text" name="first_name" class="form-control email-input" placeholder="First Name">
+            <input type="text" name="email" class="form-control email-input" placeholder="Your Email">
+            <button type="submit" class="btn-submit">Subscribe</button>
+          </div>
+          <div class="form-mess"></div> 
+        </form> 
+      </div>
+    </div>
   </div>
 </div>
