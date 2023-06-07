@@ -61,6 +61,8 @@ export class SettingsComponent implements OnInit {
   state: any = '';
   status: any = 1;
   tax: any = 5;
+  booking_fee: any = 3.5;
+  deposit_now: any = 20;
   user_login: any = 0;
   user_verify_with: any = 0;
   zip: any = '';
@@ -330,7 +332,9 @@ export class SettingsComponent implements OnInit {
       tax: this.tax,
       user_login: this.user_login,
       user_verify_with: this.user_verify_with,
-      zip: this.zip
+      zip: this.zip,
+      booking_fee: this.booking_fee,
+      deposit_now: this.deposit_now,
     };
     console.log(param);
     this.util.show();
@@ -359,7 +363,7 @@ export class SettingsComponent implements OnInit {
       this.default_city_id == '' || this.default_city_id == null || this.default_country_code == null || this.default_country_code == null || this.default_delivery_zip == '' ||
       this.default_delivery_zip == null || this.delivery_charge == '' || this.delivery_charge == null || this.email == '' || this.email == null || this.fcm_token == '' || this.fcm_token == null ||
       this.logo == '' || this.logo == null || this.mobile == '' || this.mobile == null || this.name == '' || this.name == null || this.search_radius == null || this.search_radius == '' ||
-      this.state == '' || this.state == null || this.tax == '' || this.tax == null || this.zip == '' || this.zip == null) {
+      this.state == '' || this.state == null || this.tax == '' || this.tax == null || this.zip == '' || this.zip == null || this.booking_fee == null || this.booking_fee == '' || this.deposit_now == null || this.deposit_now == '') {
       this.util.error(this.util.translate('All fields are required'));
       return false;
     }
@@ -458,7 +462,9 @@ export class SettingsComponent implements OnInit {
       tax: this.tax,
       user_login: this.user_login,
       user_verify_with: this.user_verify_with,
-      zip: this.zip
+      zip: this.zip,
+      booking_fee: this.booking_fee,
+      deposit_now: this.deposit_now,
     };
     console.log(param);
     this.util.show();

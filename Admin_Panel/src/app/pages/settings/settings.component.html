@@ -120,6 +120,22 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
+                                <label>{{util.translate('Booking Fee')}} <span style="color: red;">*</span> </label>
+                                <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="booking_fee" [placeholder]="util.translate('Booking Fee')">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{util.translate('Deposit Now')}} <span style="color: red;">*</span> </label>
+                                <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="deposit_now" [placeholder]="util.translate('Deposit Now')">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
                                 <label>{{util.translate('Delivery Type')}} <span style="color: red;">*</span> </label>
                                 <select class="form-control" [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="delivery_type">

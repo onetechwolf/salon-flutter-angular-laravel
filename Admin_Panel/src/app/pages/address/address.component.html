@@ -23,9 +23,9 @@
                                 <th> {{util.translate('User')}}</th>
                                 <th> {{util.translate('Title')}}</th>
                                 <th> {{util.translate('Address')}} </th>
-                                <th> {{util.translate('House')}} </th>
-                                <th> {{util.translate('Landmark')}} </th>
-                                <th> {{util.translate('Pincode')}} </th>
+                                <th> {{util.translate('1st Line of address')}} </th>
+                                <th> {{util.translate('Postcode')}} </th>
+                                <!-- <th> {{util.translate('Pincode')}} </th> -->
                                 <th> {{util.translate('Actions')}} </th>
                             </tr>
                         </thead>
@@ -57,9 +57,9 @@
                                     {{item.landmark}}
                                 </td>
 
-                                <td>
+                                <!-- <td>
                                     {{item.pincode}}
-                                </td>
+                                </td> -->
                                 <td>
                                     <c-badge color="danger" class="me-1 badge bg-danger" (click)="deleteAddress(item)">
                                         {{ util.translate('Delete')}}
