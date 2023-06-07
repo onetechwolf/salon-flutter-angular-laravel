@@ -51,6 +51,8 @@ class SettingsController extends Controller
             'status' => 'required',
             'allowDistance' => 'required',
             'searchResultKind' => 'required',
+            'booking_fee' => 'required',
+            'deposit_now' => 'required',
         ]);
         if ($validator->fails()) {
             $response = [
@@ -109,7 +111,8 @@ class SettingsController extends Controller
             ];
             return response()->json($response, 404);
         }
-        $data = Settings::find($request->id)->update($request->all());
+
+        $data = Settings::where('id', $request->id)->update($request->all());
 
         if (is_null($data)) {
             $response = [
