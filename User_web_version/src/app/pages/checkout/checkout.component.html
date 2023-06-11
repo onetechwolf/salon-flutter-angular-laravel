@@ -391,7 +391,7 @@
 
                 <div class="bg-white px-3 py-2">
                   <p class="ff-bold small">{{util.translate('Bill Details')}}</p>
-                  <p class="mb-1"> {{util.translate('Service Total')}}
+                  <p class="mb-1"> {{util.translate('Treatment Total')}}
                     <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
                       {{serviceCart.totalPrice}}</span>
                     <span class="float-right text-dark" *ngIf="util.currencySide == 'right'">{{serviceCart.totalPrice}}
@@ -416,9 +416,38 @@
                       *ngIf="util.currencySide == 'right'">{{serviceCart.deliveryCharge}}
                       {{util.currencySymbol}}</span>
                   </p>
+                  <p class="mb-1">{{util.translate("Booking Fees") + '(' + util.booking_fee + '%)' }}
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
+                      {{serviceCart.totalPrice * util.booking_fee / 100}}</span>
+                    <span class="float-right text-dark"
+                      *ngIf="util.currencySide == 'right'">{{serviceCart.totalPrice * util.booking_fee / 100}}
+                      {{util.currencySymbol}}</span>
+                  </p>
+                  <p class="mb-1">{{util.translate('Total Charges')}}
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
+                      {{serviceCart.totalPrice - serviceCart.discount + serviceCart.orderTax + serviceCart.deliveryCharge - serviceCart.totalPrice * util.booking_fee / 100}}</span>
+                    <span class="float-right text-dark"
+                      *ngIf="util.currencySide == 'right'">{{serviceCart.totalPrice - serviceCart.discount + serviceCart.orderTax + serviceCart.deliveryCharge - serviceCart.totalPrice * util.booking_fee / 100}}
+                      {{util.currencySymbol}}</span>
+                  </p>
+                  <p class="mb-1">{{util.translate("Deposit Now") + '(' + util.deposit_now + '%)' }}
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
+                      {{(serviceCart.totalPrice - serviceCart.discount + serviceCart.orderTax + serviceCart.deliveryCharge - serviceCart.totalPrice * util.booking_fee / 100) * util.deposit_now / 100}}</span>
+                    <span class="float-right text-dark"
+                      *ngIf="util.currencySide == 'right'">{{(serviceCart.totalPrice - serviceCart.discount + serviceCart.orderTax + serviceCart.deliveryCharge - serviceCart.totalPrice * util.booking_fee / 100) * util.deposit_now / 100}}
+                      {{util.currencySymbol}}</span>
+                  </p>
+
+                  <p class="mb-1">{{util.translate("To pay at Salon / Beautician") }}
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
+                      {{(serviceCart.totalPrice - serviceCart.discount + serviceCart.orderTax + serviceCart.deliveryCharge - serviceCart.totalPrice * util.booking_fee / 100) * (100-util.deposit_now) / 100}}</span>
+                    <span class="float-right text-dark"
+                      *ngIf="util.currencySide == 'right'">{{(serviceCart.totalPrice - serviceCart.discount + serviceCart.orderTax + serviceCart.deliveryCharge - serviceCart.totalPrice * util.booking_fee / 100) * (100-util.deposit_now) / 100}}
+                      {{util.currencySymbol}}</span>
+                  </p>
                 </div>
 
-                <div class="p-3 border-top">
+                <!-- <div class="p-3 border-top">
                   <h6 class="m-0 ff-medium h5">{{util.translate('To Pay')}}
                     <span class="float-right ff-medium h5 f-primary"
                       *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
@@ -427,7 +456,7 @@
                       *ngIf="util.currencySide == 'right'">{{serviceCart.grandTotal}}
                       {{util.currencySymbol}}</span>
                   </h6>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>

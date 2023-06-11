@@ -16,8 +16,8 @@
       <div class="modal-body">
         <div #map id="map" class="map"></div>
         <div>
-          <h3>{{util.translate('Set your delivery location')}}</h3>
-          <p>{{util.translate('DELIVERY AREA')}}</p>
+          <h3>{{util.translate('Manage your address(es)')}}</h3>
+          <p>{{util.translate('Current Localisation')}}</p>
           <div class="borders">
             <p class="address">
               <mdb-icon fas icon="check-circle" color="primary"></mdb-icon>
@@ -29,23 +29,23 @@
             <div class="md-form">
               <input id="house" style="height: auto !important;" [(ngModel)]="house" class="form-control" type="text"
                 mdbInput>
-              <label for="house"> {{util.translate('HOUSE / FLAT NO')}} </label>
+              <label for="house"> {{util.translate('1st Line of address')}} </label>
             </div>
             <div class="md-form">
               <input id="landmark" style="height: auto !important;" [(ngModel)]="landmark" class="form-control"
                 type="text" mdbInput>
-              <label for="landmark"> {{util.translate('LANDMARK')}} </label>
+              <label for="landmark"> {{util.translate('Postcode')}} </label>
             </div>
             <div class="md-form">
-              <input id="pincode" style="height: auto !important;" [(ngModel)]="pincode" class="form-control"
+              <!-- <input id="pincode" style="height: auto !important;" [(ngModel)]="pincode" class="form-control"
                 type="text" mdbInput>
-              <label for="pincode"> {{util.translate('Pincode')}} </label>
+              <label for="pincode"> {{util.translate('Pincode')}} </label> -->
             </div>
 
             <div class="md-form">
               <select class="browser-default custom-select" [(ngModel)]="title">
                 <option [value]="0"> {{util.translate('HOME')}} </option>
-                <option [value]="1"> {{util.translate('WORK')}} </option>
+                <option [value]="1"> {{util.translate('OFFICE')}} </option>
                 <option [value]="2"> {{util.translate('OTHER')}} </option>
               </select>
             </div>
@@ -56,19 +56,19 @@
       </div>
       <!--Footer-->
       <div class="modal-footer justify-content-center">
-        <a type="button" *ngIf="addressSelected == false" mdbBtn color="danger" class="waves-light" mdbWavesEffect
+        <a type="button" *ngIf="addressSelected == false" mdbBtn class="waves-light primary" mdbWavesEffect
           (click)="chooseFromMaps()">
           {{util.translate('Confirm and Proceed')}}
         </a>
-        <a type="button" *ngIf="addressSelected == true && editClicked ==false" mdbBtn color="danger"
-          class="waves-light" mdbWavesEffect (click)="addAddress()">
+        <a type="button" *ngIf="addressSelected == true && editClicked ==false" mdbBtn
+          class="waves-light primary" mdbWavesEffect (click)="addAddress()">
           {{util.translate('Add Address')}}
         </a>
-        <a type="button" *ngIf="editClicked ==true" mdbBtn color="danger" class="waves-light" mdbWavesEffect
+        <a type="button" *ngIf="editClicked ==true" mdbBtn  class="waves-light primary" mdbWavesEffect
           (click)="editMyAddress()">
           {{util.translate('Edit')}}
         </a>
-        <a type="button" mdbBtn color="danger" outline="true" class="waves-light" mdbWavesEffect data-dismiss="modal"
+        <a type="button" mdbBtn  outline="true" class="waves-light primary" mdbWavesEffect data-dismiss="modal"
           (click)="addressFromMap.hide()"> {{util.translate('Cancel')}} </a>
       </div>
     </div>
@@ -185,9 +185,28 @@
                       </select>
                     </div>
                     <div class="col-lg-6">
-                      <label class="hint_lbl">{{util.translate('Phone Number')}}</label>
+                      <!-- <label class="hint_lbl">{{util.translate('Phone Number')}}</label>
                       <input mdbInput type="text" [disabled]="!editProfileClick" id="form1" class="form-control"
-                        [(ngModel)]="mobile">
+                        [(ngModel)]="mobile"> -->
+                      <label class="hint_lbl">{{util.translate('Phone Number')}}</label>
+                      <div class="row">
+                        <div class="col-3">
+                          <select type="text" name="ccode" spellcheck="false"
+                            autocapitalize="off" required style="border: 1px solid lightgray;width: 100%;">
+                            <!-- <option *ngFor="let item of util.countrys" [value]="item.dialling_code"> +{{item.dialling_code}}
+                              {{item.country_name}}
+                            </option> -->
+                            <option [value]="+44"> +44 United Kingdom</option>
+                          </select>
+                        </div>
+                        <div class="col-9">
+                          <!-- <input [(ngModel)]="mobile" [disabled]="!editProfileClick" type="number"
+                            name="form1" id="form1" spellcheck="false" autocapitalize="off" required
+                            class="form-control" max="10"> -->
+                          <input mdbInput type="number" [disabled]="!editProfileClick" id="form1" class="form-control" (keydown)="handleKeyDown($event)" min="1000000000" max="9999999999"
+                            [(ngModel)]="mobile">
+                        </div>
+                      </div>
                     </div>
 
                     <div class="col-lg-12" style="text-align: center;" *ngIf="editProfileClick">

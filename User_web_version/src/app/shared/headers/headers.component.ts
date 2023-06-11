@@ -165,4 +165,9 @@ export class HeadersComponent implements OnInit {
     this.activeTab = 'faq';
     this.router.navigate(['faq']);
   }
+
+  goToContact() {
+    this.activeTab = 'contact';
+    this.router.navigate(['contact']);
+  }
 }

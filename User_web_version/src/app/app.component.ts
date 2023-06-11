@@ -366,6 +366,8 @@ export class AppComponent {
         this.util.logo = settings.logo;
         this.util.user_login = settings.user_login;
         this.util.sms_name = settings.sms_name;
+        this.util.booking_fee = settings.booking_fee;
+        this.util.deposit_now = settings.deposit_now;
         this.api.default_country_code = settings.default_country_code;
         this.util.deliveryCharge = parseFloat(settings.delivery_charge);;
         this.util.delivery = settings.delivery_type;
@@ -1801,5 +1803,24 @@ export class AppComponent {
     // try {
 
     // } catch (err) { }
+  }
+
+  handleKeyDown(e) {
+    const typedValue = e.keyCode;
+    if (typedValue < 48 && typedValue > 57) {
+      // If the value is not a number, we skip the min/max comparison
+      return;
+    }
+
+    const typedNumber = parseInt(e.key);
+    const min = parseInt(e.target.min);
+    const max = parseInt(e.target.max);
+    const currentVal = parseInt(e.target.value) || '';
+    const newVal = parseInt(typedNumber.toString() + currentVal.toString());
+
+    if (newVal > max) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
   }
 }

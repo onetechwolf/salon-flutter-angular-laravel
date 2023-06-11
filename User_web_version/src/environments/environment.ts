@@ -12,7 +12,7 @@ export const environment = {
   mediaURL: 'http://192.168.107.110:8000/storage/images/',
   // baseURL: 'https://api.bunitas.com/api/',
   // mediaURL: 'https://api.bunitas.com/storage/images/',
-  app_name: 'Book Salon and Mobile Beautician - Bunitas',
+  app_name: 'Bunitas - Book Salon and Mobile Beautician',
   websiteURL: 'https://www.bunitas.com',
   websiteName: 'bunitas',
   default_country_code: '44',

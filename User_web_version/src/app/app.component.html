@@ -474,7 +474,7 @@
                 <div class="col-9">
                   <input [(ngModel)]="registerForm.mobile" type="number" [placeholder]="util.translate('Mobile Number')"
                     name="mobile" #phone="ngModel" spellcheck="false" autocapitalize="off" required
-                    class="form-control frm">
+                    class="form-control frm" (keydown)="handleKeyDown($event)"  min="1000000000" max="9999999999">
                   <p [hidden]="phone.valid || submitted == false" class="redAlert">
                     {{util.translate('Phone number is required')}}
                   </p>
@@ -582,7 +582,7 @@
                 <div class="col-9">
                   <input [(ngModel)]="registerPartnerForm.mobile" type="number" [placeholder]="util.translate('Mobile Number')"
                     name="partner_mobile" #partner_mobile="ngModel" spellcheck="false" autocapitalize="off" required
-                    class="form-control frm">
+                    class="form-control frm" (keydown)="handleKeyDown($event)" min="1000000000" max="9999999999">
                 </div>
               </div>
               <p [hidden]="partner_mobile.valid || submitted == false" class="redAlert">
@@ -731,7 +731,7 @@
           </div>
         </div>
         <div class="modal-footer d-flex justify-content-center">
-          <button mdbBtn color="default" class="waves-light" [disabled]="isLogin" style="background-color: #9C0278 !important" 
+          <button mdbBtn color="default" class="waves-light" [disabled]="isLogin" style="background-color: #9C0278 !important"
             (click)="onRegister(loginForm, registerPartnerModal, verifyModal, 1)" mdbWavesEffect>
             <span *ngIf="!isLogin"> {{util.translate('Signup')}}</span>
             <div class="spinner-border" *ngIf="isLogin" role="status"></div>
