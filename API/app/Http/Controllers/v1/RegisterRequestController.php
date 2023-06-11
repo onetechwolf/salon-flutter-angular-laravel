@@ -65,6 +65,7 @@ class RegisterRequestController extends Controller
             // 'fee_start' => 'required',
             'cid' => 'required',
             'dob' => 'required',
+            'id_card' => 'required',
         ]);
         if ($validator->fails()) {
             $response = [
@@ -98,7 +99,7 @@ class RegisterRequestController extends Controller
                 } else if ($request->type == 'individual') {
                     $subject = 'Mobile Beautician Register Request';
                 }
-                
+
                 $request->merge([
                     'cover_src' =>base64_encode($this->curl_get_file_contents(env('APP_URL', 'http://api.bunitas.com') . '/storage/images/' . $request->cover))
                 ]);
@@ -108,9 +109,9 @@ class RegisterRequestController extends Controller
                 if (isset($request->qualification)) {
                     $request->merge([
                         'qualification_src' =>base64_encode($this->curl_get_file_contents(env('APP_URL', 'http://api.bunitas.com') . '/storage/images/' . $request->qualification))
-                    ]);    
+                    ]);
                 }
-                
+
                 $useremail = env('MAIL_USERNAME', 'verification@bunitas.com');
                 $mailTo = Mail::send('mails/notificationForRegister', $request->all()
                 , function($message) use($subject,$generalInfo, $useremail){
@@ -163,7 +164,7 @@ class RegisterRequestController extends Controller
         curl_setopt($c, CURLOPT_URL, $URL);
         $contents = curl_exec($c);
         curl_close($c);
-    
+
         if ($contents) return $contents;
         else return FALSE;
     }
