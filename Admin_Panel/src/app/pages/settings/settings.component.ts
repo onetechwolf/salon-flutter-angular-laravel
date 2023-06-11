@@ -168,6 +168,8 @@ export class SettingsComponent implements OnInit {
         this.user_login = info.user_login;
         this.user_verify_with = info.user_verify_with;
         this.zip = info.zip;
+        this.booking_fee = info.booking_fee;
+        this.deposit_now = info.deposit_now;
         console.log(this);
       } else {
         this.isNew = true;
