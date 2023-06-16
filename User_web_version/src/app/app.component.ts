@@ -74,7 +74,9 @@ export class AppComponent {
     stripe_key: '',
     referral: '',
     cc: this.api.default_country_code,
-    check: false
+    checkTermsAndCondition: false,
+    checkAge: false,
+    checkUpdate: false
   };
 
   registerPartnerForm: registerPartner = {
@@ -98,7 +100,9 @@ export class AppComponent {
     stripe_key: '',
     referral: '',
     cc: this.api.default_country_code,
-    check: false,
+    checkTermsAndCondition: false,
+    checkAge: false,
+    checkUpdate: false,
     idCard: '',
     qualification: '',
     salon_name: '',
@@ -121,7 +125,7 @@ export class AppComponent {
   registerType: number;
   viewAcc = false;
   autocomplete1: string;
-  autocompleteItems1: any = [];
+  autocompleteLocationItems: any = [];
   GoogleAutocomplete;
   geocoder: any;
   submitted = false;
@@ -219,7 +223,7 @@ export class AppComponent {
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder();
     this.autocomplete1 = '';
-    this.autocompleteItems1 = [];
+    this.autocompleteLocationItems = [];
     this.util.subscribeAddressPopup().subscribe(() => {
       this.locationModal.show();
     });
@@ -378,6 +382,7 @@ export class AppComponent {
         document.documentElement.dir = this.util.direction;
         this.util.cities = data.data.cities;
         this.util.categories = data.data.categories;
+        this.util.services = data.data.services;
 
         this.util.general = settings;
         if (((x) => { try { JSON.parse(x); return true; } catch (e) { return false } })(settings.social)) {
@@ -462,7 +467,7 @@ export class AppComponent {
   onSearchChange(event) {
     console.log(event);
     if (this.autocomplete1 == '') {
-      this.autocompleteItems1 = [];
+      this.autocompleteLocationItems = [];
       return;
     }
     const addsSelected = localStorage.getItem('addsSelected');
@@ -474,8 +479,8 @@ export class AppComponent {
     this.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete1 }, (predictions, status) => {
       console.log(predictions);
       if (predictions && predictions.length > 0) {
-        this.autocompleteItems1 = predictions;
-        console.log(this.autocompleteItems1);
+        this.autocompleteLocationItems = predictions;
+        console.log(this.autocompleteLocationItems);
       }
     });
   }
@@ -483,7 +488,7 @@ export class AppComponent {
   selectSearchResult1(item) {
     console.log('select', item);
     localStorage.setItem('addsSelected', 'true');
-    this.autocompleteItems1 = [];
+    this.autocompleteLocationItems = [];
     this.autocomplete1 = item.description;
     this.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
       if (status == 'OK' && results[0]) {
@@ -1119,9 +1124,9 @@ export class AppComponent {
     this.submitted = true;
     this.registerType = registerType;
     if (form.valid &&
-      (this.registerType == 0 && this.registerForm.check && this.registerForm.email && this.registerForm.password && this.registerForm.first_name
+      (this.registerType == 0 && this.registerForm.checkTermsAndCondition && this.registerForm.checkAge && this.registerForm.email && this.registerForm.password && this.registerForm.first_name
         && this.registerForm.last_name && this.registerForm.mobile && this.registerForm.cc && this.registerForm.dob && this.registerForm.location) ||
-      (this.registerType == 1 && this.registerPartnerForm.check && this.registerPartnerForm.email && this.registerPartnerForm.password && this.registerPartnerForm.first_name
+      (this.registerType == 1 && this.registerForm.checkTermsAndCondition && this.registerForm.checkAge && this.registerPartnerForm.email && this.registerPartnerForm.password && this.registerPartnerForm.first_name
         && this.registerPartnerForm.last_name && this.registerPartnerForm.mobile && this.registerPartnerForm.cc && this.registerPartnerForm.dob && this.registerPartnerForm.cid
         && this.registerPartnerForm.idCard)) {
       console.log('valid data');
@@ -1822,5 +1827,9 @@ export class AppComponent {
       e.preventDefault();
       e.stopPropagation();
     }
+  }
+
+  public showRegisterPartnerDailog() {
+    this.registerPartnerModal.show();
   }
 }

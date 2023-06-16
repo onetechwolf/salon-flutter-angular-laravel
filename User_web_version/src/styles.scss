@@ -112,16 +112,21 @@ body {
 
 input,
 select {
-  border-radius: 0px !important;
+  border-radius: 7px !important;
   height: 50px !important;
 }
 
-textarea {
-  border-radius: 0px !important;
+textarea, img, .modal-content {
+  border-radius: 7px !important;
 }
 
 button {
-  border-radius: 0px !important;
+  border-radius: 15px !important;
+}
+
+.form-control:focus {
+  border-color: #ced4da;
+  box-shadow: 0px 4px 5px 2px rgb(0 0 0 / 5%);
 }
 
 p {
@@ -1286,6 +1291,7 @@ span.c-number {
   border: 1px solid grey;
   cursor: pointer;
   line-height: 30px;
+  border-radius: 7px !important;
 }
 
 /* Optional styles to make the button look like a regular button */
@@ -1300,4 +1306,21 @@ span.c-number {
 
 .multiselect-dropdown[_ngcontent-nji-c111] .dropdown-btn[_ngcontent-nji-c111] {
   padding: 6px 6px !important;
+}
+
+// #mdb-checkbox-1{
+//   height: 25px !important;
+// }
+mdb-checkbox[name="checkls"] input[type="checkbox"] {
+  height: 35px !important;
+}
+mdb-checkbox[name="checkls1"] input[type="checkbox"] {
+  height: 35px !important;
+}
+mdb-checkbox[name="checkls2"] input[type="checkbox"] {
+  height: 80px !important;
+}
+
+mdb-checkbox[name="checkls"],mdb-checkbox[name="checkls1"],mdb-checkbox[name="checkls2"] .span_term {
+  font-size: 15px;
 }

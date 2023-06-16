@@ -47,7 +47,7 @@ export class SettingsComponent implements OnInit {
 
   // autocomplete1: { 'query': string };
   query: any = '';
-  autocompleteItems1: any = [];
+  autocompleteLocationItems: any = [];
   GoogleAutocomplete;
   geocoder: any;
   addressSelected: boolean;
@@ -83,7 +83,7 @@ export class SettingsComponent implements OnInit {
       this.first_name = this.util.userInfo.first_name;
       this.last_name = this.util.userInfo.last_name;
       this.mobile = this.util.userInfo.mobile;
-      this.autocompleteItems1 = [];
+      this.autocompleteLocationItems = [];
       this.addressSelected = false;
       this.editProfileClick = true;
       if (this.tabId == 'appointment') {
@@ -459,7 +459,7 @@ export class SettingsComponent implements OnInit {
   onSearchChange(event) {
     console.log(event);
     if (this.query == '') {
-      this.autocompleteItems1 = [];
+      this.autocompleteLocationItems = [];
       return;
     }
     const addsSelected = localStorage.getItem('addsSelected');
@@ -471,8 +471,8 @@ export class SettingsComponent implements OnInit {
     this.GoogleAutocomplete.getPlacePredictions({ input: this.query }, (predictions, status) => {
       console.log(predictions);
       if (predictions && predictions.length > 0) {
-        this.autocompleteItems1 = predictions;
-        console.log(this.autocompleteItems1);
+        this.autocompleteLocationItems = predictions;
+        console.log(this.autocompleteLocationItems);
       }
     });
   }
@@ -480,7 +480,7 @@ export class SettingsComponent implements OnInit {
   selectSearchResult1(item) {
     console.log('select', item);
     localStorage.setItem('addsSelected', 'true');
-    this.autocompleteItems1 = [];
+    this.autocompleteLocationItems = [];
     this.query = item.description;
     this.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
       if (status == 'OK' && results[0]) {

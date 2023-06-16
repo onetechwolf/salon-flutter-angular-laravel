@@ -95,7 +95,7 @@
             class="form-control" type="text" mdbInput (ngModelChange)="onSearchChange($event)">
         </div>
         <div class="addressList">
-          <div class="select_addr" *ngFor="let item of autocompleteItems1" (click)="selectSearchResult1(item)">
+          <div class="select_addr" *ngFor="let item of autocompleteLocationItems" (click)="selectSearchResult1(item)">
             <mdb-icon fas icon="map-marker-alt" style="color: gray; margin-right: 10px;"></mdb-icon>
             {{ item.description }}
           </div>

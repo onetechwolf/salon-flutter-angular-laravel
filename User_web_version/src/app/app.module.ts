@@ -76,7 +76,7 @@ export function LanguageLoader(http: HttpClient) {
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    NgMultiSelectDropDownModule.forRoot(),
+    NgMultiSelectDropDownModule,
   ],
   providers: [LeaveGuard, AwaitLeaveGuard],
   bootstrap: [AppComponent]

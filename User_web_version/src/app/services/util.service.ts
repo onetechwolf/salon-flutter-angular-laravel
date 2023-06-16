@@ -59,6 +59,7 @@ export class UtilService {
   public deviceType: any = 'desktop';
   public cities: any;
   public categories: any;
+  public services: any;
   public booking_fee: any;
   public deposit_now: any;
 

@@ -11,6 +11,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilService } from 'src/app/services/util.service';
+import { AppComponent } from 'src/app/app.component';
 declare var google: any;
 
 
@@ -20,8 +21,9 @@ declare var google: any;
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit {
-  autocomplete1: { 'query': string };
-  autocompleteItems1: any = [];
+  autocomplete1: { 'query_treatment': string, 'query_location': string };
+  autocompleteTreatmentItems: any = [];
+  autocompleteLocationItems: any = [];
   GoogleAutocomplete;
   geocoder: any;
 
@@ -29,12 +31,13 @@ export class WelcomeComponent implements OnInit {
   constructor(
     private router: Router,
     public util: UtilService,
-    public api: ApiService
+    public api: ApiService,
+    public appComponent: AppComponent,
   ) {
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder();
-    this.autocomplete1 = { query: '' };
-    this.autocompleteItems1 = [];
+    this.autocomplete1 = { query_treatment: '', query_location: '' };
+    this.autocompleteLocationItems = [];
     this.getBlogs();
   }
 
@@ -102,10 +105,40 @@ export class WelcomeComponent implements OnInit {
     };
   }
 
-  onSearchChange(event) {
+  onSearchChangeTreatment(event) {
     console.log(event);
-    if (this.autocomplete1.query == '') {
-      this.autocompleteItems1 = [];
+    if (this.autocomplete1.query_treatment == '') {
+      this.autocompleteTreatmentItems = [];
+      return;
+    }
+    // const addsSelected = localStorage.getItem('treatment');
+    // if (addsSelected && addsSelected != null) {
+    //   localStorage.removeItem('treatmentSelected');
+    //   return;
+    // }
+
+    let query = this.autocomplete1.query_treatment;
+    this.autocompleteTreatmentItems = this.util.services.map(function(service) {
+      if (service.name.includes(query)) {
+        return service;
+      }
+    }).filter(function(item) {
+      return item !== undefined;
+    });
+  }
+
+  selectSearchTreatmentResult(item) {
+    console.log('select', item);
+    this.autocompleteTreatmentItems = [];
+    this.autocomplete1.query_treatment = item.name;
+    localStorage.setItem('treatmentSelected', 'true');
+    localStorage.setItem('treatment', 'item.name');
+  }
+
+  onSearchChangeLocation(event) {
+    console.log(event);
+    if (this.autocomplete1.query_location == '') {
+      this.autocompleteLocationItems = [];
       return;
     }
     const addsSelected = localStorage.getItem('addsSelected');
@@ -114,27 +147,27 @@ export class WelcomeComponent implements OnInit {
       return;
     }
 
-    this.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete1.query }, (predictions, status) => {
+    this.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete1.query_location }, (predictions, status) => {
       console.log(predictions);
       if (predictions && predictions.length > 0) {
-        this.autocompleteItems1 = predictions;
-        console.log(this.autocompleteItems1);
+        this.autocompleteLocationItems = predictions;
+        console.log(this.autocompleteLocationItems);
       }
     });
   }
 
-  selectSearchResult1(item) {
+  selectSearchLocationResult(item) {
     console.log('select', item);
     localStorage.setItem('addsSelected', 'true');
-    this.autocompleteItems1 = [];
-    this.autocomplete1.query = item.description;
+    this.autocompleteLocationItems = [];
+    this.autocomplete1.query_location = item.description;
     this.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
       if (status == 'OK' && results[0]) {
         console.log(status);
         localStorage.setItem('location', 'true');
         localStorage.setItem('lat', results[0].geometry.location.lat());
         localStorage.setItem('lng', results[0].geometry.location.lng());
-        localStorage.setItem('address', this.autocomplete1.query);
+        localStorage.setItem('address', this.autocomplete1.query_location);
         this.router.navigate(['/home']);
       }
     });
@@ -172,4 +205,13 @@ export class WelcomeComponent implements OnInit {
     return moment(item).format('MMM');
   }
 
+  removeTreatmentSearchKey() {
+    this.autocomplete1.query_treatment = '';
+    this.autocompleteTreatmentItems = [];
+  }
+
+  removeLocationSearchKey() {
+    this.autocomplete1.query_location = '';
+    this.autocompleteLocationItems = [];
+  }
 }

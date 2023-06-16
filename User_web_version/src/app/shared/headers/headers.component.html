@@ -22,7 +22,6 @@
         <a class="nav-link waves-light" mdbWavesEffect (click)="goToHome()">
           <label [class.active]="activeTab == 'home'"> {{util.translate('Home')}} </label>
         </a>
-
         <a class="nav-link waves-light" mdbWavesEffect style="position: relative;overflow: visible;"
           (click)="goToShop()">
           <label [class.active]="activeTab == 'shop'"> {{util.translate('Shop')}} </label>
@@ -30,20 +29,18 @@
             style="position: absolute; line-height: 10px; background: #9C0278;color: white; border-radius: 50%; padding: 5px; top: 0px; right: 5px; font-size: 15px; height: 20px;  text-align: center;">
             {{cart.cart.length}} </span>
         </a>
-
         <a class="nav-link waves-light" mdbWavesEffect (click)="util.publishModalPopup('login')"
           *ngIf="haveSigned() ==false">
           <label [class.active]="activeTab == 'account'">{{util.translate('Login')}} </label>
         </a>
-
         <a class="nav-link waves-light" mdbWavesEffect (click)="util.publishModalPopup('register')"
           *ngIf="haveSigned() ==false">
           <label [class.active]="activeTab == 'account'">{{util.translate('Signup')}}</label>
         </a>
 
-        <a class="nav-link waves-light" mdbWavesEffect (click)="util.publishModalPopup('registerJoin')"
+        <a class="nav-link waves-light" mdbWavesEffect (click)="gotoPartner()"
           *ngIf="haveSigned() ==false">
-          <label [class.active]="activeTab == 'account'">{{util.translate('Join as Partner')}}</label>
+          <label [class.active]="activeTab == 'partner'">{{util.translate('   For Partner')}}</label>
         </a>
 
         <!-- <a class="nav-link waves-light" mdbWavesEffect (click)="goToHelp();" *ngIf="haveSigned() == false">
