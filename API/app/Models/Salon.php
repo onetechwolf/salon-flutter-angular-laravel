@@ -14,7 +14,7 @@ class Salon extends Model
     public $timestamps = true; //by default timestamp false
 
     protected $fillable = ['uid','name','cover','categories','address','lat','lng','about','rating','total_rating','website','timing','images',
-    'zipcode','service_at_home','verified','cid','have_stylist','status','in_home','popular','have_shop','extra_field'];
+    'zipcode','service_at_home','verified','cid','have_stylist','status','in_home','popular','have_shop','extra_field', 'policy', 'policy_date'];
 
     protected $hidden = [
         'updated_at', 'created_at',

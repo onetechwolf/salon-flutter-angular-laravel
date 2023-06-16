@@ -37,5 +37,6 @@ class RegisterRequest extends Model
         'cid',
         'id_card',
         'qualification',
+        'policy',
     ];
 }

@@ -47,6 +47,7 @@ class SalonController extends Controller
             'have_shop'=>'required',
             'rate' => 'required',
             'id_card' => 'required',
+            'policy' => 'required',
         ]);
         if ($validator->fails()) {
             $response = [
@@ -57,6 +58,7 @@ class SalonController extends Controller
             return response()->json($response, 404);
         }
 
+        $request['policy_date'] = date('Y-m-d');
         $data = Salon::create($request->all());
         if (is_null($data)) {
             $response = [

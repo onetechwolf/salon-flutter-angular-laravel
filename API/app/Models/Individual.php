@@ -14,7 +14,7 @@ class Individual extends Model
     public $timestamps = true; //by default timestamp false
 
     protected $fillable = ['uid','background','categories','address','about','rating','total_rating','website','timing','images',
-    'zipcode','verified','cid','fee_start','lat','lng','status','in_home','popular','have_shop','extra_field'];
+    'zipcode','verified','cid','fee_start','lat','lng','status','in_home','popular','have_shop','extra_field','policy','policy_date'];
 
     protected $hidden = [
         'updated_at', 'created_at',
