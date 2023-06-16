@@ -29,6 +29,7 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
+            $table->text('policy')->nullable();
             $table->string('name');
             $table->text('about')->nullable();
             $table->double('fee_start',10,2)->default(0);
