@@ -50,6 +50,7 @@ export class SalonRequestComponent implements OnInit {
   zoomTitle: any = '';
   id_card: any= '';
   qualification: any='';
+  policy: any='';
   constructor(
     public util: UtilService,
     public api: ApiService
@@ -69,6 +70,9 @@ export class SalonRequestComponent implements OnInit {
         console.log(">>>>>", data);
         if (data.data.length > 0) {
           this.freelancers = data.data;
+          this.freelancers.forEach(element => {
+            return element.policy = JSON.parse(element.policy);
+          });
         }
       }
     }, error => {
@@ -152,6 +156,7 @@ export class SalonRequestComponent implements OnInit {
         this.name = item.name;
         this.id_card = item.id_card;
         this.qualification = item.qualification;
+        this.policy = item.policy;
         this.largeModal.show();
       }
     });
@@ -260,6 +265,7 @@ export class SalonRequestComponent implements OnInit {
       rate: this.rate,
       id_card: this.id_card,
       qualification: this.qualification,
+      policy: JSON.stringify(this.policy),
     };
     this.util.show();
     this.api.post_private('v1/salon/create', body).then((data: any) => {

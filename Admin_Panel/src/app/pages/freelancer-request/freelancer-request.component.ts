@@ -50,6 +50,7 @@ export class FreelancerRequestComponent implements OnInit {
   zoomTitle: any = '';
   id_card: any= '';
   qualification: any='';
+  policy: any='';
 
   constructor(
     public util: UtilService,
@@ -70,6 +71,9 @@ export class FreelancerRequestComponent implements OnInit {
         console.log(">>>>>", data);
         if (data.data.length > 0) {
           this.freelancers = data.data;
+          this.freelancers.forEach(element => {
+            return element.policy = JSON.parse(element.policy);
+          });
         }
       }
     }, error => {
@@ -153,6 +157,7 @@ export class FreelancerRequestComponent implements OnInit {
         this.address = item.address;
         this.id_card = item.id_card;
         this.qualification = item.qualification;
+        this.policy = item.policy;
         this.largeModal.show();
       }
     });
@@ -259,7 +264,8 @@ export class FreelancerRequestComponent implements OnInit {
       background: 'NA',
       rate: this.rate,
       id_card: this.id_card,
-      qualification: this.qualification
+      qualification: this.qualification,
+      policy: JSON.stringify(this.policy),
     };
     this.util.show();
     this.api.post_private('v1/individual/create', body).then((data: any) => {

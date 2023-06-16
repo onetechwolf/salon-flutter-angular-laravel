@@ -360,6 +360,59 @@
                                 </div>
                             </div>
 
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-email">{{util.translate('Policy')}}
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">{{util.translate('Cancellation')}}
+                                                </label>
+                                                <div class="input-group input-group-alternative">
+                                                    <textarea class="form-control form-control-alternative" rows="3"
+                                                        [(ngModel)]="cancellation"
+                                                        [placeholder]="util.translate('Cancellation')"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">{{util.translate('Late')}}
+                                                </label>
+                                                <div class="input-group input-group-alternative">
+                                                    <textarea class="form-control form-control-alternative" rows="3"
+                                                        [(ngModel)]="late"
+                                                        [placeholder]="util.translate('Cancellation')"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">{{util.translate('No-Show')}}
+                                                </label>
+                                                <div class="input-group input-group-alternative">
+                                                    <textarea class="form-control form-control-alternative" rows="3"
+                                                        [(ngModel)]="no_show"
+                                                        [placeholder]="util.translate('Cancellation')"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">{{util.translate('Reschedule')}}
+                                                </label>
+                                                <div class="input-group input-group-alternative">
+                                                    <textarea class="form-control form-control-alternative" rows="3"
+                                                        [(ngModel)]="reschedule"
+                                                        [placeholder]="util.translate('Cancellation')"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-email">

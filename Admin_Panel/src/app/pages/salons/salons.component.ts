@@ -44,6 +44,10 @@ export class SalonsComponent implements OnInit {
   zipcode: any = '';
   zoomImage: any = '';
   zoomTitle: any = '';
+  cancellation: any = '';
+  late: any = '';
+  no_show: any = '';
+  reschedule: any = '';
   dropdownSettings = {
     singleSelection: false,
     idField: 'id',
@@ -274,6 +278,12 @@ export class SalonsComponent implements OnInit {
     console.log('uid', uid);
     const ids = this.selectedItems.map((x: any) => x.id);
     console.log(ids);
+    let policy = {
+      cancellation: this.cancellation,
+      late: this.late,
+      no_show: this.no_show,
+      reschedule: this.reschedule,
+    };
     const body = {
       uid: uid,
       name: this.name,
@@ -299,7 +309,8 @@ export class SalonsComponent implements OnInit {
       popular: 0,
       in_home: 1,
       extra_field: 'NA',
-      rate: this.rate
+      rate: this.rate,
+      policy: JSON.stringify(policy),
     };
     this.util.show();
     this.api.post_private('v1/salon/create', body).then((data: any) => {
@@ -341,6 +352,10 @@ export class SalonsComponent implements OnInit {
     this.have_stylist = false;
     this.service_at_home = false;
     this.rate = '';
+    this.cancellation = '';
+    this.late = '';
+    this.no_show = '';
+    this.reschedule = '';
   }
 
   changeShop(item: any) {
@@ -539,6 +554,11 @@ export class SalonsComponent implements OnInit {
         this.have_shop = data.data.have_shop;
         this.have_stylist = data.data.have_stylist;
         this.service_at_home = data.data.service_at_home;
+        let policy = JSON.parse(data.data.policy);
+        this.cancellation = policy.cancellation;
+        this.late = policy.late;
+        this.no_show = policy.no_show;
+        this.reschedule = policy.reschedule;
         this.myModal2.show();
       }
     }).catch(error => {
@@ -597,6 +617,12 @@ export class SalonsComponent implements OnInit {
     }
     const ids = this.selectedItems.map((x: any) => x.id);
     console.log(ids);
+    let policy = {
+      cancellation: this.cancellation,
+      late: this.late,
+      no_show: this.no_show,
+      reschedule: this.reschedule,
+    };
     const body = {
       id: this.salonId,
       name: this.name,
@@ -611,7 +637,8 @@ export class SalonsComponent implements OnInit {
       have_shop: this.have_shop == true ? 1 : 0,
       service_at_home: this.service_at_home == true ? 1 : 0,
       have_stylist: this.have_stylist == true ? 1 : 0,
-      rate: this.rate
+      rate: this.rate,
+      policy: JSON.stringify(policy),
     };
     this.util.show();
     this.api.post_private('v1/salon/update', body).then((data: any) => {

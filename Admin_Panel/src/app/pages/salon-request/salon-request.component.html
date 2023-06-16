@@ -31,6 +31,7 @@
                                 <th scope="col">{{util.translate('Dob')}}</th>
                                 <th scope="col">{{util.translate('Id Card')}}</th>
                                 <th scope="col">{{util.translate('Qualification')}}</th>
+                                <th scope="col">{{util.translate('Policy')}}</th>
                                 <th scope="col">{{util.translate('Action')}}</th>
                             </tr>
                         </thead>
@@ -75,7 +76,12 @@
                                     <img class="img-responsive" style="height: 60px;width: 60px; object-fit: cover;" 
                                         [src]="this.api.imageUrl + item.qualification" onError="this.src='assets/img/dummy.jpeg'"  (click)="clickZoom(this.api.imageUrl + item.qualification, 1)"/>
                                 </td>
-
+                                <td>
+                                    Cancellation: {{item.policy.cancellation}}<br/>
+                                    Late: {{item.policy.late}}<br/>
+                                    No-show: {{item.policy.no_show}}<br/>
+                                    Reschedule: {{item.policy.reschedule}}
+                                </td>
                                 <td>
                                     <div class="d-flex align-items-center">
 
