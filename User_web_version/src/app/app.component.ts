@@ -176,8 +176,8 @@ export class AppComponent {
   router$: Subscription;
   authToken: any;
   recaptchaVerifier: firebase.default.auth.RecaptchaVerifier;
-  idCardTitle: any = 'Choose Id Card File';
-  qualificationTitle: any = 'Choose Qualification File';
+  idCardTitle: any = 'Upload ID Card/Proof Address';
+  qualificationTitle: any = 'Upload Beauty Certificate';
 
 
   constructor(
