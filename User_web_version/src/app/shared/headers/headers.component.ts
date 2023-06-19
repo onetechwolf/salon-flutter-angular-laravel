@@ -123,6 +123,13 @@ export class HeadersComponent implements OnInit {
     this.router.navigate(['shop']);
   }
 
+  gotoPartner() {
+    this.activeTab = 'partner';
+    this.router.navigate(['partner']);
+  }
+
+
+
   getAddress() {
     const location = localStorage.getItem('address');
     if (location && location != null && location !== 'null') {
@@ -164,5 +171,10 @@ export class HeadersComponent implements OnInit {
   goToFaqs() {
     this.activeTab = 'faq';
     this.router.navigate(['faq']);
+  }
+
+  goToContact() {
+    this.activeTab = 'contact';
+    this.router.navigate(['contact']);
   }
 }

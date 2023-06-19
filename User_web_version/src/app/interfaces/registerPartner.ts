@@ -27,7 +27,6 @@ export interface registerPartner {
   stripe_key: string;
   referral: string;
   cc: string;
-  check: boolean;
   idCard: string;
   qualification: string;
   salon_name: string;
@@ -36,4 +35,7 @@ export interface registerPartner {
   category: any[],
   address: string,
   zipcode: string,
+  checkTermsAndCondition: false,
+  checkAge: false,
+  checkUpdate: false
 }

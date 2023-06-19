@@ -8,6 +8,7 @@ use App\Models\Settings;
 use App\Models\User;
 use App\Models\Cities;
 use App\Models\Category;
+use App\Models\Services;
 use Validator;
 use DB;
 
@@ -195,11 +196,13 @@ class SettingsController extends Controller
         $support = User::select('id','first_name','last_name')->where('type','admin')->first();
         $cities = Cities::all();
         $categories = Category::all();
+        $services = Services::all();
         $data = [
             'settings'=>$settings,
             'support'=>$support,
             'cities'=>$cities,
-            'categories'=>$categories
+            'categories'=>$categories,
+            'services'=>$services,
         ];
 
         $response = [

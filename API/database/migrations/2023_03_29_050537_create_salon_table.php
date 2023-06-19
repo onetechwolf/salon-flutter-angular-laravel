@@ -30,6 +30,8 @@ return new class extends Migration
             $table->text('timing')->nullable();
             $table->text('images')->nullable();
             $table->text('zipcode')->nullable();
+            $table->text('policy')->nullable();
+            $table->date('policy_date')->nullable();
             $table->tinyInteger('service_at_home')->default(1);
             $table->tinyInteger('verified')->default(1);
             $table->tinyInteger('in_home')->default(1);

@@ -41,13 +41,13 @@ export class SettingsComponent implements OnInit {
   house: any = '';
   landmark: any = '';
   title: any = 0;
-  pincode: any = '';
+  // pincode: any = '';
   map: any;
   marker: any;
 
   // autocomplete1: { 'query': string };
   query: any = '';
-  autocompleteItems1: any = [];
+  autocompleteLocationItems: any = [];
   GoogleAutocomplete;
   geocoder: any;
   addressSelected: boolean;
@@ -83,7 +83,7 @@ export class SettingsComponent implements OnInit {
       this.first_name = this.util.userInfo.first_name;
       this.last_name = this.util.userInfo.last_name;
       this.mobile = this.util.userInfo.mobile;
-      this.autocompleteItems1 = [];
+      this.autocompleteLocationItems = [];
       this.addressSelected = false;
       this.editProfileClick = true;
       if (this.tabId == 'appointment') {
@@ -398,13 +398,13 @@ export class SettingsComponent implements OnInit {
 
   addAddress() {
     this.addressFromMap.hide();
-    if (this.address == '' || this.landmark == '' || this.house == '' || this.pincode == '' || this.optionalPhone == '') {
+    if (this.address == '' || this.landmark == '' || this.house == '') { //this.pincode == '' || this.optionalPhone == ''
       this.util.errorMessage(this.util.translate('all fields are required'));
       return false;
     }
     const geocoder = new google.maps.Geocoder;
     this.util.start();
-    geocoder.geocode({ address: this.house + ' ' + this.landmark + ' ' + this.address + ' ' + this.pincode }, (results, status) => {
+    geocoder.geocode({ address: this.house + ' ' + this.landmark + ' ' + this.address }, (results, status) => {
       console.log(results, status);
       if (status == 'OK' && results && results.length) {
         this.lat = results[0].geometry.location.lat();
@@ -419,7 +419,7 @@ export class SettingsComponent implements OnInit {
           address: this.address,
           house: this.house,
           landmark: this.landmark,
-          pincode: this.pincode,
+          // pincode: this.pincode,
           lat: this.lat,
           lng: this.lng,
           status: 1
@@ -459,7 +459,7 @@ export class SettingsComponent implements OnInit {
   onSearchChange(event) {
     console.log(event);
     if (this.query == '') {
-      this.autocompleteItems1 = [];
+      this.autocompleteLocationItems = [];
       return;
     }
     const addsSelected = localStorage.getItem('addsSelected');
@@ -471,8 +471,8 @@ export class SettingsComponent implements OnInit {
     this.GoogleAutocomplete.getPlacePredictions({ input: this.query }, (predictions, status) => {
       console.log(predictions);
       if (predictions && predictions.length > 0) {
-        this.autocompleteItems1 = predictions;
-        console.log(this.autocompleteItems1);
+        this.autocompleteLocationItems = predictions;
+        console.log(this.autocompleteLocationItems);
       }
     });
   }
@@ -480,7 +480,7 @@ export class SettingsComponent implements OnInit {
   selectSearchResult1(item) {
     console.log('select', item);
     localStorage.setItem('addsSelected', 'true');
-    this.autocompleteItems1 = [];
+    this.autocompleteLocationItems = [];
     this.query = item.description;
     this.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
       if (status == 'OK' && results[0]) {
@@ -502,7 +502,7 @@ export class SettingsComponent implements OnInit {
     this.address = item.address;
     this.lat = item.lat;
     this.lng = item.lng;
-    this.pincode = item.pincode;
+    // this.pincode = item.pincode;
     this.landmark = item.landmark;
     this.house = item.house;
     this.title = item.title;
@@ -515,13 +515,13 @@ export class SettingsComponent implements OnInit {
 
   editMyAddress() {
     this.addressFromMap.hide();
-    if (this.address == '' || this.landmark == '' || this.house == '' || this.pincode == '' || this.optionalPhone == '') {
+    if (this.address == '' || this.landmark == '' || this.house == '' || this.optionalPhone == '') {
       this.util.errorMessage(this.util.translate('all fields are required'));
       return false;
     }
     const geocoder = new google.maps.Geocoder;
     this.util.start();
-    geocoder.geocode({ address: this.house + ' ' + this.landmark + ' ' + this.address + ' ' + this.pincode }, (results, status) => {
+    geocoder.geocode({ address: this.house + ' ' + this.landmark + ' ' + this.address }, (results, status) => {
       console.log(results, status);
       if (status == 'OK' && results && results.length) {
         this.lat = results[0].geometry.location.lat();
@@ -536,7 +536,7 @@ export class SettingsComponent implements OnInit {
           address: this.address,
           house: this.house,
           landmark: this.landmark,
-          pincode: this.pincode,
+          // pincode: this.pincode,
           lat: this.lat,
           lng: this.lng,
           status: 1
@@ -673,5 +673,24 @@ export class SettingsComponent implements OnInit {
       'Pending Payments', // 8
     ];
     return this.util.translate(orderStatus[status]);
+  }
+
+  handleKeyDown(e) {
+    const typedValue = e.keyCode;
+    if (typedValue < 48 && typedValue > 57) {
+      // If the value is not a number, we skip the min/max comparison
+      return;
+    }
+
+    const typedNumber = parseInt(e.key);
+    const min = parseInt(e.target.min);
+    const max = parseInt(e.target.max);
+    const currentVal = parseInt(e.target.value) || '';
+    const newVal = parseInt(typedNumber.toString() + currentVal.toString());
+
+    if (newVal > max) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
   }
 }

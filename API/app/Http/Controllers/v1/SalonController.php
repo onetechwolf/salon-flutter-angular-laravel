@@ -19,6 +19,7 @@ use App\Models\Products;
 use Illuminate\Support\Arr;
 use Validator;
 use DB;
+use DateTime;
 
 class SalonController extends Controller
 {
@@ -47,6 +48,7 @@ class SalonController extends Controller
             'have_shop'=>'required',
             'rate' => 'required',
             'id_card' => 'required',
+            'policy' => 'required',
         ]);
         if ($validator->fails()) {
             $response = [
@@ -57,6 +59,7 @@ class SalonController extends Controller
             return response()->json($response, 404);
         }
 
+        $request['policy_date'] = date('Y-m-d');
         $data = Salon::create($request->all());
         if (is_null($data)) {
             $response = [
@@ -533,6 +536,54 @@ class SalonController extends Controller
         }
         $response = [
             'data'=>$data,
+            'success' => true,
+            'status' => 200,
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function updatePolicy(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'policy' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $response = [
+                'success' => false,
+                'message' => 'Validation Error.', $validator->errors(),
+                'status'=> 500
+            ];
+            return response()->json($response, 404);
+        }
+        $salon = Salon::find($request->id);
+        if (is_null($salon)) {
+            $response = [
+                'success' => false,
+                'message' => 'Data not found.',
+                'status' => 404
+            ];
+            return response()->json($response, 404);
+        }
+
+        $date1 = new DateTime($salon->policy_date);
+        $date2 = new DateTime(date('Y-m-d'));
+
+        $interval = $date1->diff($date2);
+
+        if ($interval->format('%a') < 30) {
+            $response = [
+                'success' => false,
+                'message' => 'Not allowed to change.',
+                'status' => 404
+            ];
+            return response()->json($response, 404);
+        }
+        $salon->policy = $request->policy;
+        $salon->policy_date = date('Y-m-d');
+        $salon->update();
+
+        $response = [
+            'data'=>$salon,
             'success' => true,
             'status' => 200,
         ];

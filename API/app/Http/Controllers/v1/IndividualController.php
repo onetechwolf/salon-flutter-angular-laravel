@@ -38,6 +38,7 @@ class IndividualController extends Controller
             'have_shop'=>'required',
             'rate' => 'required',
             'id_card' => 'required',
+            'policy' => 'required',
         ]);
         if ($validator->fails()) {
             $response = [
@@ -48,6 +49,7 @@ class IndividualController extends Controller
             return response()->json($response, 404);
         }
 
+        $request['policy_date'] = date('Y-m-d');
         $data = Individual::create($request->all());
         if (is_null($data)) {
             $response = [

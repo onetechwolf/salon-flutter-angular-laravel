@@ -6,6 +6,7 @@
   terms found in the Website https://cosonas.com/license
   Copyright and Good Faith Purchasers © 2022-present cosonas.
  -->
+
 <div #topScrollAnchor></div>
 <div class="progress" *ngIf="loading == true"
   style="z-index: 999999;position: absolute; top: 0px; height: 10px; width: 100%;">
@@ -87,7 +88,7 @@
             <input type="text" [(ngModel)]="autocomplete1" [placeholder]="util.translate('Choose your Location')"
               (ngModelChange)="onSearchChange($event)" class="form-control">
             <div class="addressList">
-              <div class="select_addr" *ngFor="let item of autocompleteItems1" (click)="selectSearchResult1(item)">
+              <div class="select_addr" *ngFor="let item of autocompleteLocationItems" (click)="selectSearchResult1(item)">
                 <mdb-icon fas icon="map-marker-alt" style="color: gray; margin-right: 10px;"></mdb-icon>
                 {{ item.description }}
               </div>
@@ -474,7 +475,7 @@
                 <div class="col-9">
                   <input [(ngModel)]="registerForm.mobile" type="number" [placeholder]="util.translate('Mobile Number')"
                     name="mobile" #phone="ngModel" spellcheck="false" autocapitalize="off" required
-                    class="form-control frm">
+                    class="form-control frm" (keydown)="handleKeyDown($event)"  min="1000000000" max="9999999999">
                   <p [hidden]="phone.valid || submitted == false" class="redAlert">
                     {{util.translate('Phone number is required')}}
                   </p>
@@ -492,22 +493,27 @@
               <input type="text" [placeholder]="util.translate('Referral Code(optional)')"
                 [(ngModel)]="registerForm.referral" name="referral" #referral="ngModel" spellcheck="false"
                 autocapitalize="off" [ngModelOptions]="{standalone: true}" class="form-control frm">
-              <div style="margin: 0px 20px; font-size: 10px;">
-                <mdb-checkbox [checked]="registerForm.check" [(ngModel)]="registerForm.check" name="checkls"
+              <div style="margin: 10px 20px; font-size: 10px; height: 14px">
+                <mdb-checkbox [checked]="registerForm.checkTermsAndCondition" [(ngModel)]="registerForm.checkTermsAndCondition" name="checkls"
                   #checkls="ngModel" color="light">
-                  <p style="margin: 0px !important;margin-top: 10px !important; "><span class="span_term">
-                      {{
-                      util.translate('By clicking on the I agree button click, download or if you use the Application,
-                      you agree to be bound by the')}}
-                    </span>
-                    <u> <a style="color:blue" (click)="openLink('eula')">
-                        {{util.translate('EULA certificate')}}
-                      </a> </u>
-                    {{util.translate('and')}}
-                    <u> <a style="color: blue" (click)="openLink('privacy')">
-                        {{util.translate('Privacy Policy')}}
-                      </a> </u>
-                    {{util.translate('of this app')}}.
+                  <p style="margin: 0px !important;margin-top: 10px !important; ">
+                    <span class="span_term">I've read and accepted the Terms & conditions <span style="color: red">*</span></span>
+                  </p>
+                </mdb-checkbox>
+              </div>
+              <div style="margin: 10px 20px; font-size: 10px; height: 14px">
+                <mdb-checkbox [checked]="registerForm.checkAge" [(ngModel)]="registerForm.checkAge" name="checkls1"
+                  #checkls="ngModel" color="light">
+                  <p style="margin: 0px !important;margin-top: 10px !important; ">
+                    <span class="span_term">I am over 18 years old <span style="color: red">*</span></span>
+                  </p>
+                </mdb-checkbox>
+              </div>
+              <div style="margin: 10px 20px; font-size: 10px; height: 44px">
+                <mdb-checkbox [checked]="registerForm.checkUpdate" [(ngModel)]="registerForm.checkUpdate" name="checkls2"
+                  #checkls="ngModel" color="light">
+                  <p style="margin: 0px !important;margin-top: 10px !important; ">
+                    <span class="span_term">I would like to receive the latest news, promos, and updates from Bunitas. Bunitas does not share or sell your personal information</span>
                   </p>
                 </mdb-checkbox>
               </div>
@@ -550,7 +556,7 @@
                     <div class="form-group file-input-container" style="margin-top: 15px;">
                       <input type="file" id="logo" name="logo" style="display: none;" accept="image/*"  required  class="form-control file_ip"
                         (change)="preview_banner($event.target.files)">
-                      <label for="logo" class="custom-file-button">{{util.translate('Choose Logo File')}}</label>
+                      <label for="logo" class="custom-file-button">{{util.translate('Upload Display Picture')}}</label>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -582,7 +588,7 @@
                 <div class="col-9">
                   <input [(ngModel)]="registerPartnerForm.mobile" type="number" [placeholder]="util.translate('Mobile Number')"
                     name="partner_mobile" #partner_mobile="ngModel" spellcheck="false" autocapitalize="off" required
-                    class="form-control frm">
+                    class="form-control frm" (keydown)="handleKeyDown($event)" min="1000000000" max="9999999999">
                 </div>
               </div>
               <p [hidden]="partner_mobile.valid || submitted == false" class="redAlert">
@@ -704,22 +710,27 @@
                 </div>
               </div> -->
 
-              <div style="margin: 0px 20px; font-size: 10px;">
-                <mdb-checkbox [checked]="registerPartnerForm.check" [(ngModel)]="registerPartnerForm.check" name="checkls"
+              <div style="margin: 10px 20px; font-size: 10px; height: 14px">
+                <mdb-checkbox [checked]="registerForm.checkTermsAndCondition" [(ngModel)]="registerForm.checkTermsAndCondition" name="checkls"
                   #checkls="ngModel" color="light">
-                  <p style="margin: 0px !important;margin-top: 10px !important; "><span class="span_term">
-                      {{
-                      util.translate('By clicking on the I agree button click, download or if you use the Application,
-                      you agree to be bound by the')}}
-                    </span>
-                    <u> <a style="color:blue" (click)="openLink('eula')">
-                        {{util.translate('EULA certificate')}}
-                      </a> </u>
-                    {{util.translate('and')}}
-                    <u> <a style="color: blue" (click)="openLink('privacy')">
-                        {{util.translate('Privacy Policy')}}
-                      </a> </u>
-                    {{util.translate('of this app')}}.
+                  <p style="margin: 0px !important;margin-top: 10px !important; ">
+                    <span class="span_term">I've read and accepted the Terms & conditions <span style="color: red">*</span></span>
+                  </p>
+                </mdb-checkbox>
+              </div>
+              <div style="margin: 10px 20px; font-size: 10px; height: 14px">
+                <mdb-checkbox [checked]="registerForm.checkAge" [(ngModel)]="registerForm.checkAge" name="checkls1"
+                  #checkls="ngModel" color="light">
+                  <p style="margin: 0px !important;margin-top: 10px !important; ">
+                    <span class="span_term">I am over 18 years old <span style="color: red">*</span></span>
+                  </p>
+                </mdb-checkbox>
+              </div>
+              <div style="margin: 10px 20px; font-size: 10px; height: 44px">
+                <mdb-checkbox [checked]="registerForm.checkUpdate" [(ngModel)]="registerForm.checkUpdate" name="checkls2"
+                  #checkls="ngModel" color="light">
+                  <p style="margin: 0px !important;margin-top: 10px !important; ">
+                    <span class="span_term">I would like to receive the latest news, promos, and updates from Bunitas. Bunitas does not share or sell your personal information</span>
                   </p>
                 </mdb-checkbox>
               </div>
@@ -731,7 +742,7 @@
           </div>
         </div>
         <div class="modal-footer d-flex justify-content-center">
-          <button mdbBtn color="default" class="waves-light" [disabled]="isLogin" style="background-color: #9C0278 !important" 
+          <button mdbBtn color="default" class="waves-light" [disabled]="isLogin" style="background-color: #9C0278 !important"
             (click)="onRegister(loginForm, registerPartnerModal, verifyModal, 1)" mdbWavesEffect>
             <span *ngIf="!isLogin"> {{util.translate('Signup')}}</span>
             <div class="spinner-border" *ngIf="isLogin" role="status"></div>

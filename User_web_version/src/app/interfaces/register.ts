@@ -27,5 +27,7 @@ export interface register {
   stripe_key: string;
   referral: string;
   cc: string;
-  check: boolean;
+  checkTermsAndCondition: boolean;
+  checkAge: boolean;
+  checkUpdate: boolean;
 }

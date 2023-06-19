@@ -109,6 +109,11 @@ const routes: Routes = [
         data: { title: 'Shop' }
       },
       {
+        path: 'partner',
+        loadChildren: () => import('./pages/partner/partner.module').then(m => m.PartnerModule),
+        data: { title: 'Partner' }
+      },
+      {
         path: 'checkout',
         loadChildren: () => import('./pages/checkout/checkout.module').then(m => m.CheckoutModule),
         data: { title: 'Checkout' }

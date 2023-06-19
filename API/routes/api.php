@@ -102,6 +102,7 @@ Route::prefix('/v1')->group(function () {
         Route::get('salon/getAll', [SalonController::class, 'getAll']);
         Route::post('salon/create', [SalonController::class, 'save']);
         Route::post('salon/update', [SalonController::class, 'update']);
+        Route::post('salon/updatePolicy', [SalonController::class, 'updatePolicy']);
         Route::post('salon/destroy', [SalonController::class, 'delete']);
         Route::post('salon/getById', [SalonController::class, 'getById']);
 

@@ -210,7 +210,6 @@ class AuthController extends Controller
                     // 'id_card' => !empty($request->id_card) ? $request->id_card:null,
                     // 'qualification' => !empty($request->qualification) ? $request->qualification:null,
                 ]);
-                info($user);
                 $token = JWTAuth::fromUser($user);
                 function clean($string) {
                     $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.

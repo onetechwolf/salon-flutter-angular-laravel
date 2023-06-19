@@ -8,11 +8,11 @@
 */
 export const environment = {
   production: false,
-  baseURL: 'http://192.168.107.110:8000/api/',
-  mediaURL: 'http://192.168.107.110:8000/storage/images/',
+  baseURL: 'http://192.168.107.107:8000/api/',
+  mediaURL: 'http://192.168.107.107:8000/storage/images/',
   // baseURL: 'https://api.bunitas.com/api/',
   // mediaURL: 'https://api.bunitas.com/storage/images/',
-  app_name: 'Book Salon and Mobile Beautician - Bunitas',
+  app_name: 'Bunitas - Book Salon and Mobile Beautician',
   websiteURL: 'https://www.bunitas.com',
   websiteName: 'bunitas',
   default_country_code: '44',
@@ -26,5 +26,5 @@ export const environment = {
     appId: "1:564593729355:web:bd88803166d101c48a12ce",
     measurementId: "G-W21WL776TY"
   },
-  googleMapsKeys: 'AIzaSyBOKwOOTmodUCq5nMEM1taZ99pawJo88MM'
+  googleMapsKeys: 'AIzaSyD_90YKmwxLQPkETXUJ4cU5o4QJRzP4y0A' //AIzaSyBOKwOOTmodUCq5nMEM1taZ99pawJo88MM
 };

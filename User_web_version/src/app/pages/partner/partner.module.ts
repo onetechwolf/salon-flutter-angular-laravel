@@ -9,21 +9,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { WelcomeRoutingModule } from './welcome-routing.module';
-import { WelcomeComponent } from './welcome.component';
+import { PartnerRoutingModule } from './partner-routing.module';
+import { PartnerComponent } from './partner.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { FormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { IvyCarouselModule } from 'angular-responsive-carousel';
 
 
 @NgModule({
   declarations: [
-    WelcomeComponent,
+    PartnerComponent
   ],
   imports: [
     CommonModule,
-    WelcomeRoutingModule,
-    FormsModule,
+    PartnerRoutingModule,
     MDBBootstrapModule.forRoot(),
+    SharedModule,
+    IvyCarouselModule,
   ]
 })
-export class WelcomeModule { }
+export class PartnerModule { }
