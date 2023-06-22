@@ -62,6 +62,7 @@ export class UtilService {
   public services: any;
   public booking_fee: any;
   public deposit_now: any;
+  public processing_fee: any;
 
   public facebook_link: any;
   public instagram_link: any;

@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import * as moment from 'moment';
 import { UtilService } from 'src/app/services/util.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-footers',
@@ -18,10 +19,20 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class FootersComponent implements OnInit {
   qty = 2;
+  visibility: any=true;
   constructor(
+    location: Location,
     private router: Router,
     public util: UtilService
-  ) { }
+  ) {
+    router.events.subscribe((val) => {
+      if(location.path() != '' && location.path().includes('search')){
+        this.visibility = false;
+      } else {
+       this.visibility = true;
+      }
+    });
+  }
 
   ngOnInit(): void {
 

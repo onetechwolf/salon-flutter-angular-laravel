@@ -6,7 +6,7 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2022-present initappz.
  -->
-<footer class="page-footer font-small back_footer" style="padding-top: 1px;">
+<footer class="page-footer font-small back_footer" style="padding-top: 1px;" *ngIf="visibility">
 
 
   <div class="container">
@@ -22,7 +22,7 @@
             <img src="assets/imgs/google.svg" alt="" style="height: 45px;">
           </a>
         </div>
-      </div>      
+      </div>
       <div class="col-md-3">
         <label class="footer_lbl">{{util.translate('About Bunitas')}} </label>
         <div class="flex_box" (click)="goToAbout()">

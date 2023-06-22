@@ -52,7 +52,7 @@
 
     <div>
       <div class="row">
-        <div class="col-6 col-md-4 col-lg-3 my-2 px-2" *ngFor="let item of salonList">
+        <div class="col-6 col-md-4 col-lg-3 my-2 px-2" *ngFor="let item of salonList | slice:0:8">
           <div class="px-0 rounded overflow-hidden shadow-sm animate border">
             <a class="text-dark" (click)="onSalon(item.uid,item.name)">
               <div class="service-list text-center pb-2">
@@ -83,6 +83,11 @@
             </a>
           </div>
         </div>
+        <div class="col-12" *ngIf="salonList.length > 4" style="text-align: right;">
+          <a class="waves-light" mdbWavesEffect (click)="gotoSalonList()">
+            <label>{{util.translate('Load More..')}}</label>
+          </a>
+        </div>
       </div>
 
     </div>
@@ -96,7 +101,7 @@
 
     <div>
       <div class="row">
-        <div class="col-6 col-md-4 col-lg-3 my-2 px-2" *ngFor="let item of freelancerList">
+        <div class="col-6 col-md-4 col-lg-3 my-2 px-2" *ngFor="let item of freelancerList | slice:0:8">
           <div class="px-0 rounded overflow-hidden shadow-sm animate border">
             <a class="text-dark" (click)="onFreelancerDetail(item.uid,item.userInfo.first_name +' '+
             item.userInfo.last_name)">
@@ -141,7 +146,7 @@
     </div>
 
     <div class="row">
-      <div class="col-6 col-md-4 col-lg-3 my-2 px-2" *ngFor="let item of productList;let i = index">
+      <div class="col-6 col-md-4 col-lg-3 my-2 px-2" *ngFor="let item of productList | slice:0:8;let i = index ">
         <div class="px-0 rounded overflow-hidden shadow-sm animate border">
           <a class="text-dark">
             <div class="product-list text-center pb-3">

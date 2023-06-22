@@ -229,7 +229,7 @@
               {{util.translate('create an account')}}</span> </p>
         </div>
         <div class="modal-footer d-flex justify-content-center">
-          <button mdbBtn color="default" class="waves-light" [disabled]="isLogin"
+          <button mdbBtn color="default" class="waves-light" [disabled]="isLogin" style="background-color: #9C0278 !important"
             (click)="loginWithEmailPassword(loginForm,loginModal)" mdbWavesEffect>
             <span *ngIf="!isLogin"> {{util.translate('Login')}}</span>
             <div class="spinner-border" *ngIf="isLogin" role="status"></div>

@@ -114,6 +114,11 @@ const routes: Routes = [
         data: { title: 'Partner' }
       },
       {
+        path: 'search',
+        loadChildren: () => import('./pages/search/search.module').then(m => m.SearchModule),
+        data: { title: 'Salon List' }
+      },
+      {
         path: 'checkout',
         loadChildren: () => import('./pages/checkout/checkout.module').then(m => m.CheckoutModule),
         data: { title: 'Checkout' }

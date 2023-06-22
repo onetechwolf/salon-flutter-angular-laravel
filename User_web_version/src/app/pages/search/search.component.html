@@ -1,0 +1,185 @@
+<!--
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : Bunitas Salon Full App Flutter
+  This App Template Source code is licensed as per the
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2022-present initappz.
+ -->
+<div class="row">
+  <div class="col-4" style="margin: 0;padding: 0px;">
+    <div class="row_div">
+      <div class="overlay">
+        <div class="row justify-content-md-center">
+          <div class="col-xl-10 col-lg-8">
+            <div class="row full_div">
+              <div class="row col-11">
+                <div class="col-6">
+                  <div class="input_div">
+                    <img src="assets/imgs/search.png" style="width: 18px;height: 18px;">
+                    <input type="text" style="font-size: 16px;" class="form-control" [(ngModel)]="treatment"
+                      [placeholder]="util.translate('Any Treatment')" (ngModelChange)="onSearchChangeTreatment($event)">
+                    <img src="assets/imgs/remove.png" style="width: 20px;height: 20px;cursor: pointer;" *ngIf="treatment != ''" (click)="removeTreatmentSearchKey()">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="input_div">
+                    <img src="assets/imgs/divider.png" style="width: 22px;height: 25px;">
+                    <img src="assets/imgs/placeholder.png" style="width: 18px;height: 18px;">
+                    <input type="text" style="font-size: 16px;" class="form-control" [(ngModel)]="address"
+                      [placeholder]="util.translate('Current Location')" (ngModelChange)="onSearchChangeLocation($event)">
+                    <img src="assets/imgs/remove.png" style="width: 20px;height: 20px;cursor: pointer;" *ngIf="address != ''" (click)="removeLocationSearchKey()">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-1" *ngIf="util.deviceType =='desktop'">
+                <div class="btns">
+                  <button class="arrow_btn" (click)="locate()">
+                    <mdb-icon fas icon="search"></mdb-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="util.deviceType !=='desktop'">
+              <div class="col-12">
+                <div class="locate_btn_lng waves-effect" mdbWavesEffect (click)="locate()">
+                  <mdb-icon fas icon="search"></mdb-icon>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="position: absolute;z-index: 100;width: 100%;">
+              <div class="row col-11">
+                <div class="col-6" style="padding-right: 0px;">
+                  <div class="treatment_list" *ngIf="autocompleteTreatmentItems.length > 0 && treatment != ''">
+                    <div class="treatment_name" *ngFor="let item of autocompleteTreatmentItems"
+                      (click)="selectSearchTreatmentResult(item)">
+                      <img class="treatment_icon" [src]="api.mediaURL + item.cover">
+                      {{ item.name }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6" style="padding-right: 0px;">
+                  <div class="location_list" *ngIf="autocompleteLocationItems.length > 0 && address != ''">
+                    <div class="location_name" *ngFor="let item of autocompleteLocationItems"
+                      (click)="selectSearchLocationResult(item)">
+                      <mdb-icon fas icon="map-marker-alt" style="color: gray; margin-right: 10px;"></mdb-icon>
+                      {{ item.description }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="kcJOzk">
+          <div class="v11a4U">
+             <div class="HUckpv">
+                <p class="">{{ salonList.length }} Salons within map area</p>
+             </div>
+          </div>
+          <div class="ac3324fac aeb3b1fac">
+             <div data-qa="undefined-wrapper" class="_40704199d">
+                <button type="button" id="button-open-filters-md" aria-pressed="false" aria-labelledby="label-open-filters-md" class="_6d7cc36d9 f9776c5c7 _5f547c7dc _6a607a7dc e8c6537dc fa2d8c7dc" aria-live="polite">
+                   <span class="ffaa3ab4b fd8ce6b4b" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                         <path fill-rule="evenodd" d="M5.25 3a.75.75 0 0 1 .75.75V12h1.5a.75.75 0 0 1 0 1.5H3A.75.75 0 0 1 3 12h1.5V3.75A.75.75 0 0 1 5.25 3ZM12 3a.75.75 0 0 1 .75.75V7.5h1.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5h1.5V3.75A.75.75 0 0 1 12 3Zm6.75 0a.75.75 0 0 1 .75.75V15H21a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5H18V3.75a.75.75 0 0 1 .75-.75ZM12 10.5a.75.75 0 0 1 .75.75v9a.75.75 0 0 1-1.5 0v-9a.75.75 0 0 1 .75-.75ZM5.25 15a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0v-4.5a.75.75 0 0 1 .75-.75Zm13.5 3a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd"></path>
+                      </svg>
+                   </span>
+                   <p id="label-open-filters-md" class="ff02b98a7 c349388a7 font-default-body-s-medium da9b167dc">Filters</p>
+                </button>
+             </div>
+          </div>
+       </div>
+      </div>
+      <div class="salon-list">
+        <div *ngFor="let item of salonList">
+          <div class="px-0 rounded overflow-hidden shadow-sm animate border" style="margin: 10px;">
+            <a class="text-dark" (click)="onSalon(item.uid,item.name)">
+              <div class="service-list text-center pb-2" style="display: flex;padding: 10px;">
+                <div style="width: 50%;">
+                  <div
+                  [ngStyle]="{'background-image': 'url('+ api.mediaURL + item.cover +'),url(assets/images/placeholder.png)'}"
+                  class="bg-img"></div>
+                </div>
+                <div style="width: 50%;margin: 20px 5px;">
+                  <h5 class="text-black ff-medium px-2 text-overflow salon-head-text">{{item.name}}</h5>
+
+                  <div style="font-size: 15px;">
+                    <span *ngFor="let cates of item.categories;let j = index;"> {{cates.name}} <span
+                        *ngIf="(item.categories.length - 1) != j">,</span> </span>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-item-center mb-2">
+                    <mdb-icon fas icon="star" size="sm" [ngStyle]="{color: item.rating >= 1 ? 'orange':'grey'}">
+                    </mdb-icon>
+                    <mdb-icon fas icon="star" size="sm" [ngStyle]="{color: item.rating >= 2 ? 'orange':'grey'}">
+                    </mdb-icon>
+                    <mdb-icon fas icon="star" size="sm" [ngStyle]="{color: item.rating >= 3 ? 'orange':'grey'}">
+                    </mdb-icon>
+                    <mdb-icon fas icon="star" size="sm" [ngStyle]="{color: item.rating >= 4 ? 'orange':'grey'}">
+                    </mdb-icon>
+                    <mdb-icon fas icon="star" size="sm" [ngStyle]="{color: item.rating >= 5 ? 'orange':'grey'}">
+                    </mdb-icon>
+                    <h6 class="text-muted ff-medium pl-2 rf-6 m-0 rf-lg-1"> {{item.rating}} ( {{item.total_rating}} )</h6>
+                  </div>
+
+                  <div style="font-size: 15px;">
+                    <span *ngFor="let cates of item.categories;let j = index;"> {{item.address}} <span
+                        *ngIf="(item.categories.length - 1) != j">,</span> </span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-8" style="margin: 0;padding: 0px;">
+    <div class="map-container">
+      <agm-map #gm class="map" [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+        <agm-marker #gmaker *ngFor="let item of salonList " [latitude]="item.salon_lat" [longitude]="item.salon_lng" class="zoom-effect"
+          [iconUrl]="''" (mouseClick)="onMouseClick(infoWindow,gm)" (mouseOver)="onMouseOver(gmaker)">
+          <agm-info-window [disableAutoPan]="false" #infoWindow>
+            <div class="px-0 rounded overflow-hidden" style="width: 400px">
+              <a class="text-dark" (click)="onSalon(item.uid,item.name)">
+                <div class="service-list text-center pb-2" style="display: flex;padding: 10px;">
+                  <div style="width: 50%;">
+                    <div
+                    [ngStyle]="{'background-image': 'url('+ api.mediaURL + item.cover +'),url(assets/images/placeholder.png)'}"
+                    class="sm-img"></div>
+                  </div>
+                  <div style="width: 50%;margin: 20px 5px;">
+                    <h5 class="text-black ff-medium px-2 text-overflow salon-head-text">{{item.name}}</h5>
+
+                    <div style="font-size: 15px;">
+                      <span *ngFor="let cates of item.categories;let j = index;"> {{cates.name}} <span
+                          *ngIf="(item.categories.length - 1) != j">,</span> </span>
+                    </div>
+
+                    <div class="d-flex justify-content-center align-item-center mb-2">
+                      <mdb-icon fas icon="star" size="sm" [ngStyle]="{color: item.rating >= 1 ? 'orange':'grey'}">
+                      </mdb-icon>
+                      <mdb-icon fas icon="star" size="sm" [ngStyle]="{color: item.rating >= 2 ? 'orange':'grey'}">
+                      </mdb-icon>
+                      <mdb-icon fas icon="star" size="sm" [ngStyle]="{color: item.rating >= 3 ? 'orange':'grey'}">
+                      </mdb-icon>
+                      <mdb-icon fas icon="star" size="sm" [ngStyle]="{color: item.rating >= 4 ? 'orange':'grey'}">
+                      </mdb-icon>
+                      <mdb-icon fas icon="star" size="sm" [ngStyle]="{color: item.rating >= 5 ? 'orange':'grey'}">
+                      </mdb-icon>
+                      <h6 class="text-muted ff-medium pl-2 rf-6 m-0 rf-lg-1"> {{item.rating}} ( {{item.total_rating}} )</h6>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </agm-info-window>
+        </agm-marker>
+      </agm-map>
+    </div>
+  </div>
+</div>

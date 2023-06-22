@@ -192,4 +192,9 @@ export class HomeComponent implements OnInit {
     this.productList[index].quantity = this.productList[index].quantity + 1;
     this.productCart.updateQuantity(this.productList[index].id, this.productList[index].quantity);
   }
+
+
+  gotoSalonList() {
+    this.router.navigate(['search']);
+  }
 }
