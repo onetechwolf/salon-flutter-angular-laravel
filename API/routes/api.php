@@ -7,6 +7,7 @@ use App\Http\Controllers\v1\CitiesController;
 use App\Http\Controllers\v1\TimeslotController;
 use App\Http\Controllers\v1\SalonController;
 use App\Http\Controllers\v1\CategoryController;
+use App\Http\Controllers\v1\PreCategoryController;
 use App\Http\Controllers\v1\IndividualController;
 use App\Http\Controllers\v1\BannersController;
 use App\Http\Controllers\v1\ProductCategoryController;
@@ -124,6 +125,15 @@ Route::prefix('/v1')->group(function () {
         Route::post('blogs/destroy', [BlogsController::class, 'delete']);
         Route::post('blogs/getById', [BlogsController::class, 'getById']);
 
+        // Pre-Category Routes
+        Route::get('pre_category/getAll', [PreCategoryController::class, 'getAll']);
+        Route::get('pre_category/getStores', [PreCategoryController::class, 'getStores']);
+        Route::post('pre_category/create', [PreCategoryController::class, 'save']);
+        Route::post('pre_category/update', [PreCategoryController::class, 'update']);
+        Route::post('pre_category/destroy', [PreCategoryController::class, 'delete']);
+        Route::post('pre_category/getById', [PreCategoryController::class, 'getById']);
+        Route::get('pre_category/getActiveItem', [PreCategoryController::class, 'getActiveItem']);
+        Route::post('pre_category/updateStatus', [PreCategoryController::class, 'updateStatus']);
         // Category Routes
         Route::get('category/getAll', [CategoryController::class, 'getAll']);
         Route::get('category/getStores', [CategoryController::class, 'getStores']);

@@ -53,6 +53,7 @@ class SettingsController extends Controller
             'allowDistance' => 'required',
             'searchResultKind' => 'required',
             'booking_fee' => 'required',
+            'processing_fee' => 'required',
             'deposit_now' => 'required',
         ]);
         if ($validator->fails()) {
