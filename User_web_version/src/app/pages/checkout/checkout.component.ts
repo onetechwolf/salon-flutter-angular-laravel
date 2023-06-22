@@ -87,18 +87,21 @@ export class CheckoutComponent implements OnInit {
   stripeCardList: any[] = [];
   selectedCard: any = '';
   paymentMethodList: any[] = [];
-
   balance: any = 0.0;
   walletDiscount: any = 0.0;
   walletCheck: boolean = false;
-
   storeInfo: any;
-
   specialist: any[] = [];
   selectedSpecialist: any = '';
   specialistName: any = '';
-
+  subtotal: number=0;
+  deposit: number=0;
+  processing_fee: number=0;
+  payNow: number=0;
+  payAt: number=0;
+  billDetails: any = {processing_fee: '', payNow: '', payAt: ''};
   serviceAt: any = 'home';
+
   constructor(private router: Router,
     public util: UtilService,
     public api: ApiService,
@@ -115,10 +118,22 @@ export class CheckoutComponent implements OnInit {
         this.getFreelancerByID();
         this.getProfile();
         this.getWalletAmount();
+        this.calcPrices();
       }, 1000);
     } else {
       this.router.navigate(['']);
     }
+  }
+
+  calcPrices() {
+    this.subtotal = this.serviceCart.totalPrice + this.serviceCart.deliveryCharge - this.serviceCart.discount;
+    this.deposit = this.subtotal * this.util.deposit_now / 100;
+    this.processing_fee =this.deposit * this.util.processing_fee/100;
+    this.payNow = this.deposit + this.util.booking_fee + this.processing_fee;
+    this.payAt = this.subtotal - this.payNow;
+    this.billDetails.processing_fee = this.processing_fee.toFixed(2);
+    this.billDetails.payNow = this.payNow.toFixed(2);
+    this.billDetails.payAt = this.payAt.toFixed(2);
   }
 
   changeServiceAt(at: any) {

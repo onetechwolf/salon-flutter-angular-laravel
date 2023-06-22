@@ -555,10 +555,12 @@ export class SalonsComponent implements OnInit {
         this.have_stylist = data.data.have_stylist;
         this.service_at_home = data.data.service_at_home;
         let policy = JSON.parse(data.data.policy);
-        this.cancellation = policy.cancellation;
-        this.late = policy.late;
-        this.no_show = policy.no_show;
-        this.reschedule = policy.reschedule;
+        if (policy !== null) {
+          this.cancellation = policy.cancellation;
+          this.late = policy.late;
+          this.no_show = policy.no_show;
+          this.reschedule = policy.reschedule;
+        }
         this.myModal2.show();
       }
     }).catch(error => {

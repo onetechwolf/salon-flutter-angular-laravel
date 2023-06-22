@@ -372,6 +372,7 @@ export class AppComponent {
         this.util.sms_name = settings.sms_name;
         this.util.booking_fee = settings.booking_fee;
         this.util.deposit_now = settings.deposit_now;
+        this.util.processing_fee = settings.processing_fee;
         this.api.default_country_code = settings.default_country_code;
         this.util.deliveryCharge = parseFloat(settings.delivery_charge);;
         this.util.delivery = settings.delivery_type;

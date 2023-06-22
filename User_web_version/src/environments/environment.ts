@@ -8,10 +8,10 @@
 */
 export const environment = {
   production: false,
-  baseURL: 'http://192.168.107.107:8000/api/',
-  mediaURL: 'http://192.168.107.107:8000/storage/images/',
-  // baseURL: 'https://api.bunitas.com/api/',
-  // mediaURL: 'https://api.bunitas.com/storage/images/',
+  // baseURL: 'http://192.168.107.107:8000/api/',
+  // mediaURL: 'http://192.168.107.107:8000/storage/images/',
+  baseURL: 'https://api.bunitas.com/api/',
+  mediaURL: 'https://api.bunitas.com/storage/images/',
   app_name: 'Bunitas - Book Salon and Mobile Beautician',
   websiteURL: 'https://www.bunitas.com',
   websiteName: 'bunitas',

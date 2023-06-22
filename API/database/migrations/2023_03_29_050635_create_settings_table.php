@@ -24,8 +24,9 @@ return new class extends Migration
             $table->string('zip')->nullable();
             $table->string('country')->nullable();
             $table->double('tax',10,2)->nullable();
-            $table->double('booking_fee',10,5)->default(3.5);
-            $table->integer('deposit_now')->default(0);
+            $table->double('booking_fee',10,2)->default(2.99);
+            $table->double('processing_fee',10,2)->default(3.5);
+            $table->integer('deposit_now')->default(20);
             $table->double('delivery_charge',10,2)->nullable();
             $table->string('currencySymbol');
             $table->string('currencySide');

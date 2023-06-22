@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Services;
 use Validator;
 use App\Models\Category;
+use App\Models\User;
 use DB;
 
 class ServicesController extends Controller
@@ -219,13 +220,13 @@ class ServicesController extends Controller
     public function getAll(){
         $data = Services::all();
         foreach($data as $loop){
-            if($loop && $loop->served_category && $loop->served_category !=null){
-                $ids = explode(',',$loop->served_category);
+            if($loop && $loop->cate_id && $loop->cate_id !=null){
+                $ids = explode(',',$loop->cate_id);
                 $cats = Category::WhereIn('id',$ids)->get();
-                $loop->web_cates_data = $cats;
+                $loop->category = $cats;
             }
-            if($loop && $loop->cid && $loop->cid !=null){
-                $loop->city_data = Cities::find($loop->cid);
+            if($loop && $loop->uid && $loop->uid !=null){
+                $loop->user = User::find($loop->uid);
             }
         }
         if (is_null($data)) {

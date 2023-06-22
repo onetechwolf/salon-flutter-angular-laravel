@@ -24,14 +24,35 @@ export class CategoriesComponent implements OnInit {
   cover: any = '';
   page: number = 1;
   cateId: any = '';
+  category: any;
+  mainCateId: any;
+
   constructor(
     public api: ApiService,
     public util: UtilService
   ) {
+    this.getCategories();
     this.getAll();
   }
 
   ngOnInit(): void {
+  }
+
+  getCategories() {
+    this.api.get_private('v1/pre_category/getAll').then((data: any) => {
+      if (data && data.status && data.status == 200 && data.success) {
+        console.log(">>>>>", data);
+        if (data.data.length > 0) {
+          this.category = data.data;
+        }
+      }
+    }, error => {
+      console.log('Error', error);
+      this.util.apiErrorHandler(error);
+    }).catch(error => {
+      console.log('Err', error);
+      this.util.apiErrorHandler(error);
+    });
   }
 
   getAll() {
@@ -197,6 +218,7 @@ export class CategoriesComponent implements OnInit {
       if (data && data.status && data.status == 200 && data.success) {
         this.name = data.data.name;
         this.cover = data.data.cover;
+        this.mainCateId = data.data.parent.id
       }
     }, error => {
       this.util.hide();
@@ -217,13 +239,14 @@ export class CategoriesComponent implements OnInit {
 
 
   createCategory() {
-    if (this.name == '' || this.name == null || this.cover == '') {
+    if (this.name == '' || this.name == null || this.cover == '' || this.mainCateId == undefined || this.mainCateId == '') {
       this.util.error(this.util.translate('All Fields are required'));
     } else {
       const body = {
         name: this.name,
         status: 1,
-        cover: this.cover
+        cover: this.cover,
+        parent_id: this.mainCateId,
       };
       this.util.show();
       this.api.post_private('v1/category/create', body).then((data: any) => {
@@ -254,6 +277,7 @@ export class CategoriesComponent implements OnInit {
 
       const body = {
         id: this.cateId,
+        parent_id: this.mainCateId,
         name: this.name,
         cover: this.cover
       };
@@ -279,6 +303,4 @@ export class CategoriesComponent implements OnInit {
       });
     }
   }
-
-
 }

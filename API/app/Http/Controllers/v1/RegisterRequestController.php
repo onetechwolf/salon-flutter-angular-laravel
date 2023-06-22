@@ -66,7 +66,6 @@ class RegisterRequestController extends Controller
             'cid' => 'required',
             'dob' => 'required',
             'id_card' => 'required',
-            'policy' => 'required',
         ]);
         if ($validator->fails()) {
             $response = [

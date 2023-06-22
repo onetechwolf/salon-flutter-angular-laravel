@@ -377,7 +377,7 @@
                 </div>
 
                 <div class="wallet_box" [ngStyle]="{'color': balance <= 0 || serviceCart.coupon ? 'gray':'black'}">
-                  <label class="head_lbl">{{util.app_name}} {{util.translate('Wallet Balance')}} </label>
+                  <label class="head_lbl">{{util.translate('Your Wallet Balance')}} </label>
 
                   <div class="checkmark" (click)="walletChange()">
                     <i class="fas fa-check-circle" *ngIf="walletCheck == true"></i>
@@ -391,10 +391,17 @@
 
                 <div class="bg-white px-3 py-2">
                   <p class="ff-bold small">{{util.translate('Bill Details')}}</p>
-                  <p class="mb-1"> {{util.translate('Treatment Total')}}
+                  <p class="mb-1"> {{util.translate('Service Cost')}}
                     <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
                       {{serviceCart.totalPrice}}</span>
                     <span class="float-right text-dark" *ngIf="util.currencySide == 'right'">{{serviceCart.totalPrice}}
+                      {{util.currencySymbol}}</span>
+                  </p>
+                  <p class="mb-1">{{util.translate('Distance Charge')}}<sup class="bill-tooltip" title="Beautician charges for travel">(i)</sup>
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
+                      {{serviceCart.deliveryCharge}}</span>
+                    <span class="float-right text-dark"
+                      *ngIf="util.currencySide == 'right'">{{serviceCart.deliveryCharge}}
                       {{util.currencySymbol}}</span>
                   </p>
                   <p class="mb-1"> {{util.translate('Total Discount')}}
@@ -403,46 +410,46 @@
                     <span class="float-right text-danger" *ngIf="util.currencySide == 'right'">-{{serviceCart.discount}}
                       {{util.currencySymbol}}</span>
                   </p>
-                  <p class="mb-1">{{util.translate('Taxes and Charges')}}
-                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                      {{serviceCart.orderTax}}</span>
-                    <span class="float-right text-dark" *ngIf="util.currencySide == 'right'">{{serviceCart.orderTax}}
-                      {{util.currencySymbol}}</span>
+
+                  <p class="mb-2" style="font-weight: bold;"> {{util.translate('Subtotal')}}
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}} {{ subtotal }}</span>
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'right'">{{ subtotal }} {{util.currencySymbol}}</span>
                   </p>
-                  <p class="mb-1">{{util.translate('Distance Charge')}}
+                  <p class="mb-1">{{util.translate("Deposit") + '(' + util.deposit_now + '%)' }}<sup class="bill-tooltip" title="Deposit to secure your treatment">(ii)</sup>
                     <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                      {{serviceCart.deliveryCharge}}</span>
+                      {{deposit}}</span>
                     <span class="float-right text-dark"
-                      *ngIf="util.currencySide == 'right'">{{serviceCart.deliveryCharge}}
-                      {{util.currencySymbol}}</span>
+                      *ngIf="util.currencySide == 'right'">{{deposit}} {{util.currencySymbol}}</span>
                   </p>
-                  <p class="mb-1">{{util.translate("Booking Fees") + '(' + util.booking_fee + '%)' }}
+
+                  <p class="mb-1">{{util.translate("Booking Fees")}}<sup class="bill-tooltip" title="Booking Fee to covers our costs of connecting you to your salon/beautician">(iii)</sup>
                     <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                      {{serviceCart.totalPrice * util.booking_fee / 100}}</span>
+                      {{util.booking_fee}}</span>
                     <span class="float-right text-dark"
-                      *ngIf="util.currencySide == 'right'">{{serviceCart.totalPrice * util.booking_fee / 100}}
-                      {{util.currencySymbol}}</span>
-                  </p>
-                  <p class="mb-1">{{util.translate('Total Charges')}}
-                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                      {{serviceCart.totalPrice - serviceCart.discount + serviceCart.orderTax + serviceCart.deliveryCharge - serviceCart.totalPrice * util.booking_fee / 100}}</span>
-                    <span class="float-right text-dark"
-                      *ngIf="util.currencySide == 'right'">{{serviceCart.totalPrice - serviceCart.discount + serviceCart.orderTax + serviceCart.deliveryCharge - serviceCart.totalPrice * util.booking_fee / 100}}
-                      {{util.currencySymbol}}</span>
-                  </p>
-                  <p class="mb-1">{{util.translate("Deposit Now") + '(' + util.deposit_now + '%)' }}
-                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                      {{(serviceCart.totalPrice - serviceCart.discount + serviceCart.orderTax + serviceCart.deliveryCharge - serviceCart.totalPrice * util.booking_fee / 100) * util.deposit_now / 100}}</span>
-                    <span class="float-right text-dark"
-                      *ngIf="util.currencySide == 'right'">{{(serviceCart.totalPrice - serviceCart.discount + serviceCart.orderTax + serviceCart.deliveryCharge - serviceCart.totalPrice * util.booking_fee / 100) * util.deposit_now / 100}}
+                      *ngIf="util.currencySide == 'right'">{{util.booking_fee}}
                       {{util.currencySymbol}}</span>
                   </p>
 
-                  <p class="mb-1">{{util.translate("To pay at Salon / Beautician") }}
+                  <p class="mb-2">{{util.translate("Processing Fees") + '(' + util.processing_fee + '%)' }}<sup class="bill-tooltip" title="Processing Fee covers the cost of processing this transaction">(iv)</sup>
                     <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                      {{(serviceCart.totalPrice - serviceCart.discount + serviceCart.orderTax + serviceCart.deliveryCharge - serviceCart.totalPrice * util.booking_fee / 100) * (100-util.deposit_now) / 100}}</span>
+                      {{this.billDetails.processing_fee}}</span>
                     <span class="float-right text-dark"
-                      *ngIf="util.currencySide == 'right'">{{(serviceCart.totalPrice - serviceCart.discount + serviceCart.orderTax + serviceCart.deliveryCharge - serviceCart.totalPrice * util.booking_fee / 100) * (100-util.deposit_now) / 100}}
+                      *ngIf="util.currencySide == 'right'">{{this.billDetails.processing_fee}}
+                      {{util.currencySymbol}}</span>
+                  </p>
+                  <p class="mb-2" style="font-weight: bold;">{{util.translate('To Pay Now')}}
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
+                      {{this.billDetails.payNow}}</span>
+                    <span class="float-right text-dark"
+                      *ngIf="util.currencySide == 'right'">{{ this.billDetails.payNow }}
+                      {{util.currencySymbol}}</span>
+                  </p>
+
+                  <p class="mb-1" style="font-weight: bold;">{{util.translate("Pay at Salon/Beautician") }}
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
+                      {{this.billDetails.payAt}}</span>
+                    <span class="float-right text-dark"
+                      *ngIf="util.currencySide == 'right'">{{this.billDetails.payAt}}
                       {{util.currencySymbol}}</span>
                   </p>
                 </div>

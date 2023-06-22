@@ -56,7 +56,7 @@ class CategoryController extends Controller
             return response()->json($response, 404);
         }
 
-        $data = Category::find($request->id);
+        $data = Category::with('parent')->find($request->id);
 
         if (is_null($data)) {
             $response = [
@@ -136,7 +136,7 @@ class CategoryController extends Controller
     }
 
     public function getAll(){
-        $data = Category::all();
+        $data = Category::with('parent')->get();
         if (is_null($data)) {
             $response = [
                 'success' => false,

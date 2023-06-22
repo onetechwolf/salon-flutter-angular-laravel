@@ -25,6 +25,10 @@ export class WelcomeComponent implements OnInit {
   autocompleteTreatmentItems: any = [];
   autocompleteLocationItems: any = [];
   GoogleAutocomplete;
+  selectedLat: any;
+  selectedLng: any;
+  selectedAddress: any;
+  selectedTreatment: any;
   geocoder: any;
 
   blogs: any;
@@ -74,35 +78,15 @@ export class WelcomeComponent implements OnInit {
     this.router.navigate(['/blog-detail'], param);
   }
   locate() {
-    if (window.navigator && window.navigator.geolocation) {
-      this.util.start();
-      window.navigator.geolocation.getCurrentPosition(
-        position => {
-
-          console.log(position);
-          this.getAddress(position.coords.latitude, position.coords.longitude);
-        },
-        error => {
-          this.util.stop();
-          switch (error.code) {
-            case 1:
-              console.log('Permission Denied');
-              this.util.errorMessage(this.util.translate('Location Permission Denied'));
-              break;
-            case 2:
-              console.log('Position Unavailable');
-              this.util.errorMessage(this.util.translate('Position Unavailable'));
-              break;
-            case 3:
-              console.log('Timeout');
-              this.util.errorMessage(this.util.translate('Failed to fetch location'));
-              break;
-            default:
-              console.log('defual');
-          }
-        }
-      );
-    };
+    const param: NavigationExtras = {
+      queryParams: {
+        treatment: this.selectedTreatment,
+        lat: this.selectedLat,
+        lng: this.selectedLng,
+        address: this.selectedAddress,
+      }
+    }
+    this.router.navigate(['search'], param);
   }
 
   onSearchChangeTreatment(event) {
@@ -131,6 +115,7 @@ export class WelcomeComponent implements OnInit {
     console.log('select', item);
     this.autocompleteTreatmentItems = [];
     this.autocomplete1.query_treatment = item.name;
+    this.selectedTreatment = item.id;
     localStorage.setItem('treatmentSelected', 'true');
     localStorage.setItem('treatment', 'item.name');
   }
@@ -164,11 +149,10 @@ export class WelcomeComponent implements OnInit {
     this.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
       if (status == 'OK' && results[0]) {
         console.log(status);
-        localStorage.setItem('location', 'true');
-        localStorage.setItem('lat', results[0].geometry.location.lat());
-        localStorage.setItem('lng', results[0].geometry.location.lng());
-        localStorage.setItem('address', this.autocomplete1.query_location);
-        this.router.navigate(['/home']);
+        this.selectedLat = results[0].geometry.location.lat();
+        this.selectedLng = results[0].geometry.location.lng();
+        this.selectedLng = results[0].geometry.location.lng();
+        this.selectedAddress = this.autocomplete1.query_location;
       }
     });
   }
@@ -208,10 +192,12 @@ export class WelcomeComponent implements OnInit {
   removeTreatmentSearchKey() {
     this.autocomplete1.query_treatment = '';
     this.autocompleteTreatmentItems = [];
+    this.selectedTreatment = '';
   }
 
   removeLocationSearchKey() {
     this.autocomplete1.query_location = '';
     this.autocompleteLocationItems = [];
+    this.selectedLat = ''; this.selectedLng = '';
   }
 }
