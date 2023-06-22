@@ -12,10 +12,10 @@ import { UtilService } from '../../services/util.service';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-categories',
-  templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss']
+  templateUrl: './pre-categories.component.html',
+  styleUrls: ['./pre-categories.component.scss']
 })
-export class CategoriesComponent implements OnInit {
+export class PreCategoriesComponent implements OnInit {
   action = 'create';
   dummy = Array(5);
   list: any[] = [];
@@ -24,41 +24,20 @@ export class CategoriesComponent implements OnInit {
   cover: any = '';
   page: number = 1;
   cateId: any = '';
-  category: any;
-  mainCateId: any;
-
   constructor(
     public api: ApiService,
     public util: UtilService
   ) {
-    this.getCategories();
     this.getAll();
   }
 
   ngOnInit(): void {
   }
 
-  getCategories() {
-    this.api.get_private('v1/pre_category/getAll').then((data: any) => {
-      if (data && data.status && data.status == 200 && data.success) {
-        console.log(">>>>>", data);
-        if (data.data.length > 0) {
-          this.category = data.data;
-        }
-      }
-    }, error => {
-      console.log('Error', error);
-      this.util.apiErrorHandler(error);
-    }).catch(error => {
-      console.log('Err', error);
-      this.util.apiErrorHandler(error);
-    });
-  }
-
   getAll() {
     this.list = [];
     this.dummy = Array(5);
-    this.api.get_private('v1/category/getAll').then((data: any) => {
+    this.api.get_private('v1/pre_category/getAll').then((data: any) => {
       this.dummy = [];
       if (data && data.status && data.status == 200 && data.success) {
         console.log(">>>>>", data);
@@ -117,7 +96,7 @@ export class CategoriesComponent implements OnInit {
         console.log(item);
         console.log(item);
         this.util.show();
-        this.api.post_private('v1/category/destroy', { id: item.id }).then((data: any) => {
+        this.api.post_private('v1/pre_category/destroy', { id: item.id }).then((data: any) => {
           console.log(data);
           this.util.hide();
           if (data && data.status && data.status == 200) {
@@ -183,7 +162,7 @@ export class CategoriesComponent implements OnInit {
         };
         console.log("======", body);
         this.util.show();
-        this.api.post_private('v1/category/update', body).then((data: any) => {
+        this.api.post_private('v1/pre_category/update', body).then((data: any) => {
           this.util.hide();
           console.log("+++++++++++++++", data);
           if (data && data.status && data.status == 200 && data.success) {
@@ -212,13 +191,12 @@ export class CategoriesComponent implements OnInit {
     };
     console.log("CAT BY ID => ", body);
     this.util.show();
-    this.api.post_private('v1/category/getById', body).then((data: any) => {
+    this.api.post_private('v1/pre_category/getById', body).then((data: any) => {
       console.log(data);
       this.util.hide();
       if (data && data.status && data.status == 200 && data.success) {
         this.name = data.data.name;
         this.cover = data.data.cover;
-        this.mainCateId = data.data.parent.id
       }
     }, error => {
       this.util.hide();
@@ -239,17 +217,16 @@ export class CategoriesComponent implements OnInit {
 
 
   createCategory() {
-    if (this.name == '' || this.name == null || this.cover == '' || this.mainCateId == undefined || this.mainCateId == '') {
+    if (this.name == '' || this.name == null || this.cover == '') {
       this.util.error(this.util.translate('All Fields are required'));
     } else {
       const body = {
         name: this.name,
         status: 1,
-        cover: this.cover,
-        parent_id: this.mainCateId,
+        cover: this.cover
       };
       this.util.show();
-      this.api.post_private('v1/category/create', body).then((data: any) => {
+      this.api.post_private('v1/pre_category/create', body).then((data: any) => {
         console.log("+++++++++++++++", data);
         this.util.hide();
         if (data && data.status && data.status == 200 && data.success) {
@@ -277,13 +254,12 @@ export class CategoriesComponent implements OnInit {
 
       const body = {
         id: this.cateId,
-        parent_id: this.mainCateId,
         name: this.name,
         cover: this.cover
       };
       console.log("======", body);
       this.util.show();
-      this.api.post_private('v1/category/update', body).then((data: any) => {
+      this.api.post_private('v1/pre_category/update', body).then((data: any) => {
         console.log("+++++++++++++++", data);
         this.util.hide();
         if (data && data.status && data.status == 200 && data.success) {
@@ -303,4 +279,6 @@ export class CategoriesComponent implements OnInit {
       });
     }
   }
+
+
 }

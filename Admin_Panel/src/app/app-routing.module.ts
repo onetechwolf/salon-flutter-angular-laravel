@@ -48,7 +48,17 @@ const routes: Routes = [
       },
       {
         path: 'categories',
+        loadChildren: () => import('./pages/pre-categories/pre-categories.module').then(m => m.PreCategoriesModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'sub_categories',
         loadChildren: () => import('./pages/categories/categories.module').then(m => m.CategoriesModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'treatments',
+        loadChildren: () => import('./pages/treatments/treatments.module').then(m => m.TreatmentsModule),
         canActivate: [AuthGuard]
       },
       {

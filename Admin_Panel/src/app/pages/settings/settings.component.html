@@ -120,9 +120,17 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>{{util.translate('Booking Fee(%)')}} <span style="color: red;">*</span> </label>
+                                <label>{{util.translate('Booking Fee(£)')}} <span style="color: red;">*</span> </label>
                                 <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="booking_fee" [placeholder]="util.translate('Booking Fee')">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{util.translate('Processing Fee(%)')}} <span style="color: red;">*</span> </label>
+                                <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="processing_fee" [placeholder]="util.translate('Processing Fee')">
                             </div>
                         </div>
 

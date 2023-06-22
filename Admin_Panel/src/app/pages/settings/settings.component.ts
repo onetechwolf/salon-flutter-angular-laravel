@@ -61,7 +61,8 @@ export class SettingsComponent implements OnInit {
   state: any = '';
   status: any = 1;
   tax: any = 5;
-  booking_fee: any = 3.5;
+  booking_fee: any = 2.99;
+  processing_fee: any = 3.5;
   deposit_now: any = 20;
   user_login: any = 0;
   user_verify_with: any = 0;
@@ -169,6 +170,7 @@ export class SettingsComponent implements OnInit {
         this.user_verify_with = info.user_verify_with;
         this.zip = info.zip;
         this.booking_fee = info.booking_fee;
+        this.processing_fee = info.processing_fee;
         this.deposit_now = info.deposit_now;
         console.log(this);
       } else {
@@ -336,6 +338,7 @@ export class SettingsComponent implements OnInit {
       user_verify_with: this.user_verify_with,
       zip: this.zip,
       booking_fee: this.booking_fee,
+      processing_fee: this.processing_fee,
       deposit_now: this.deposit_now,
     };
     console.log(param);
@@ -365,7 +368,8 @@ export class SettingsComponent implements OnInit {
       this.default_city_id == '' || this.default_city_id == null || this.default_country_code == null || this.default_country_code == null || this.default_delivery_zip == '' ||
       this.default_delivery_zip == null || this.delivery_charge == '' || this.delivery_charge == null || this.email == '' || this.email == null || this.fcm_token == '' || this.fcm_token == null ||
       this.logo == '' || this.logo == null || this.mobile == '' || this.mobile == null || this.name == '' || this.name == null || this.search_radius == null || this.search_radius == '' ||
-      this.state == '' || this.state == null || this.tax == '' || this.tax == null || this.zip == '' || this.zip == null || this.booking_fee == null || this.booking_fee == '' || this.deposit_now == null || this.deposit_now == '') {
+      this.state == '' || this.state == null || this.tax == '' || this.tax == null || this.zip == '' || this.zip == null || this.booking_fee == null || this.booking_fee == '' || 
+      this.processing_fee == null || this.processing_fee == '' || this.deposit_now == null || this.deposit_now == '') {
       this.util.error(this.util.translate('All fields are required'));
       return false;
     }
@@ -466,6 +470,7 @@ export class SettingsComponent implements OnInit {
       user_verify_with: this.user_verify_with,
       zip: this.zip,
       booking_fee: this.booking_fee,
+      processing_fee: this.processing_fee,
       deposit_now: this.deposit_now,
     };
     console.log(param);
