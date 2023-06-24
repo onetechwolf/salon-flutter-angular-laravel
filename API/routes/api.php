@@ -106,7 +106,6 @@ Route::prefix('/v1')->group(function () {
         Route::post('salon/updatePolicy', [SalonController::class, 'updatePolicy']);
         Route::post('salon/destroy', [SalonController::class, 'delete']);
         Route::post('salon/getById', [SalonController::class, 'getById']);
-
         Route::get('salon/getListForOffers', [SalonController::class, 'getListForOffers']);
 
         // individual Routes
@@ -398,6 +397,7 @@ Route::prefix('/v1')->group(function () {
     Route::post('salon/getHomeData', [SalonController::class, 'getHomeData']);
     Route::post('salon/getHomeDataWeb', [SalonController::class, 'getHomeDataWeb']);
     Route::post('salon/getSearchResult', [SalonController::class, 'getSearchResult']);
+    Route::post('salon/search', [SalonController::class, 'search']);
     Route::post('salon/getDataFromCategory', [SalonController::class, 'getDataFromCategory']);
     Route::post('salon/getDataFromCategoryWeb', [SalonController::class, 'getDataFromCategoryWeb']);
     Route::post('salon/getTopFreelancer', [SalonController::class, 'getTopFreelancer']);

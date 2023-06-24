@@ -754,7 +754,7 @@ class SalonController extends Controller
         foreach($categories as $loop){
             $loop->services = Services::where(['status'=>1,'cate_id'=>$loop->id,'uid'=>$request->id])->count();
         }
-        $packages =Packages::where('uid',$request->id)->get();
+        $packages = Packages::where('uid',$request->id)->get();
         $response = [
             'data'=>$data,
             'categories'=>$categories,
@@ -764,5 +764,86 @@ class SalonController extends Controller
             'status' => 200,
         ];
         return response()->json($response, 200);
+    }
+
+    function search(Request $request) {
+        // $validator = Validator::make($request->all(), [
+        //     'lat' => 'required',
+        //     'lng' => 'required',
+        //     'treatment_id' => 'required',
+        //     'treatment_type' => 'required',
+        // ]);
+        // if ($validator->fails()) {
+        //     $response = [
+        //         'success' => false,
+        //         'message' => 'Validation Error.', $validator->errors(),
+        //         'status'=> 500
+        //     ];
+        //     return response()->json($response, 404);
+        // }
+        $data = '';
+        if (isset($request->lat) && isset($request->lng)) {
+            $searchQuery = Settings::select('allowDistance','searchResultKind')->first();
+            $categories = Category::where(['status'=>1])->get();
+            if($searchQuery->searchResultKind == 1){
+                $values = 3959; // miles
+                $distanceType = 'miles';
+            }else{
+                $values = 6371; // km
+                $distanceType = 'km';
+            }
+
+            $data = Salon::select(DB::raw('salon.id as id,salon.uid as uid,salon.name as name,salon.rating as rating,salon.lat as lat,salon.lng as lng,
+            salon.total_rating as total_rating,salon.address as address,salon.cover as cover,salon.categories as categories, ( '.$values.' * acos( cos( radians('.$request->lat.') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('.$request->lng.') ) + sin( radians('.$request->lat.') ) * sin( radians( lat ) ) ) ) AS distance'))
+            ->having('distance', '<', (int)$searchQuery->allowDistance)
+            ->where(['salon.status'=>1,'salon.in_home'=>1]);
+
+
+            // foreach($data as $loop){
+            //     $ids = explode(',',$loop->categories);
+            //     $loop->categories = Category::select('id','name','cover')->WhereIn('id',$ids)->get();
+            // }
+        }
+
+        if (isset($request->category_id) && isset($request->category_type)) {
+            if ($request->category_type == 0) { // main category
+                // TODO
+                $categories = Category::where('parent_id', $request->category_id);
+            } else if ($request->category_type == 1) { // sub category
+                if ($data === '') {
+                    $data = Salon::whereRaw("find_in_set('".$request->category_id."',categories)");
+                } else {
+                    $data = $data->whereRaw("find_in_set('".$request->category_id."',categories)");
+                }
+            }
+        }
+
+
+
+        if ($data != '') {
+            if (isset($request->sort)) {
+                switch($request->sort) {
+                    case 0: // recommended
+                        // $data = $data->orderBy('distance');
+                        break;
+                    case 1: // nearest
+                        $data = $data->orderBy('distance', 'desc');
+                        break;
+                    case 2: // top-rated
+                        $data = $data->orderBy('rating', 'desc');
+                        break;
+                }
+
+            }
+            $data = $data->get();
+        }
+
+        $response = [
+            'data'=>$data,
+            'success' => true,
+            'status' => 200,
+        ];
+        return response()->json($response, 200);
+
     }
 }
