@@ -6,52 +6,6 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2022-present initappz.
  -->
- <style>
-
-  .anim-container {
-    color: #e5e5e5;
-    font-size: 2.26rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .anim-container section {
-    margin-left: 0px;
-  }
-
-  .animation {
-    height:50px;
-    overflow:hidden;
-    margin-left: 1rem;
-  }
-
-  .animation > div > div {
-    padding: 0.25rem 0.75rem;
-    height:2.73rem;
-    margin-bottom: 2.80rem;
-    display:inline-block;
-    color: #9C0278;
-  }
-
-  .animation div:first-child {
-    animation: text-animation 8s infinite;
-  }
-
-  @keyframes text-animation {
-    0% {margin-top: -0.15rem;}
-    10% {margin-top: -0.15rem;}
-    20% {margin-top: -5.42rem;}
-    30% {margin-top: -5.42rem;}
-    40% {margin-top: -10.82rem;}
-    60% {margin-top: -10.82rem;}
-    70% {margin-top: -5.42rem;}
-    80% {margin-top: -5.42rem;}
-    90% {margin-top: -0.15rem;}
-    100% {margin-top: -0.15rem;}
-  }
-
-</style>
 <div class="row_div">
   <div class="row">
     <div class="col-lg-12 col-sm-4 back_image bg_image" [style.backgroundImage]="'url(assets/imgs/back.png)'">
@@ -75,8 +29,8 @@
                     <div class="input_div">
                       <img src="assets/imgs/search.png" style="width: 18px;height: 18px;">
                       <input type="text" style="font-size: 16px;" class="form-control" [(ngModel)]="autocomplete1.query_treatment"
-                        [placeholder]="util.translate('Any Treatment')" (ngModelChange)="onSearchChangeTreatment($event)">
-                      <img src="assets/imgs/remove.png" style="width: 20px;height: 20px;cursor: pointer;" *ngIf="autocomplete1.query_treatment != ''" (click)="removeTreatmentSearchKey()">
+                        [placeholder]="util.translate('Any Treatment')" (ngModelChange)="onSearchChangeTreatmentCategory($event)">
+                      <img src="assets/imgs/remove.png" style="width: 20px;height: 20px;cursor: pointer;" *ngIf="autocomplete1.query_treatment != ''" (click)="removeTreatmentCategorySearchKey()">
                     </div>
                   </div>
                   <div class="col-6">
@@ -114,9 +68,9 @@
                 <div class="row col-11">
                   <div class="col-6" style="padding-right: 0px;">
                     <div class="treatment_list" *ngIf="autocompleteTreatmentItems.length > 0 && this.autocomplete1.query_treatment != ''">
-                      <div class="treatment_name" *ngFor="let item of autocompleteTreatmentItems"
+                      <div ngClass="treatment_name" *ngFor="let item of autocompleteTreatmentItems"
                         (click)="selectSearchTreatmentResult(item)">
-                        <img class="treatment_icon" [src]="api.mediaURL + item.cover">
+                        <img class="treatment_icon" [src]="api.mediaURL + item.cover" [style]="item.type==1 ? 'margin-left: 15px' : ''">
                         {{ item.name }}
                       </div>
                     </div>

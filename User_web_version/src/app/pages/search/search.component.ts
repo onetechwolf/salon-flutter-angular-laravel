@@ -6,12 +6,13 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2022-present initappz.
 */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilService } from 'src/app/services/util.service';
 import Swal from 'sweetalert2';
-import { NavigationExtras, ActivatedRoute } from '@angular/router';
+import { NavigationExtras, ActivatedRoute, Router } from '@angular/router';
+import { ModalDirective } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'app-search',
@@ -20,26 +21,27 @@ import { NavigationExtras, ActivatedRoute } from '@angular/router';
 })
 export class SearchComponent implements OnInit {
 
-  lat: string=''; lng: string=''; address: string=''; treatment: string='';
+  lat: string=''; lng: string=''; address: string=''; placeId: string=''; treatmentCategory: string='';categoryId: string=''; categoryType: string='';
   zoom = 12; // example zoom level
   isDropdownOpen = false;
-
   GoogleAutocomplete;
   geocoder: any;
   salonList: any[] = [];
   iconUrl: any = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
-
   places = [];
-
   autocompleteTreatmentItems: any = [];
   autocompleteLocationItems: any = [];
-  selectedSort: any = 1;
+  selectedSort: any = "0";selectedSortTemp: any = "0";
   apiCalled: boolean = false;
+  price: any = "";priceTemp: any = "";
+
+  @ViewChild('searchFilterModal') public searchFilterModal: ModalDirective;
 
   constructor(
     public util: UtilService,
     public api: ApiService,
-    private router: ActivatedRoute,
+    private activatedRouter: ActivatedRoute,
+    private router: Router,
   ) {
     this.autocompleteLocationItems = [];
     this.geocoder = new google.maps.Geocoder();
@@ -47,35 +49,49 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getParams();
     this.initSearch();
   }
 
+  getParams() {
+    this.treatmentCategory = this.activatedRouter.snapshot.queryParams['category'];
+    this.categoryId = this.activatedRouter.snapshot.queryParams['category_id'];
+    this.categoryType = this.activatedRouter.snapshot.queryParams['category_type'];
+    this.address = this.activatedRouter.snapshot.queryParams['address'];
+    this.placeId = this.activatedRouter.snapshot.queryParams['place_id'];
+  }
+
   initSearch() {
-    const treatment = this.router.snapshot.params['treatment'];
-    if (treatment != undefined) {
-      this.treatment = treatment;
-    }
-    this.lat = this.router.snapshot.params['lat'];
-    this.lng = this.router.snapshot.params['lng'];
-    this.address = this.router.snapshot.params['address'];
-    if (this.lat == undefined || this.lng == undefined || this.address == undefined) {
+    if (this.address == undefined || this.placeId == undefined) { // get current location when the location is not selected
       this.getCurrentAddress();
     } else {
-      this.getSalonData()
+      this.selectSearchLocationResult(this.placeId, this.address);
     }
   }
 
   getSalonData() {
+
+    // window.history.pushState({}, "", "/new-url");
+
+    this.util.start();
     this.apiCalled = false;
-    const param = { "lat": this.lat, "lng": this.lng };
-    this.api.post('v1/salon/getHomeDataWeb', param).then((data: any) => {
+    this.places = [];
+    this.salonList = [];
+    const param = {
+      "lat": this.lat,
+      "lng": this.lng,
+      "category_id": this.categoryId,
+      "category_type": this.categoryType,
+      "price": this.price,
+      "sort": this.selectedSort,
+    };
+    this.api.post('v1/salon/search', param).then((data: any) => {
       this.apiCalled = true;
+      this.util.stop();
       if (data && data.status == 200) {
-        console.log(data);
-        this.salonList = data.salon;
+        this.salonList = data.data;
         this.salonList.forEach(salon => {
-          this.places.push({lat:salon.salon_lat, lng:salon.salon_lng, cover: salon.cover});
-          console.log(this.places);
+          this.places.push({lat:salon.lat, lng:salon.lng, cover: salon.cover});
         });
       } else {
       }
@@ -85,28 +101,33 @@ export class SearchComponent implements OnInit {
     }).catch(error => {
       this.apiCalled = true;
       console.log('Err', error);
+      this.util.stop();
     });
   }
 
-  onSearchChangeTreatment(event) {
-    if (this.treatment == '') {
-      this.autocompleteTreatmentItems = [];
-      return;
-    }
+  onSearchChangeTreatmentCategory(event) {
+    this.autocompleteTreatmentItems = [];
 
-    let query = this.treatment;
-    this.autocompleteTreatmentItems = this.util.services.map(function(service) {
-      if (service.name.includes(query)) {
-        return service;
+    let query = this.treatmentCategory;
+    let tempId = 0;
+    this.util.categories.forEach(category => {
+      if (category.name.includes(query)) {
+        if (category.parent.id != tempId) {
+          category.parent.type = 0; // parent
+          this.autocompleteTreatmentItems.push(category.parent);
+          tempId = category.parent.id;
+        }
+        category.type = 1; // child
+        this.autocompleteTreatmentItems.push(category);
       }
-    }).filter(function(item) {
-      return item !== undefined;
     });
   }
 
   selectSearchTreatmentResult(item) {
     this.autocompleteTreatmentItems = [];
-    this.treatment = item.name;
+    this.treatmentCategory = item.name;
+    this.categoryType = item.type;
+    this.categoryId = item.id;
   }
 
   onSearchChangeLocation(event) {
@@ -124,17 +145,14 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  selectSearchLocationResult(item) {
-    console.log('select', item);
-    localStorage.setItem('addsSelected', 'true');
+  selectSearchLocationResult(placeId, address) {
     this.autocompleteLocationItems = [];
-    this.address = item.description;
-    this.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
+    this.address = address;
+    this.geocoder.geocode({ placeId: placeId }, (results, status) => {
       if (status == 'OK' && results[0]) {
-        console.log(status);
         this.lat = results[0].geometry.location.lat();
         this.lng = results[0].geometry.location.lng();
-        this.address = item.description;
+        this.getSalonData();
       }
     });
   }
@@ -150,18 +168,23 @@ export class SearchComponent implements OnInit {
         this.lat = lat;
         this.address = results[0].formatted_address;
         this.lng = lng;
+        this.getSalonData();
       }
     });
   }
 
-  removeTreatmentSearchKey() {
-    this.treatment = '';
+  removeTreatmentCategorySearchKey() {
+    this.treatmentCategory = '';
     this.autocompleteTreatmentItems = [];
+    this.categoryId = '';
+    this.categoryType = '';
   }
 
   removeLocationSearchKey() {
     this.address = '';
     this.autocompleteLocationItems = [];
+    this.lat = '';
+    this.lng = '';
   }
 
   toggleDropdown() {
@@ -201,7 +224,6 @@ export class SearchComponent implements OnInit {
       window.navigator.geolocation.getCurrentPosition(
         position => {
           this.getAddress(position.coords.latitude, position.coords.longitude);
-          this.getSalonData();
         },
         error => {
           this.util.stop();
@@ -224,6 +246,21 @@ export class SearchComponent implements OnInit {
         }
       );
     };
+  }
+
+  onSalon(salonUID: String, name: String) {
+    const routeName = name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();;
+    this.router.navigate(['salons', salonUID, routeName]);
+  }
+
+  showFilterModal() {
+    this.searchFilterModal.show();
+  }
+
+  clickFilter() {
+    this.price = this.priceTemp;
+    this.selectedSort = this.selectedSortTemp;
+    this.getSalonData();
   }
 }
 
