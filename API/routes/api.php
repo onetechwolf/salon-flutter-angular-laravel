@@ -7,7 +7,7 @@ use App\Http\Controllers\v1\CitiesController;
 use App\Http\Controllers\v1\TimeslotController;
 use App\Http\Controllers\v1\SalonController;
 use App\Http\Controllers\v1\CategoryController;
-use App\Http\Controllers\v1\PreCategoryController;
+use App\Http\Controllers\v1\TreatmentsController;
 use App\Http\Controllers\v1\IndividualController;
 use App\Http\Controllers\v1\BannersController;
 use App\Http\Controllers\v1\ProductCategoryController;
@@ -125,14 +125,14 @@ Route::prefix('/v1')->group(function () {
         Route::post('blogs/getById', [BlogsController::class, 'getById']);
 
         // Pre-Category Routes
-        Route::get('pre_category/getAll', [PreCategoryController::class, 'getAll']);
-        Route::get('pre_category/getStores', [PreCategoryController::class, 'getStores']);
-        Route::post('pre_category/create', [PreCategoryController::class, 'save']);
-        Route::post('pre_category/update', [PreCategoryController::class, 'update']);
-        Route::post('pre_category/destroy', [PreCategoryController::class, 'delete']);
-        Route::post('pre_category/getById', [PreCategoryController::class, 'getById']);
-        Route::get('pre_category/getActiveItem', [PreCategoryController::class, 'getActiveItem']);
-        Route::post('pre_category/updateStatus', [PreCategoryController::class, 'updateStatus']);
+        Route::get('treatments/getAll', [TreatmentsController::class, 'getAll']);
+        Route::get('treatments/getStores', [TreatmentsController::class, 'getStores']);
+        Route::post('treatments/create', [TreatmentsController::class, 'save']);
+        Route::post('treatments/update', [TreatmentsController::class, 'update']);
+        Route::post('treatments/destroy', [TreatmentsController::class, 'delete']);
+        Route::post('treatments/getById', [TreatmentsController::class, 'getById']);
+        Route::get('treatments/getActiveItem', [TreatmentsController::class, 'getActiveItem']);
+        Route::post('treatments/updateStatus', [TreatmentsController::class, 'updateStatus']);
         // Category Routes
         Route::get('category/getAll', [CategoryController::class, 'getAll']);
         Route::get('category/getStores', [CategoryController::class, 'getStores']);
@@ -403,6 +403,7 @@ Route::prefix('/v1')->group(function () {
     Route::post('salon/getTopFreelancer', [SalonController::class, 'getTopFreelancer']);
     Route::post('salon/getTopSalon', [SalonController::class, 'getTopSalon']);
     Route::get('category/getAllCategories', [CategoryController::class, 'getActiveItem']);
+    Route::get('treatments/getAllCategories', [TreatmentsController::class, 'getActiveItem']);
     Route::post('specialist/getActiveSpecialist', [SpecialistController::class, 'getActiveSpecialist']);
     Route::post('salon/salonDetails', [SalonController::class, 'salonDetails']);
     Route::post('freelancer_services/getByCategoryId', [ServicesController::class, 'getByCategoryId']);

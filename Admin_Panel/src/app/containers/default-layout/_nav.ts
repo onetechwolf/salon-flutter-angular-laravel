@@ -16,22 +16,22 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Treatments',
-    url: '/categories',
+    url: '/treatments',
     iconComponent: { name: 'cib-cakephp' },
     children: [
       {
-        name: 'Categories',
-        url: '/categories',
-        iconComponent: { name: 'cil-grid' }
-      },
-      {
-        name: 'Sub Categories',
-        url: '/sub_categories',
-        iconComponent: { name: 'cil-grid' }
-      },
-      {
         name: 'Treatments',
         url: '/treatments',
+        iconComponent: { name: 'cil-grid' }
+      },
+      {
+        name: 'Treatment Types',
+        url: '/treatment_types',
+        iconComponent: { name: 'cil-grid' }
+      },
+      {
+        name: 'Treatment Services',
+        url: '/treatment_services',
         iconComponent: { name: 'cib-cakephp' }
       }
     ]

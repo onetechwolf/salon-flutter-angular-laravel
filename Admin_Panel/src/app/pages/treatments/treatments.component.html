@@ -9,15 +9,47 @@
 <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
 <div class="animated fadeIn">
   <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-header">
+          {{util.translate('Treatments')}}
+        </div>
+        <div class="card-body">
+          <div class="logoContainer">
+            <img [src]="api.imageUrl+ cover" onError="this.src='assets/img/dummy.jpeg'">
+          </div>
+          <div class="fileContainer sprite">
+            <span> {{util.translate('Add Cover')}} </span>
+            <input (change)="preview_banner($event.target.files)" type="file" value="Choose File">
+          </div>
+          <p class="text-heler">
+            {{util.translate('Files types accepted: .jpg, .jpeg, .png, .bmp recommended size (512 X 512) pixels')}} </p>
+          <form>
+            <div class="form-group">
+              <label class="modal_lbl">{{util.translate('Treatment Name')}}</label>
+              <input class="form-control" [(ngModel)]="name" [ngModelOptions]="{standalone: true}"
+                [placeholder]="util.translate('Treatment Name')">
+            </div>
+          </form>
+          <br>
+          <button type="button" class="btn btn-success" *ngIf="this.action == 'create'" (click)="createTreatment()">
+            {{util.translate('Save')}}</button>
+          <button type="button" class="btn btn btn-primary" *ngIf="this.action == 'update'" (click)="updateTreatment()">
+            {{util.translate('Update')}}</button>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
       <div class="card">
         <div class="card-header">
           {{util.translate('All Treatments')}}
         </div>
         <div class="card-body">
+
           <div class="row flex_row">
             <div class="col-lg-12">
-              <input type="text" class="form-control" id="name" [placeholder]="util.translate('Search Treatments With Name')"
+              <input type="text" class="form-control" id="name" [placeholder]="util.translate('Search Treatment')"
                 (input)="search($event.target.value)">
             </div>
           </div>
@@ -30,14 +62,7 @@
             <thead *ngIf="list?.length > 0">
               <tr>
                 <th>{{util.translate('Cover')}}</th>
-                <th>{{util.translate('Salon/Beautician')}}</th>
-                <th>{{util.translate('Category')}}</th>
-                <th>{{util.translate('Name')}}</th>
-                <th>{{util.translate('Duration')}}</th>
-                <th>{{util.translate('Price')}}</th>
-                <th>{{util.translate('Off')}}</th>
-                <th>{{util.translate('Dismount')}}</th>
-                <th>{{util.translate('Description')}}</th>
+                <th>{{util.translate('Treatment Name')}}</th>
                 <th>{{util.translate('Action')}}</th>
               </tr>
             </thead>
@@ -52,18 +77,7 @@
                   <img class="img-responsive" style="height: 40px;width: 40px; object-fit: cover;"
                     [src]="api.imageUrl + item.cover" onError="this.src='assets/img/dummy.jpeg'">
                 </td>
-                <td>{{item.user.first_name + ' ' + item.user.last_name}}</td>
-                <td>  
-                  <p *ngIf="item.category != undefined && item.category.length > 0">
-                    <span *ngFor="let i of item.category">{{ i.name + ',' }}</span>
-                  </p>
-                </td>
                 <td>{{item.name}}</td>
-                <td>{{item.duration}}</td>
-                <td>{{item.price}}</td>
-                <td>{{item.off}}</td>
-                <td>{{item.dismount}}</td>
-                <td>{{item.descriptions}}</td>
                 <td>
                   <c-badge [color]="item.status == 1?'success':'dark'"
                     [class]="item.status == 1 ? 'me-1 badge bg-success':'me-1 badge bg-dark'"

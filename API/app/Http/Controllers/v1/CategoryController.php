@@ -201,7 +201,12 @@ class CategoryController extends Controller
     }
 
     public function getActiveItem(Request $request){
-        $data = Category::where('status',1)->get();
+        $data = [];
+        if (isset($request->parent_id)) {
+            $data = Category::where('parent_id', $request->parent_id)->where('status',1)->get();
+        } else {
+            $data = Category::where('status',1)->get();
+        }
 
         $response = [
             'data'=>$data,

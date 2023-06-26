@@ -8,12 +8,12 @@
 */
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PreCategoriesComponent } from './pre-categories.component';
+import { TreatmentTypesComponent } from './treatment-types.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: PreCategoriesComponent
+    component: TreatmentTypesComponent
   }
 ];
 
@@ -21,4 +21,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PreCategoriesRoutingModule { }
+export class TreatmentTypesRoutingModule { }

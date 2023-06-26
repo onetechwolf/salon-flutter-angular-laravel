@@ -5,12 +5,12 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Individual;
-use App\Models\PreCategory;
+use App\Models\Treatment;
 use App\Models\Salon;
 use Validator;
 use DB;
 
-class PreCategoryController extends Controller
+class TreatmentsController extends Controller
 {
     public function save(Request $request){
         $validator = Validator::make($request->all(), [
@@ -26,7 +26,7 @@ class PreCategoryController extends Controller
             return response()->json($response, 404);
         }
 
-        $data = PreCategory::create($request->all());
+        $data = Treatment::create($request->all());
         if (is_null($data)) {
             $response = [
             'data'=>$data,
@@ -56,7 +56,7 @@ class PreCategoryController extends Controller
             return response()->json($response, 404);
         }
 
-        $data = PreCategory::find($request->id);
+        $data = Treatment::find($request->id);
 
         if (is_null($data)) {
             $response = [
@@ -87,7 +87,7 @@ class PreCategoryController extends Controller
             ];
             return response()->json($response, 404);
         }
-        $data = PreCategory::find($request->id)->update($request->all());
+        $data = Treatment::find($request->id)->update($request->all());
 
         if (is_null($data)) {
             $response = [
@@ -117,7 +117,7 @@ class PreCategoryController extends Controller
             ];
             return response()->json($response, 404);
         }
-        $data = PreCategory::find($request->id);
+        $data = Treatment::find($request->id);
         if ($data) {
             $data->delete();
             $response = [
@@ -136,7 +136,7 @@ class PreCategoryController extends Controller
     }
 
     public function getAll(){
-        $data = PreCategory::all();
+        $data = Treatment::all();
         if (is_null($data)) {
             $response = [
                 'success' => false,
@@ -168,7 +168,7 @@ class PreCategoryController extends Controller
         }
         $data = Salon::where('uid',$request->id)->first();
         $ids = explode(',',$data->categories);
-        $cats = PreCategory::WhereIn('id',$ids)->get();
+        $cats = Treatment::WhereIn('id',$ids)->get();
         $response = [
             'data'=>$cats,
             'success' => true,
@@ -191,7 +191,7 @@ class PreCategoryController extends Controller
         }
         $data = Individual::where('uid',$request->id)->first();
         $ids = explode(',',$data->categories);
-        $cats = PreCategory::WhereIn('id',$ids)->get();
+        $cats = Treatment::WhereIn('id',$ids)->get();
         $response = [
             'data'=>$cats,
             'success' => true,
@@ -201,7 +201,7 @@ class PreCategoryController extends Controller
     }
 
     public function getActiveItem(Request $request){
-        $data = PreCategory::where('status',1)->get();
+        $data = Treatment::where('status',1)->get();
 
         $response = [
             'data'=>$data,
@@ -231,12 +231,12 @@ class PreCategoryController extends Controller
                             'cover' => $row['cover'],
                             'status' => $row['status'],
                         );
-                        $checkLead  =  PreCategory::where("id", "=", $row["id"])->first();
+                        $checkLead  =  Treatment::where("id", "=", $row["id"])->first();
                         if (!is_null($checkLead)) {
-                            DB::table('pre_categories')->where("id", "=", $row["id"])->update($insertInfo);
+                            DB::table('treatments')->where("id", "=", $row["id"])->update($insertInfo);
                         }
                         else {
-                            DB::table('pre_categories')->insert($insertInfo);
+                            DB::table('treatments')->insert($insertInfo);
                         }
                     }
                 }

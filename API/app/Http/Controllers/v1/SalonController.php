@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Salon;
 use App\Models\Banners;
 use App\Models\Category;
+use App\Models\Treatment;
 use App\Models\User;
 use App\Models\Cities;
 use App\Models\Settings;
@@ -249,7 +250,7 @@ class SalonController extends Controller
             return response()->json($response, 404);
         }
         $searchQuery = Settings::select('allowDistance','searchResultKind')->first();
-        $categories = Category::where(['status'=>1])->get();
+        $categories = Treatment::where(['status'=>1])->get();
         if($searchQuery->searchResultKind == 1){
             $values = 3959; // miles
             $distanceType = 'miles';
@@ -282,8 +283,6 @@ class SalonController extends Controller
         // foreach($freelancer as $loop){
         //     $loop->userInfo = User::select('first_name','last_name','cover')->find($loop->uid);
         // }
-
-        $categories =  Category::where('status',1)->get();
 
         $cities  = Cities::select(DB::raw('cities.id as id,cities.name as name, ( '.$values.' * acos( cos( radians('.$request->lat.') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('.$request->lng.') ) + sin( radians('.$request->lat.') ) * sin( radians( lat ) ) ) ) AS distance'))
         ->having('distance', '<', (int)$searchQuery->allowDistance)
@@ -459,6 +458,7 @@ class SalonController extends Controller
             'lat' => 'required',
             'lng' => 'required',
             'id' => 'required',
+            'type' => 'required',
         ]);
         if ($validator->fails()) {
             $response = [
@@ -469,7 +469,7 @@ class SalonController extends Controller
             return response()->json($response, 404);
         }
         $searchQuery = Settings::select('allowDistance','searchResultKind')->first();
-        $categories = Category::where(['status'=>1])->get();
+
         if($searchQuery->searchResultKind == 1){
             $values = 3959; // miles
             $distanceType = 'miles';
@@ -482,9 +482,20 @@ class SalonController extends Controller
         salon.total_rating as total_rating,salon.address as address,salon.cover as cover,salon.categories, ( '.$values.' * acos( cos( radians('.$request->lat.') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('.$request->lng.') ) + sin( radians('.$request->lat.') ) * sin( radians( lat ) ) ) ) AS distance'))
         ->having('distance', '<', (int)$searchQuery->allowDistance)
         ->orderBy('distance')
-        ->where(['salon.status'=>1,'salon.in_home'=>1])
-        ->whereRaw("find_in_set('".$request->id."',salon.categories)")
-        ->get();
+        ->where(['salon.status'=>1,'salon.in_home'=>1]);
+        if ($request->type == 0) {// main category
+            $categories = Category::where(['parent_id'=>$request->id])->get();
+
+            $salon = $salon->where(function($query) use ($categories) {
+                foreach ($categories as $key => $category) {
+                    $query->orWhereRaw("find_in_set('".$category->id."',salon.categories)");
+                }
+            });
+        } else if($request->type == 1) {
+            $salon = $salon->whereRaw("find_in_set('".$request->id."',salon.categories)");
+        }
+
+        $salon = $salon->get();
         foreach($salon as $loop){
             $ids = explode(',',$loop->categories);
             $loop->categories = Category::select('id','name','cover')->WhereIn('id',$ids)->get();

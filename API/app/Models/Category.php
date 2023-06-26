@@ -26,6 +26,6 @@ class Category extends Model
 
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(PreCategory::class, 'parent_id');
+        return $this->belongsTo(Treatment::class, 'parent_id');
     }
 }

@@ -9,8 +9,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CategoriesRoutingModule } from './categories-routing.module';
-import { CategoriesComponent } from './categories.component';
+import { TreatmentTypesRoutingModule } from './treatment-types-routing.module';
+import { TreatmentTypesComponent } from './treatment-types.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -20,11 +20,11 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 
 @NgModule({
   declarations: [
-    CategoriesComponent
+    TreatmentTypesComponent
   ],
   imports: [
     CommonModule,
-    CategoriesRoutingModule,
+    TreatmentTypesRoutingModule,
     FormsModule,
     NgxSpinnerModule,
     NgxPaginationModule,
@@ -33,4 +33,4 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     ModalModule
   ]
 })
-export class CategoriesModule { }
+export class TreatmentTypesModule { }

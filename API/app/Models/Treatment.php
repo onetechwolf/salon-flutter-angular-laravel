@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PreCategory extends Model
+class Treatment extends Model
 {
     use HasFactory;
 
-    protected $table = 'pre_categories';
+    protected $table = 'treatments';
 
     public $timestamps = true; //by default timestamp false
 
