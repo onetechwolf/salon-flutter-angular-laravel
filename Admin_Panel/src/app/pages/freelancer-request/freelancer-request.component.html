@@ -76,12 +76,7 @@
                                     <img class="img-responsive" style="height: 60px;width: 60px; object-fit: cover;" 
                                         [src]="this.api.imageUrl + item.qualification" onError="this.src='assets/img/dummy.jpeg'"  (click)="clickZoom(this.api.imageUrl + item.qualification, 1)"/>
                                 </td>
-                                <td>
-                                    Cancellation: {{item.policy.cancellation}}<br/>
-                                    Late: {{item.policy.late}}<br/>
-                                    No-show: {{item.policy.no_show}}<br/>
-                                    Reschedule: {{item.policy.reschedule}}
-                                </td>
+                                <td>{{ item.policy }}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
 

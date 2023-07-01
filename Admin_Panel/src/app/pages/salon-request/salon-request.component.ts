@@ -51,6 +51,9 @@ export class SalonRequestComponent implements OnInit {
   id_card: any= '';
   qualification: any='';
   policy: any='';
+  type: any='';
+  sub_type: any='';
+
   constructor(
     public util: UtilService,
     public api: ApiService
@@ -70,9 +73,6 @@ export class SalonRequestComponent implements OnInit {
         console.log(">>>>>", data);
         if (data.data.length > 0) {
           this.freelancers = data.data;
-          this.freelancers.forEach(element => {
-            return element.policy = JSON.parse(element.policy);
-          });
         }
       }
     }, error => {
@@ -157,6 +157,8 @@ export class SalonRequestComponent implements OnInit {
         this.id_card = item.id_card;
         this.qualification = item.qualification;
         this.policy = item.policy;
+        this.type = item.type;
+        this.sub_type = item.sub_type;
         this.largeModal.show();
       }
     });
@@ -183,6 +185,8 @@ export class SalonRequestComponent implements OnInit {
       password: this.password,
       dob: this.dob,
       cid: this.cityID,
+      type: this.type,
+      sub_type: this.sub_type,
     };
     this.util.show();
     this.api.post_private('v1/auth/createSalonAccount', param).then((data: any) => {

@@ -477,7 +477,7 @@ export class FreelancerComponent implements OnInit {
         this.lat = data.data.lat;
         this.lng = data.data.lng;
         this.about = data.data.about;
-        this.cover = data.data.cover;
+        this.cover = data.data.user_data.cover;
         this.address = data.data.address;
         this.have_shop = data.data.have_shop;
         this.fee_start = data.data.fee_start;

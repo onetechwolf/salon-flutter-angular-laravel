@@ -39,7 +39,7 @@ export class TreatmentTypesComponent implements OnInit {
   }
 
   getTreatments() {
-    this.api.get_private('v1/treatments/getAll').then((data: any) => {
+    this.api.get_private('v1/category/getAll').then((data: any) => {
       if (data && data.status && data.status == 200 && data.success) {
         console.log(">>>>>", data);
         if (data.data.length > 0) {
@@ -58,7 +58,7 @@ export class TreatmentTypesComponent implements OnInit {
   getAll() {
     this.list = [];
     this.dummy = Array(5);
-    this.api.get_private('v1/category/getAll').then((data: any) => {
+    this.api.get_private('v1/category_type/getAll').then((data: any) => {
       this.dummy = [];
       if (data && data.status && data.status == 200 && data.success) {
         console.log(">>>>>", data);
@@ -117,7 +117,7 @@ export class TreatmentTypesComponent implements OnInit {
         console.log(item);
         console.log(item);
         this.util.show();
-        this.api.post_private('v1/category/destroy', { id: item.id }).then((data: any) => {
+        this.api.post_private('v1/category_type/destroy', { id: item.id }).then((data: any) => {
           console.log(data);
           this.util.hide();
           if (data && data.status && data.status == 200) {
@@ -183,7 +183,7 @@ export class TreatmentTypesComponent implements OnInit {
         };
         console.log("======", body);
         this.util.show();
-        this.api.post_private('v1/category/update', body).then((data: any) => {
+        this.api.post_private('v1/category_type/update', body).then((data: any) => {
           this.util.hide();
           console.log("+++++++++++++++", data);
           if (data && data.status && data.status == 200 && data.success) {
@@ -212,7 +212,7 @@ export class TreatmentTypesComponent implements OnInit {
     };
     console.log("CAT BY ID => ", body);
     this.util.show();
-    this.api.post_private('v1/category/getById', body).then((data: any) => {
+    this.api.post_private('v1/category_type/getById', body).then((data: any) => {
       console.log(data);
       this.util.hide();
       if (data && data.status && data.status == 200 && data.success) {
@@ -249,7 +249,7 @@ export class TreatmentTypesComponent implements OnInit {
         parent_id: this.treatmentId,
       };
       this.util.show();
-      this.api.post_private('v1/category/create', body).then((data: any) => {
+      this.api.post_private('v1/category_type/create', body).then((data: any) => {
         console.log("+++++++++++++++", data);
         this.util.hide();
         if (data && data.status && data.status == 200 && data.success) {
@@ -283,7 +283,7 @@ export class TreatmentTypesComponent implements OnInit {
       };
       console.log("======", body);
       this.util.show();
-      this.api.post_private('v1/category/update', body).then((data: any) => {
+      this.api.post_private('v1/category_type/update', body).then((data: any) => {
         console.log("+++++++++++++++", data);
         this.util.hide();
         if (data && data.status && data.status == 200 && data.success) {

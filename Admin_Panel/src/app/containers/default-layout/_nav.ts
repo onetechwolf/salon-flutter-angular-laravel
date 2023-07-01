@@ -47,13 +47,13 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-spreadsheet' }
   },
   {
-    name: 'Salons',
-    url: '/salons',
+    name: 'Partners',
+    url: '/partners',
     iconComponent: { name: 'cil-bank' },
     children: [
       {
-        name: 'Salons',
-        url: '/salons',
+        name: 'Partners',
+        url: '/partners',
         iconComponent: { name: 'cil-bank' }
       },
       {
@@ -63,39 +63,39 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Joining Request',
-        url: '/salon-request',
+        url: '/partner-request',
         iconComponent: { name: 'cil-face' }
       },
       {
-        name: 'Salon Stats',
-        url: '/salon-stats',
+        name: 'Partner Stats',
+        url: '/partner-stats',
         iconComponent: { name: 'cil-chart-line' }
       }
     ]
   },
   {
-    name: 'Freelancer',
-    url: '/freelancer',
+    name: 'Mobile Beautician',
+    url: '/beautician',
     iconComponent: { name: 'cil-walk' },
     children: [
       {
-        name: 'Freelancers',
-        url: '/freelancer',
+        name: 'Mobile Beautician',
+        url: '/beautician',
         iconComponent: { name: 'cil-walk' },
       },
       {
         name: 'Appointments',
-        url: '/freelancer-appointments',
+        url: '/beautician-appointments',
         iconComponent: { name: 'cil-calendar' },
       },
       {
         name: 'Joining Request',
-        url: '/freelancer-request',
+        url: '/beautician-request',
         iconComponent: { name: 'cil-face' }
       },
       {
-        name: 'Freelancer Stats',
-        url: '/freelancer-stats',
+        name: 'Mobile Beautician Stats',
+        url: '/beautician-stats',
         iconComponent: { name: 'cil-chart-line' }
       }
     ]

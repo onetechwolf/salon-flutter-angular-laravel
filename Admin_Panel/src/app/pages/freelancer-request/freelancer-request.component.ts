@@ -51,6 +51,7 @@ export class FreelancerRequestComponent implements OnInit {
   id_card: any= '';
   qualification: any='';
   policy: any='';
+  sub_type: any='';
 
   constructor(
     public util: UtilService,
@@ -71,9 +72,6 @@ export class FreelancerRequestComponent implements OnInit {
         console.log(">>>>>", data);
         if (data.data.length > 0) {
           this.freelancers = data.data;
-          this.freelancers.forEach(element => {
-            return element.policy = JSON.parse(element.policy);
-          });
         }
       }
     }, error => {
@@ -158,6 +156,7 @@ export class FreelancerRequestComponent implements OnInit {
         this.id_card = item.id_card;
         this.qualification = item.qualification;
         this.policy = item.policy;
+        this.sub_type = item.sub_type;
         this.largeModal.show();
       }
     });
@@ -184,6 +183,7 @@ export class FreelancerRequestComponent implements OnInit {
       password: this.password,
       dob: this.dob,
       cid: this.cityID,
+      sub_type: this.sub_type
     };
     this.util.show();
     this.api.post_private('v1/auth/createIndividualAccount', param).then((data: any) => {

@@ -13,7 +13,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    {{util.translate('All Salons')}}
+                    {{util.translate('All Partners')}}
                     <div class="card-header-actions">
                         <button type="submit" class="btn btn-sm btn-primary" style="float: right;margin: 0px 5px;"
                             (click)="createNew()">
@@ -48,7 +48,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of dummySalons">
-                                <td *ngFor="let item of [1,2,3,4,1,2,3,4,5,5,6,1]">
+                                <td *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
                                     <ngx-skeleton-loader count="1" appearance="line"></ngx-skeleton-loader>
                                 </td>
                             </tr>
@@ -157,7 +157,7 @@
     <div class="modal-dialog modal-primary modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{util.translate('Manage Salon')}} </h5>
+                <h5 class="modal-title">{{util.translate('Manage Partner')}} </h5>
                 <button type="button" class="close" (click)="myModal2.hide()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -255,7 +255,7 @@
 
                     <div class="card-header text-center border-0">
                         <div class="d-flex justify-content-start">
-                            <h4>{{util.translate('Freelancer Details')}} </h4>
+                            <h4>{{util.translate('Partner Details')}} </h4>
                         </div>
                     </div>
                     <div class="card-body">
@@ -274,7 +274,7 @@
                                     <div class="input-group input-group-alternative">
                                         <input type="text" id="input-last-name"
                                             class="form-control form-control-alternative"
-                                            [placeholder]="util.translate('Salon Name')" [(ngModel)]="name">
+                                            [placeholder]="util.translate('Partner Name')" [(ngModel)]="name">
                                     </div>
                                 </div>
                             </div>
@@ -294,7 +294,7 @@
                                     <div class="input-group input-group-alternative">
                                         <textarea class="form-control form-control-alternative" rows="3"
                                             [(ngModel)]="address"
-                                            [placeholder]="util.translate('Salon Address')"></textarea>
+                                            [placeholder]="util.translate('Partner Address')"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -364,48 +364,8 @@
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-email">{{util.translate('Policy')}}
                                     </label>
-                                    <div class="row">
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-email">{{util.translate('Cancellation')}}
-                                                </label>
-                                                <div class="input-group input-group-alternative">
-                                                    <textarea class="form-control form-control-alternative" rows="3"
-                                                        [(ngModel)]="cancellation"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-email">{{util.translate('Late')}}
-                                                </label>
-                                                <div class="input-group input-group-alternative">
-                                                    <textarea class="form-control form-control-alternative" rows="3"
-                                                        [(ngModel)]="late"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-email">{{util.translate('No-Show')}}
-                                                </label>
-                                                <div class="input-group input-group-alternative">
-                                                    <textarea class="form-control form-control-alternative" rows="3"
-                                                        [(ngModel)]="no_show"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-email">{{util.translate('Reschedule')}}
-                                                </label>
-                                                <div class="input-group input-group-alternative">
-                                                    <textarea class="form-control form-control-alternative" rows="3"
-                                                        [(ngModel)]="reschedule"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <textarea class="form-control form-control-alternative" rows="3"
+                                        [(ngModel)]="policy"></textarea>
                                 </div>
                             </div>
 
@@ -456,7 +416,7 @@
                 <button type="button" class="btn btn-primary" (click)="updateSalon()" *ngIf="action == 'update'">
                     {{util.translate('Save changes')}}
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="myModal2.close()">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="myModal2.hide()">
                     {{util.translate('Close')}}
                 </button>
             </div>

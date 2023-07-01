@@ -32,12 +32,13 @@
                                 <th scope="col">{{util.translate('Id Card')}}</th>
                                 <th scope="col">{{util.translate('Qualification')}}</th>
                                 <th scope="col">{{util.translate('Policy')}}</th>
+                                <th scope="col">{{util.translate('Salon Type')}}</th>
                                 <th scope="col">{{util.translate('Action')}}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of dummyFreelacer">
-                                <td *ngFor="let item of [1,2,3,4,1,2,3,4,5,5,6]">
+                                <td *ngFor="let item of [1,2,3,4,1,2,3,4,5,5,6,7]">
                                     <ngx-skeleton-loader count="1" appearance="line"></ngx-skeleton-loader>
                                 </td>
                             </tr>
@@ -77,11 +78,9 @@
                                         [src]="this.api.imageUrl + item.qualification" onError="this.src='assets/img/dummy.jpeg'"  (click)="clickZoom(this.api.imageUrl + item.qualification, 1)"/>
                                 </td>
                                 <td>
-                                    Cancellation: {{item.policy.cancellation}}<br/>
-                                    Late: {{item.policy.late}}<br/>
-                                    No-show: {{item.policy.no_show}}<br/>
-                                    Reschedule: {{item.policy.reschedule}}
+                                    {{ item.policy }}
                                 </td>
+                                <td>{{ item.sub_type }}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
 
