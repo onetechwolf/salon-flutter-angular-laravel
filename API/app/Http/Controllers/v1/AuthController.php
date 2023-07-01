@@ -387,6 +387,8 @@ class AuthController extends Controller
             'cover' => 'required',
             'dob' => 'required',
             'cid' => 'required',
+            'type' => 'required',
+            'sub_type' => 'required',
         ]);
         if ($validator->fails()) {
             $response = [
@@ -407,6 +409,7 @@ class AuthController extends Controller
                     'first_name'=>$request->first_name,
                     'last_name'=>$request->last_name,
                     'type'=>'salon',
+                    'sub_type'=>$request->sub_type,
                     'status'=>1,
                     'mobile'=>$request->mobile,
                     'cover'=>$request->cover,
@@ -445,6 +448,7 @@ class AuthController extends Controller
             'cover' => 'required',
             'cid' => 'required',
             'dob' => 'required',
+            'sub_type' => 'required'
         ]);
         if ($validator->fails()) {
             $response = [
@@ -465,6 +469,7 @@ class AuthController extends Controller
                     'first_name'=>$request->first_name,
                     'last_name'=>$request->last_name,
                     'type'=>'individual',
+                    'sub_type'=>$request->sub_type,
                     'status'=>1,
                     'mobile'=>$request->mobile,
                     'cover'=>$request->cover,

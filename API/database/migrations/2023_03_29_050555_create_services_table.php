@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('cover')->nullable();
             $table->double('duration',10,2)->nullable();
             $table->double('price',10,2)->nullable();
-            $table->integer('off');
+            $table->integer('off')->nullable();
             $table->double('discount',10,2)->nullable();
             $table->text('descriptions')->nullable();
             $table->text('images')->nullable();

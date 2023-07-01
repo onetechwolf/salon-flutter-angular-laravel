@@ -81,24 +81,26 @@ class RegisterRequestController extends Controller
             $matchThese = ['country_code' => $request->country_code, 'mobile' => $request->mobile];
             $data = RegisterRequest::where($matchThese)->first();
             if (is_null($data) || !$data) {
-
+                $request->merge(['sub_type' => $request->type]);
+                if ($request->type == 'Mobile Beautician') {
+                    $request->merge(['type' => 'individual']);
+                } else {
+                    $request->merge(['type' => 'salon']);
+                }
                 $data = RegisterRequest::create($request->all());
                 if (is_null($data)) {
                     $response = [
-                    'data'=>$data,
-                    'message' => 'error',
-                    'status' => 500,
-                ];
-                return response()->json($response, 200);
+                        'data'=>$data,
+                        'message' => 'error',
+                        'status' => 500,
+                    ];
+                    return response()->json($response, 200);
                 }
 
                 $generalInfo = Settings::take(1)->first();
                 $subject = '';
-                if ($request->type == 'salon') {
-                    $subject = 'Salon Register Request';
-                } else if ($request->type == 'individual') {
-                    $subject = 'Mobile Beautician Register Request';
-                }
+
+                $subject = $request->type . ' Register Request';
 
                 $request->merge([
                     'cover_src' =>base64_encode($this->curl_get_file_contents(env('APP_URL', 'http://api.bunitas.com') . '/storage/images/' . $request->cover))
@@ -245,7 +247,7 @@ class RegisterRequestController extends Controller
     }
 
     public function getSalonRequest(Request $request){
-        $data = RegisterRequest::where('type','salon')->get();
+        $data = RegisterRequest::where('type', 'salon')->get();
         foreach($data as $loop){
             if($loop && $loop->categories && $loop->categories !=null){
                 $ids = explode(',',$loop->categories);

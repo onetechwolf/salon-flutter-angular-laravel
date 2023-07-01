@@ -7,7 +7,7 @@ use App\Http\Controllers\v1\CitiesController;
 use App\Http\Controllers\v1\TimeslotController;
 use App\Http\Controllers\v1\SalonController;
 use App\Http\Controllers\v1\CategoryController;
-use App\Http\Controllers\v1\TreatmentsController;
+use App\Http\Controllers\v1\CategoryTypeController;
 use App\Http\Controllers\v1\IndividualController;
 use App\Http\Controllers\v1\BannersController;
 use App\Http\Controllers\v1\ProductCategoryController;
@@ -104,6 +104,7 @@ Route::prefix('/v1')->group(function () {
         Route::post('salon/create', [SalonController::class, 'save']);
         Route::post('salon/update', [SalonController::class, 'update']);
         Route::post('salon/updatePolicy', [SalonController::class, 'updatePolicy']);
+        Route::post('salon/getPolicy', [SalonController::class, 'getPolicy']);
         Route::post('salon/destroy', [SalonController::class, 'delete']);
         Route::post('salon/getById', [SalonController::class, 'getById']);
         Route::get('salon/getListForOffers', [SalonController::class, 'getListForOffers']);
@@ -124,16 +125,7 @@ Route::prefix('/v1')->group(function () {
         Route::post('blogs/destroy', [BlogsController::class, 'delete']);
         Route::post('blogs/getById', [BlogsController::class, 'getById']);
 
-        // Pre-Category Routes
-        Route::get('treatments/getAll', [TreatmentsController::class, 'getAll']);
-        Route::get('treatments/getStores', [TreatmentsController::class, 'getStores']);
-        Route::post('treatments/create', [TreatmentsController::class, 'save']);
-        Route::post('treatments/update', [TreatmentsController::class, 'update']);
-        Route::post('treatments/destroy', [TreatmentsController::class, 'delete']);
-        Route::post('treatments/getById', [TreatmentsController::class, 'getById']);
-        Route::get('treatments/getActiveItem', [TreatmentsController::class, 'getActiveItem']);
-        Route::post('treatments/updateStatus', [TreatmentsController::class, 'updateStatus']);
-        // Category Routes
+        // Treatments Routes
         Route::get('category/getAll', [CategoryController::class, 'getAll']);
         Route::get('category/getStores', [CategoryController::class, 'getStores']);
         Route::post('category/create', [CategoryController::class, 'save']);
@@ -144,6 +136,16 @@ Route::prefix('/v1')->group(function () {
         Route::post('category/updateStatus', [CategoryController::class, 'updateStatus']);
         Route::post('salon/getMySelectedCategory', [CategoryController::class, 'getMySelectedCategory']);
         Route::post('individual/getMySavedCategory', [CategoryController::class, 'getMySavedCategory']);
+
+        // Treatment Types Routes
+        Route::get('category_type/getAll', [CategoryTypeController::class, 'getAll']);
+        Route::get('category_type/getStores', [CategoryTypeController::class, 'getStores']);
+        Route::post('category_type/create', [CategoryTypeController::class, 'save']);
+        Route::post('category_type/update', [CategoryTypeController::class, 'update']);
+        Route::post('category_type/destroy', [CategoryTypeController::class, 'delete']);
+        Route::post('category_type/getById', [CategoryTypeController::class, 'getById']);
+        Route::post('category_type/getByTreatmentId', [CategoryTypeController::class, 'getByTreatmentId']);
+        Route::get('category_type/getActiveItem', [CategoryTypeController::class, 'getActiveItem']);
 
 
         // Banners Routes

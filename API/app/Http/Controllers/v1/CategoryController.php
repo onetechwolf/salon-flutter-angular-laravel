@@ -56,7 +56,7 @@ class CategoryController extends Controller
             return response()->json($response, 404);
         }
 
-        $data = Category::with('parent')->find($request->id);
+        $data = Category::find($request->id);
 
         if (is_null($data)) {
             $response = [
@@ -136,7 +136,7 @@ class CategoryController extends Controller
     }
 
     public function getAll(){
-        $data = Category::with('parent')->get();
+        $data = Category::all();
         if (is_null($data)) {
             $response = [
                 'success' => false,
@@ -201,12 +201,7 @@ class CategoryController extends Controller
     }
 
     public function getActiveItem(Request $request){
-        $data = [];
-        if (isset($request->parent_id)) {
-            $data = Category::where('parent_id', $request->parent_id)->where('status',1)->get();
-        } else {
-            $data = Category::where('status',1)->get();
-        }
+        $data = Category::where('status',1)->get();
 
         $response = [
             'data'=>$data,

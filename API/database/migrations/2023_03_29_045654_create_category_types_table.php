@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('treatments', function (Blueprint $table) {
+        Schema::create('category_types', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('parent_id');
             $table->string('name')->nullable();
             $table->string('cover')->nullable();
             $table->text('extra_field')->nullable();

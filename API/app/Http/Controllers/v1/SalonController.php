@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Salon;
 use App\Models\Banners;
 use App\Models\Category;
-use App\Models\Treatment;
 use App\Models\User;
 use App\Models\Cities;
 use App\Models\Settings;
@@ -250,7 +249,7 @@ class SalonController extends Controller
             return response()->json($response, 404);
         }
         $searchQuery = Settings::select('allowDistance','searchResultKind')->first();
-        $categories = Treatment::where(['status'=>1])->get();
+        $categories = Category::where(['status'=>1])->get();
         if($searchQuery->searchResultKind == 1){
             $values = 3959; // miles
             $distanceType = 'miles';
@@ -581,7 +580,7 @@ class SalonController extends Controller
 
         $interval = $date1->diff($date2);
 
-        if ($interval->format('%a') < 30) {
+        if ($salon->policy_date && $interval->format('%a') < 30) {
             $response = [
                 'success' => false,
                 'message' => 'Not allowed to change.',
@@ -595,6 +594,28 @@ class SalonController extends Controller
 
         $response = [
             'data'=>$salon,
+            'success' => true,
+            'status' => 200,
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function getPolicy(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $response = [
+                'success' => false,
+                'message' => 'Validation Error.', $validator->errors(),
+                'status'=> 500
+            ];
+            return response()->json($response, 404);
+        }
+        $salon = Salon::find($request->id);
+
+        $response = [
+            'data'=>$salon->policy,
             'success' => true,
             'status' => 200,
         ];
