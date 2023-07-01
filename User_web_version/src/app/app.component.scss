@@ -274,3 +274,34 @@
 .spacer {
   margin-top: 75px;
 }
+$midnight: #ffffff;
+.location_list, .treatment_list {
+  background: white;
+  box-shadow: 0px 1px 9px grey;
+  padding: 10px 15px 10px 15px;
+  border-radius: 7px;
+  border: 1px solid grey;
+
+  .location_name, .treatment_name {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0px;
+    // border-bottom: 1px dashed lightgray;
+    padding: 8px;
+    font-size: 15px;
+    align-items: center;
+    z-index: 9999;
+    overflow: visible;
+    cursor: pointer;
+
+    &:hover {
+      background: darken($midnight, 5%);
+    }
+
+    .treatment_icon {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+  }
+}

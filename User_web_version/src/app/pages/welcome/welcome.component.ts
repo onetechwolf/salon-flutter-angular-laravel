@@ -6,7 +6,7 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2022-present initappz.
 */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
@@ -31,6 +31,8 @@ export class WelcomeComponent implements OnInit {
   selectedTreatmentCategoryType: any;
   selectedPlaceId: any;
   geocoder: any;
+
+  @ViewChild('downloadLocation') downloadLocation: ElementRef;
 
   blogs: any;
   constructor(
@@ -95,16 +97,14 @@ export class WelcomeComponent implements OnInit {
     this.autocompleteTreatmentItems = [];
 
     let query = this.autocomplete1.query_treatment;
-    let tempId = 0;
     this.util.categories.forEach(category => {
       if (category.name.includes(query)) {
-        if (category.parent.id != tempId) {
-          category.parent.type = 0; // parent
-          this.autocompleteTreatmentItems.push(category.parent);
-          tempId = category.parent.id;
-        }
-        category.type = 1; // child
+        category.type = 0; // parent
         this.autocompleteTreatmentItems.push(category);
+        category.types.forEach(type => {
+          type.type = 1; // child
+          this.autocompleteTreatmentItems.push(type);
+        });
       }
     });
   }
@@ -197,5 +197,9 @@ export class WelcomeComponent implements OnInit {
     this.autocomplete1.query_location = '';
     this.autocompleteLocationItems = [];
     this.selectedLat = ''; this.selectedLng = '';
+  }
+
+  scrollToDownload() {
+    this.downloadLocation.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 }

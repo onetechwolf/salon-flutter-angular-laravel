@@ -89,7 +89,7 @@ export class AppComponent {
     mobile: '',
     cid: '',
     fcm_token: '',
-    type: 0,
+    type: -1,
     lat: '',
     lng: '',
     cover: '',
@@ -969,7 +969,7 @@ export class AppComponent {
               cid: this.registerPartnerForm.cid,
               id_card: this.registerPartnerForm.idCard,
               qualification: this.registerPartnerForm.qualification,
-              type: this.registerPartnerForm.type == 0 ? 'salon' : 'individual',
+              type: this.util.partnerTypes[this.registerPartnerForm.type],
               categories: categories,
               lat: this.registerPartnerForm.lat,
               lng: this.registerPartnerForm.lng,
@@ -1349,7 +1349,7 @@ export class AppComponent {
             cid: this.registerPartnerForm.cid,
             id_card: this.registerPartnerForm.idCard,
             qualification: this.registerPartnerForm.qualification,
-            type: this.registerPartnerForm.type == 0 ? 'salon' : 'individual',
+            type: this.util.partnerTypes[this.registerPartnerForm.type],
             categories: categories,
             lat: this.registerPartnerForm.lat,
             lng: this.registerPartnerForm.lng,
@@ -1832,5 +1832,13 @@ export class AppComponent {
 
   public showRegisterPartnerDailog() {
     this.registerPartnerModal.show();
+  }
+
+  removeLocation() {
+    localStorage.removeItem('location');
+    localStorage.removeItem('lat');
+    localStorage.removeItem('lng');
+    localStorage.removeItem('address');
+    location.href = location.href;
   }
 }

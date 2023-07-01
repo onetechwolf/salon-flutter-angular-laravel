@@ -41,6 +41,7 @@ export class SalonsComponent implements OnInit {
   website: any = '';
   mobile: any = '';
   cover: any = '';
+  policy: any = '';
   apiCalled: boolean = false;
   currentTab: any = '1';
   serviceTab: any = '1';
@@ -99,6 +100,8 @@ export class SalonsComponent implements OnInit {
         this.website = info.website;
         this.mobile = info.mobile;
         this.cover = info.cover;
+        this.policy = info.policy;
+
         if (((x) => { try { JSON.parse(x); return true; } catch (e) { return false } })(info.images)) {
           this.gallery = JSON.parse(info.images);
         } else {

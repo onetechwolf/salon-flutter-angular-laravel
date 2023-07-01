@@ -109,16 +109,14 @@ export class SearchComponent implements OnInit {
     this.autocompleteTreatmentItems = [];
 
     let query = this.treatmentCategory;
-    let tempId = 0;
     this.util.categories.forEach(category => {
       if (category.name.includes(query)) {
-        if (category.parent.id != tempId) {
-          category.parent.type = 0; // parent
-          this.autocompleteTreatmentItems.push(category.parent);
-          tempId = category.parent.id;
-        }
-        category.type = 1; // child
+        category.type = 0; // parent
         this.autocompleteTreatmentItems.push(category);
+        category.types.forEach(type => {
+          type.type = 1; // child
+          this.autocompleteTreatmentItems.push(type);
+        });
       }
     });
   }

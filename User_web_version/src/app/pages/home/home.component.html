@@ -83,9 +83,9 @@
             </a>
           </div>
         </div>
-        <div class="col-12" *ngIf="salonList.length > 4" style="text-align: right;">
-          <a class="waves-light" mdbWavesEffect (click)="gotoSalonList()">
-            <label>{{util.translate('Load More..')}}</label>
+        <div class="col-12" *ngIf="salonList.length > 8" style="text-align: right;">
+          <a class="waves-light" mdbWavesEffect (click)="gotoSalonList()" style="border: 1px solid grey;border-radius: 8px;padding: 2px 5px;">
+            {{util.translate('Read More>>')}}
           </a>
         </div>
       </div>

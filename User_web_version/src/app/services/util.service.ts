@@ -109,6 +109,10 @@ export class UtilService {
       direction: 'ltr'
     }
   ];
+
+  public partnerTypes: any[] =
+          ['Mobile Beautician', 'Hair & Nails Salon', 'Barber Shop', 'Wellness & Spa', 'Beauty Clinics', 'Products Only'];
+
   constructor(
     public router: Router,
     private ngxService: NgxSpinnerService,

@@ -27,9 +27,9 @@
                 <div class="row col-11">
                   <div class="col-6">
                     <div class="input_div">
-                      <img src="assets/imgs/search.png" style="width: 18px;height: 18px;">
+                      <!-- <img src="assets/imgs/search.png" style="width: 18px;height: 18px;"> -->
                       <input type="text" style="font-size: 16px;" class="form-control" [(ngModel)]="autocomplete1.query_treatment"
-                        [placeholder]="util.translate('Any Treatment')" (ngModelChange)="onSearchChangeTreatmentCategory($event)">
+                        [placeholder]="util.translate('Search Treatment')" (ngModelChange)="onSearchChangeTreatmentCategory($event)">
                       <img src="assets/imgs/remove.png" style="width: 20px;height: 20px;cursor: pointer;" *ngIf="autocomplete1.query_treatment != ''" (click)="removeTreatmentCategorySearchKey()">
                     </div>
                   </div>
@@ -126,9 +126,9 @@
 </div> -->
 
 <div style="padding-top: 20px;">
-  <div class="container">
+  <div class="container" style="font-size: 17px;">
     <marquee behavior="scroll" direction="left">
-      Book Locally Beauty treatments and wellness services.  <a href="#">Download</a> the Bunitas App Now.
+      Book Locally Beauty treatments and wellness services.  <a style="color: #9C0278;" (click)="scrollToDownload()">Download</a> the Bunitas App Now.
     </marquee>
   </div>
 </div>
@@ -196,7 +196,7 @@
   </div>
 </div>
 
-<div style="padding: 60px;background: #f5f5f5;margin-top: 60px">
+<div style="padding: 60px;background: #f5f5f5;margin-top: 60px" id="downloadLocation" #downloadLocation>
   <div class="container" >
     <div class="StaticPageSection StaticPageSection--maxWidth-primary DownloadApp">
       <p class="Text SectionTitle SectionTitle--40">Download the Bunitas App</p>

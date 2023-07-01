@@ -83,12 +83,19 @@
     <div class="modal-content">
       <div class="modal-body location_body">
         <div>
-          <img src="assets/imgs/cancel.png" style="width: 20px;" (click)="locationModal.hide()">
+          <div style="display: flex;justify-content: space-between;">
+            <img src="assets/imgs/cancel.png" style="width: 20px;height: 20px;" (click)="locationModal.hide()">
+            <a (click)="removeLocation()">
+              <img src="assets/imgs/placeholder.png" style="width: 20px;" >
+              Clear
+            </a>
+          </div>
+
           <div class="form_div">
             <input type="text" [(ngModel)]="autocomplete1" [placeholder]="util.translate('Choose your Location')"
               (ngModelChange)="onSearchChange($event)" class="form-control">
-            <div class="addressList">
-              <div class="select_addr" *ngFor="let item of autocompleteLocationItems" (click)="selectSearchResult1(item)">
+            <div class="location_list" *ngIf="autocompleteLocationItems.length > 0">
+              <div class="location_name" *ngFor="let item of autocompleteLocationItems" (click)="selectSearchResult1(item)">
                 <mdb-icon fas icon="map-marker-alt" style="color: gray; margin-right: 10px;"></mdb-icon>
                 {{ item.description }}
               </div>
@@ -595,17 +602,18 @@
                 {{util.translate('Phone number is required')}}
               </p>
               <select [(ngModel)]="registerPartnerForm.type" required style="border: 1px solid lightgray;width: 100%;padding: 0 8px 0 8px;"
-                [ngModelOptions]="{standalone: true}" #type="ngModel">
-                <option value="0"> {{util.translate('Salon Owner')}}</option>
-                <option value="1"> {{util.translate('Mobile Beautifician')}} </option>
+                [ngModelOptions]="{standalone: true}" #partnerType="ngModel">
+                <option *ngFor="let item of util.partnerTypes; let i = index" value="{{ i }}"> {{ item }} </option>
               </select>
-              <p [hidden]="type.valid || submitted == false" class="redAlert">
+              <p [hidden]="partnerType.valid || submitted == false" class="redAlert">
                 {{util.translate('Type of Partner is required')}}
               </p>
 
-              <input [(ngModel)]="registerPartnerForm.salon_name" type="text" [placeholder]="util.translate('Salon Name')"
-                name="salon_name" #salon_name="ngModel" spellcheck="false" autocapitalize="off" *ngIf="registerPartnerForm.type==0"
-                class="form-control frm">
+              <input [(ngModel)]="registerPartnerForm.salon_name" type="text" [placeholder]="util.translate('Business Name')"
+                name="business_name" #business_name="ngModel" spellcheck="false" autocapitalize="off" class="form-control frm">
+              <p [hidden]="business_name.valid || submitted == false" class="redAlert">
+                {{util.translate('Business Name is required')}}
+              </p>
 
               <input [(ngModel)]="registerPartnerForm.first_name" type="text" [placeholder]="util.translate('First Name')"
                 name="partner_first_name" #partner_first_name="ngModel" spellcheck="false" autocapitalize="off" required
@@ -648,12 +656,12 @@
               <p [hidden]="about.valid || submitted == false" class="redAlert">
                 {{util.translate('About you / your salon required')}}
               </p>
-              <ng-multiselect-dropdown [placeholder]="util.translate('Category')" [ngModelOptions]="{standalone: true}"
+              <ng-multiselect-dropdown [placeholder]="util.translate('Treatments')" [ngModelOptions]="{standalone: true}"
                   maxHeight="100" [data]="util.categories" [(ngModel)]="registerPartnerForm.category"
                   [settings]="dropdownSettings" #category="ngModel" >
               </ng-multiselect-dropdown>
               <p [hidden]="category.valid || submitted == false" class="redAlert">
-                {{util.translate('Category is required')}}
+                {{util.translate('Treatment is required')}}
               </p>
 
               <select [(ngModel)]="registerPartnerForm.cid" required style="border: 1px solid lightgray;width: 100%;margin-top: 10px;padding: 0 8px 0 8px;"

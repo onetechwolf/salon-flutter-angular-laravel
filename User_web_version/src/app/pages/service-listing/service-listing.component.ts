@@ -18,12 +18,15 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class ServiceListingComponent implements OnInit {
   categoryList: any[] = [];
+  subCategoryList: any[] = [];
   freelancerList: any[] = [];
   salon: any[] = [];
   cateID: any = '';
   cateName: any = '';
+  subCateID: any = '';
   apiCalled: boolean = false;
   categoryCalled: boolean = false;
+  subCategoryCalled: boolean = false;
   haveData: boolean;
   constructor(
     private router: Router,
@@ -33,24 +36,31 @@ export class ServiceListingComponent implements OnInit {
     this.cateID = this.route.snapshot.paramMap.get('id');
     this.cateName = this.route.snapshot.paramMap.get('name');
     this.haveData = true;
-    this.getDataFromCategories();
     this.getAllCategories();
+    this.getSubAllCategories();
+    this.getDataFromSubCategories(this.cateID, 0);
   }
-
 
   onCateId(cateID: any, name: any) {
     this.cateID = cateID;
     this.cateName = name;
-    this.getDataFromCategories();
+    this.getSubAllCategories();
+    this.getDataFromSubCategories(this.cateID, 0);
+  }
+
+  onSubCateId(cateID: any, name: any) {
+    this.subCateID = cateID;
+    this.cateName = name;
+    this.getDataFromSubCategories(this.subCateID, 1);
   }
 
   onFreelancerDetail(freelancerId: any, name: any) {
-    const routeName = name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();;
+    const routeName = name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
     this.router.navigate(['service', freelancerId, routeName]);
   }
 
   onSalon(salonUID: String, name: String) {
-    const routeName = name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();;
+    const routeName = name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
     this.router.navigate(['salons', salonUID, routeName]);
   }
 
@@ -80,12 +90,31 @@ export class ServiceListingComponent implements OnInit {
     });
   }
 
+  getSubAllCategories() {
+    this.subCategoryList = [];
+    this.subCategoryCalled = false;
+    this.api.get('v1/category_type/getAllCategories?parent_id='+this.cateID).then((data: any) => {
+      this.subCategoryCalled = true;
+      if (data && data.status == 200) {
+        this.subCategoryList = data.data;
+      }
+    }, error => {
+      console.log('Error', error);
+      this.subCategoryCalled = true;
+      this.util.apiErrorHandler(error);
+    }).catch(error => {
+      console.log('Err', error);
+      this.subCategoryCalled = true;
+      this.util.apiErrorHandler(error);
+    });
+  }
 
-  getDataFromCategories() {
+  getDataFromSubCategories(cateId, type) {
     const param = {
       "lat": localStorage.getItem('lat'),
       "lng": localStorage.getItem('lng'),
-      "id": this.cateID
+      "id": cateId,
+      "type": type
     };
     this.apiCalled = false;
     this.freelancerList = [];

@@ -93,9 +93,7 @@
                     </div>
                   </div>
                   <p class="text-muted m-0 mt-2 small">
-                    {{productCart.deliveredAddress.address}} {{productCart.deliveredAddress.house}}
-                    {{productCart.deliveredAddress.landmark}} -
-                    {{productCart.deliveredAddress.pincode}},</p>
+                    {{productCart.deliveredAddress.address}}</p>
                 </div>
               </div>
 
@@ -280,21 +278,21 @@
         </button>
       </div>
       <div class="modal-body mx-3">
-        <div class="md-form mb-5">
+        <!-- <div class="md-form mb-5">
           <input type="text" id="form34" class="form-control" mdbInput [(ngModel)]="house"
             [ngModelOptions]="{standalone: true}">
           <label for="form34">{{util.translate('House / Flat NO')}}</label>
-        </div>
+        </div> -->
         <div class="md-form mb-5">
           <input type="text" id="form34" class="form-control" mdbInput [(ngModel)]="address"
             [ngModelOptions]="{standalone: true}">
           <label for="form34">{{util.translate('Address')}}</label>
         </div>
-        <div class="md-form mb-5">
+        <!-- <div class="md-form mb-5">
           <input type="text" id="form29" class="form-control" mdbInput [(ngModel)]="landmark"
             [ngModelOptions]="{standalone: true}">
           <label for="form29">{{util.translate('Landmark')}}</label>
-        </div>
+        </div> -->
         <div class="md-form mb-5">
           <input type="text" id="form32" class="form-control" mdbInput [(ngModel)]="zipcode"
             [ngModelOptions]="{standalone: true}">

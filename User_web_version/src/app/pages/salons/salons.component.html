@@ -59,30 +59,50 @@
             <div>
               <ul class="nav flex-column rounded px-2 py-2 v-tab">
                 <li (click)="changeTab('1')"> <a class="nav-link p-3 rounded mb-lg-2 text-dark"
-                    [ngClass]="currentTab =='1' ? 'active':''">{{util.translate('Services')}} </a>
-                </li>
+                    [ngClass]="currentTab =='1' ? 'active':''">{{util.translate('Overview')}}</a> </li>
 
                 <li (click)="changeTab('2')"> <a class="nav-link p-3 rounded mb-lg-2 text-dark"
-                    [ngClass]="currentTab =='2' ? 'active':''">{{util.translate('Shop')}} </a>
+                    [ngClass]="currentTab =='2' ? 'active':''">{{util.translate('Services')}} </a>
                 </li>
 
                 <li (click)="changeTab('3')"> <a class="nav-link p-3 rounded mb-lg-2 text-dark"
-                    [ngClass]="currentTab =='3' ? 'active':''">{{util.translate('Reviews')}} </a>
+                    [ngClass]="currentTab =='3' ? 'active':''">{{util.translate('Shop')}} </a>
                 </li>
 
                 <li (click)="changeTab('4')"> <a class="nav-link p-3 rounded mb-lg-2 text-dark"
-                    [ngClass]="currentTab =='4' ? 'active':''">{{util.translate('Overview')}}</a> </li>
+                  [ngClass]="currentTab =='4' ? 'active':''">{{util.translate('Gallery')}} </a>
+                </li>
 
                 <li (click)="changeTab('5')"> <a class="nav-link p-3 rounded mb-lg-2 text-dark"
-                    [ngClass]="currentTab =='5' ? 'active':''">{{util.translate('Gallery')}} </a>
+                    [ngClass]="currentTab =='5' ? 'active':''">{{util.translate('Reviews')}} </a>
+                </li>
+
+                <li (click)="changeTab('6')"> <a class="nav-link p-3 rounded mb-lg-2 text-dark"
+                  [ngClass]="currentTab =='6' ? 'active':''">{{util.translate('Policy')}} </a>
                 </li>
               </ul>
             </div>
           </div>
         </div>
 
+        <!-- overview -->
+        <div class="col-lg-9" *ngIf="currentTab == '1'">
+          <div class="bg-white rounded shadow-sm">
+            <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Overview')}}</h6>
+            <div class="card-body p-0">
+              <div class="px-3 py-3">
+                <p class="rf-6 rf-lg-1 ff-bold">{{util.translate('Descriptions')}}</p>
+                <p class="rf-6 rf-lg-1"> {{descriptions}} </p>
+                <p class="rf-6 rf-lg-1 ff-bold">{{util.translate('Contact Detail')}}</p>
+                <h6 class="rf-6 rf-lg-1"> {{email}} </h6>
+                <p class="rf-6 rf-lg-1">{{country_code}} {{mobile}} </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Service -->
-        <div class="col-lg-6 px-lg-2" *ngIf="currentTab == '1'">
+        <div class="col-lg-6 px-lg-2" *ngIf="currentTab == '2'">
           <div class="bg-white rounded shadow-sm">
             <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Services')}}</h6>
             <div style="height: 20px;">
@@ -196,7 +216,7 @@
         </div>
 
         <!-- Shop -->
-        <div class="col-lg-6 px-lg-2" *ngIf="currentTab == '2'">
+        <div class="col-lg-6 px-lg-2" *ngIf="currentTab == '3'">
           <div class="bg-white rounded shadow-sm">
             <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Shop')}}</h6>
 
@@ -298,8 +318,36 @@
           </div>
         </div>
 
+        <!-- gallary -->
+        <div class="col-lg-9" *ngIf="currentTab == '4'">
+          <div class="bg-white rounded shadow-sm">
+            <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Photos')}}</h6>
+
+            <div class="card-body p-0">
+              <div class="service-cart">
+                <div class="px-3 py-3">
+                  <div class="row m-1 g-2">
+                    <div class="col-6 col-md-4 px-1 p-0 " *ngFor="let item of gallary">
+                      <div class="px-0 py-0 pb-2 rounded overflow-hidden shadow-sm ">
+                        <a>
+                          <div>
+                            <div
+                              [ngStyle]="{'background-image': 'url('+ api.mediaURL + item +'),url(assets/images/placeholder.jpg)'}"
+                              class="gallery-img">
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- review -->
-        <div class="col-lg-9" *ngIf="currentTab == '3'">
+        <div class="col-lg-9" *ngIf="currentTab == '5'">
           <div class="bg-white rounded shadow-sm">
             <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Reviews')}}</h6>
             <div class="card-body p-0" *ngIf="reviewsCalled == true ">
@@ -372,51 +420,20 @@
           </div>
         </div>
 
-        <!-- info -->
-        <div class="col-lg-9" *ngIf="currentTab == '4'">
+        <!-- policy -->
+        <div class="col-lg-9" *ngIf="currentTab == '6'">
           <div class="bg-white rounded shadow-sm">
-            <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Overview')}}</h6>
+            <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Policy')}}</h6>
             <div class="card-body p-0">
               <div class="px-3 py-3">
-                <p class="rf-6 rf-lg-1 ff-bold">{{util.translate('Descriptions')}}</p>
-                <p class="rf-6 rf-lg-1"> {{descriptions}} </p>
-                <p class="rf-6 rf-lg-1 ff-bold">{{util.translate('Contact Detail')}}</p>
-                <h6 class="rf-6 rf-lg-1"> {{email}} </h6>
-                <p class="rf-6 rf-lg-1">{{country_code}} {{mobile}} </p>
+                <p class="rf-6 rf-lg-1" style="word-wrap: break-word;"> {{this.policy}} </p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- gallary -->
-        <div class="col-lg-9" *ngIf="currentTab == '5'">
-          <div class="bg-white rounded shadow-sm">
-            <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Photos')}}</h6>
 
-            <div class="card-body p-0">
-              <div class="service-cart">
-                <div class="px-3 py-3">
-                  <div class="row m-1 g-2">
-                    <div class="col-6 col-md-4 px-1 p-0 " *ngFor="let item of gallary">
-                      <div class="px-0 py-0 pb-2 rounded overflow-hidden shadow-sm ">
-                        <a>
-                          <div>
-                            <div
-                              [ngStyle]="{'background-image': 'url('+ api.mediaURL + item +'),url(assets/images/placeholder.jpg)'}"
-                              class="gallery-img">
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 pl-lg-0 mt-lg-0 mt-2" *ngIf="currentTab == '1'">
+        <div class="col-lg-3 pl-lg-0 mt-lg-0 mt-2" *ngIf="currentTab == '2'">
           <div class="sticky_sidebar">
             <div class="pd bg-white rounded overflow-hidden shadow-sm mb-3 checkout-sidebar">
               <div class="border-bottom bg-white p-3">
@@ -491,7 +508,7 @@
         </div>
 
 
-        <div class="col-lg-3 pl-lg-0 mt-lg-0 mt-2" *ngIf="currentTab == '2'">
+        <div class="col-lg-3 pl-lg-0 mt-lg-0 mt-2" *ngIf="currentTab == '3'">
           <div class="sticky_sidebar">
             <div class="pd bg-white rounded overflow-hidden shadow-sm mb-3 checkout-sidebar">
               <div class="border-bottom bg-white p-3">
@@ -592,19 +609,38 @@
 
     <div class="flex_menu">
       <label [ngClass]="currentTab == '1' ? 'activeTab' : 'deactiveTab'"
-        (click)="changeTab('1')">{{util.translate('Services')}}</label>
+        (click)="changeTab('1')">{{util.translate('Overview')}}</label>
       <label [ngClass]="currentTab == '2' ? 'activeTab' : 'deactiveTab'"
-        (click)="changeTab('2')">{{util.translate('Shop')}}</label>
+        (click)="changeTab('2')">{{util.translate('Services')}}</label>
       <label [ngClass]="currentTab == '3' ? 'activeTab' : 'deactiveTab'"
-        (click)="changeTab('3')">{{util.translate('Reviews')}}</label>
-      <label [ngClass]="currentTab == '4' ? 'activeTab' : 'deactiveTab'"
-        (click)="changeTab('4')">{{util.translate('Overview')}}</label>
+        (click)="changeTab('3')">{{util.translate('Shop')}}</label>
+        <label [ngClass]="currentTab == '4' ? 'activeTab' : 'deactiveTab'"
+        (click)="changeTab('4')">{{util.translate('Gallery')}}</label>
       <label [ngClass]="currentTab == '5' ? 'activeTab' : 'deactiveTab'"
-        (click)="changeTab('5')">{{util.translate('Gallery')}}</label>
+        (click)="changeTab('5')">{{util.translate('Reviews')}}</label>
+      <label [ngClass]="currentTab == '6' ? 'activeTab' : 'deactiveTab'"
+        (click)="changeTab('6')">{{util.translate('Policy')}}</label>
     </div>
 
-    <!-- services -->
+    <!-- overviews -->
     <div class="col-lg-12 px-lg-2" *ngIf="currentTab == '1'" style="padding: 0px !important;">
+      <div class="bg-white rounded shadow-sm">
+        <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Overview')}}</h6>
+        <div class="card-body p-0">
+          <div class="px-3 py-3">
+            <p class="rf-6 rf-lg-1 ff-bold">{{util.translate('Descriptions')}}</p>
+            <p class="rf-6 rf-lg-1"> {{descriptions}} </p>
+            <p class="rf-6 rf-lg-1 ff-bold">{{util.translate('Contact Detail')}}</p>
+            <h6 class="rf-6 rf-lg-1"> {{email}} </h6>
+            <p class="rf-6 rf-lg-1">{{country_code}} {{mobile}} </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- overviews -->
+
+    <!-- services -->
+    <div class="col-lg-12 px-lg-2" *ngIf="currentTab == '2'">
       <div class="bg-white rounded shadow-sm">
         <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Services')}}</h6>
         <div style="height: 20px;">
@@ -720,7 +756,7 @@
     <!-- services -->
 
     <!-- shop -->
-    <div class="col-lg-12 px-lg-2" *ngIf="currentTab == '2'">
+    <div class="col-lg-12 px-lg-2" *ngIf="currentTab == '3'">
       <div class="bg-white rounded shadow-sm">
         <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Shop')}}</h6>
 
@@ -821,8 +857,37 @@
     </div>
     <!-- shop -->
 
+    <!-- gallary -->
+    <div class="col-lg-12 px-lg-2" *ngIf="currentTab == '4'">
+      <div class="bg-white rounded shadow-sm">
+        <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Photos')}}</h6>
+
+        <div class="card-body p-0">
+          <div class="service-cart">
+            <div class="px-3 py-3">
+              <div class="row m-1 g-2">
+                <div class="col-6 col-md-4 px-1 p-0 " *ngFor="let item of gallary">
+                  <div class="px-0 py-0 pb-2 rounded overflow-hidden shadow-sm ">
+                    <a>
+                      <div>
+                        <div
+                          [ngStyle]="{'background-image': 'url('+ api.mediaURL + item +'),url(assets/images/placeholder.jpg)'}"
+                          class="gallery-img">
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- gallary -->
+
     <!-- reviews -->
-    <div class="col-lg-12 px-lg-2" *ngIf="currentTab == '3'">
+    <div class="col-lg-12 px-lg-2" *ngIf="currentTab == '5'">
       <div class="bg-white rounded shadow-sm">
         <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Reviews')}}</h6>
         <div class="card-body p-0" *ngIf="reviewsCalled == true ">
@@ -896,51 +961,18 @@
     </div>
     <!-- reviews -->
 
-    <!-- overviews -->
-    <div class="col-lg-12 px-lg-2" *ngIf="currentTab == '4'">
+    <!-- policy -->
+    <div class="col-lg-12 px-lg-2" *ngIf="currentTab == '6'">
       <div class="bg-white rounded shadow-sm">
-        <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Overview')}}</h6>
+        <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Policy')}}</h6>
         <div class="card-body p-0">
           <div class="px-3 py-3">
-            <p class="rf-6 rf-lg-1 ff-bold">{{util.translate('Descriptions')}}</p>
-            <p class="rf-6 rf-lg-1"> {{descriptions}} </p>
-            <p class="rf-6 rf-lg-1 ff-bold">{{util.translate('Contact Detail')}}</p>
-            <h6 class="rf-6 rf-lg-1"> {{email}} </h6>
-            <p class="rf-6 rf-lg-1">{{country_code}} {{mobile}} </p>
+            <p class="rf-6 rf-lg-1" style="word-wrap: break-word;"> {{this.policy}} </p>
           </div>
         </div>
       </div>
     </div>
-    <!-- overviews -->
-
-    <!-- gallary -->
-    <div class="col-lg-12 px-lg-2" *ngIf="currentTab == '5'">
-      <div class="bg-white rounded shadow-sm">
-        <h6 class="h4-responsive ff-medium text-center pt-4 m-0">{{util.translate('Photos')}}</h6>
-
-        <div class="card-body p-0">
-          <div class="service-cart">
-            <div class="px-3 py-3">
-              <div class="row m-1 g-2">
-                <div class="col-6 col-md-4 px-1 p-0 " *ngFor="let item of gallary">
-                  <div class="px-0 py-0 pb-2 rounded overflow-hidden shadow-sm ">
-                    <a>
-                      <div>
-                        <div
-                          [ngStyle]="{'background-image': 'url('+ api.mediaURL + item +'),url(assets/images/placeholder.jpg)'}"
-                          class="gallery-img">
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- gallary -->
+    <!-- policy -->
   </div>
 </div>
 
