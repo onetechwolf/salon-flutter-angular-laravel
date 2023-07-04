@@ -257,18 +257,14 @@
                   <p class="item-name text-uppercase"
                     style="margin: 0px !important;font-size: 12px;font-family: 'bold';">{{sub.name}}</p>
                   <p *ngIf="sub.discount == 0" style="margin: 0px !important;">
-                    <span *ngIf="util.currencySide == 'left'"> - {{util.currencySymbol}}
-                      {{sub.price}}</span>
+                    <span *ngIf="util.currencySide == 'left'"> - {{util.currencySymbol}}{{sub.price}}</span>
                     <span *ngIf="util.currencySide == 'right'">
-                      - {{sub.price}}
-                      {{util.currencySymbol}}</span>
+                      - {{sub.price}}{{util.currencySymbol}}</span>
                   </p>
                   <p *ngIf="sub.discount > 0" style="margin: 0px !important;">
-                    <span *ngIf="util.currencySide == 'left'"> - {{util.currencySymbol}}
-                      {{sub.off}}</span>
+                    <span *ngIf="util.currencySide == 'left'"> - {{util.currencySymbol}}{{sub.off}}</span>
                     <span *ngIf="util.currencySide == 'right'">
-                      - {{sub.off}}
-                      {{util.currencySymbol}}</span>
+                      - {{sub.off}}{{util.currencySymbol}}</span>
                   </p>
                 </div>
               </div>
@@ -285,18 +281,14 @@
                     </p>
                   </div>
                   <p *ngIf="sub.discount == 0" style="margin: 0px !important;font-size: 12px;">
-                    <span *ngIf="util.currencySide == 'left'" style="font-family: 'bold';"> - {{util.currencySymbol}}
-                      {{sub.price}}</span>
+                    <span *ngIf="util.currencySide == 'left'" style="font-family: 'bold';"> - {{util.currencySymbol}}{{sub.price}}</span>
                     <span *ngIf="util.currencySide == 'right'" style="font-family: 'bold';">
-                      - {{sub.price}}
-                      {{util.currencySymbol}}</span>
+                      - {{sub.price}}{{util.currencySymbol}}</span>
                   </p>
                   <p *ngIf="sub.discount > 0" style="margin: 0px !important;font-size: 12px;">
-                    <span *ngIf="util.currencySide == 'left'" style="font-family: 'bold';"> - {{util.currencySymbol}}
-                      {{sub.off}}</span>
+                    <span *ngIf="util.currencySide == 'left'" style="font-family: 'bold';"> - {{util.currencySymbol}}{{sub.off}}</span>
                     <span *ngIf="util.currencySide == 'right'" style="font-family: 'bold';">
-                      - {{sub.off}}
-                      {{util.currencySymbol}}</span>
+                      - {{sub.off}}{{util.currencySymbol}}</span>
                   </p>
 
                 </div>

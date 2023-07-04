@@ -264,25 +264,6 @@ input {
   padding: 64px var(--small-mobile-side-edge)
 }
 
-@media(min-width: 360px) {
-  .StaticPageSection {
-      padding:64px var(--mobile-side-edge)
-  }
-}
-
-@media(min-width: 768px) {
-  .StaticPageSection {
-      padding:80px var(--tablet-side-edge)
-  }
-}
-
-@media(min-width: 1200px) {
-  .StaticPageSection {
-      padding:80px var(--desktop-side-edge);
-      width: 100%;
-      margin: auto
-  }
-}
 
 @media(min-width: 1200px) {
   .StaticPageSection--maxWidth-primary {
@@ -296,10 +277,6 @@ input {
   }
 }
 
-.StaticPageSection {
-  padding: 64px var(--small-mobile-side-edge)
-}
-
 @media(min-width: 360px) {
   .StaticPageSection {
       padding:64px var(--mobile-side-edge)
@@ -308,7 +285,9 @@ input {
 
 @media(min-width: 768px) {
   .StaticPageSection {
-      padding:80px var(--tablet-side-edge)
+      padding:80px var(--tablet-side-edge);
+      padding: 20px 0px;
+      margin: auto;
   }
 }
 
@@ -316,7 +295,8 @@ input {
   .StaticPageSection {
       padding:80px var(--desktop-side-edge);
       width: 100%;
-      margin: auto
+      padding: 50px 0px;
+      margin: auto;
   }
 }
 
@@ -340,7 +320,7 @@ input {
 .SectionTitle.SectionTitle--40 {
   font-size: 28px;
   font-weight: 800;
-  line-height: 36px
+  line-height: 36px;
 }
 
 @media(min-width: 768px) {
@@ -355,7 +335,8 @@ input {
   .SectionTitle.SectionTitle--40 {
       font-size:48px;
       font-weight: 800;
-      line-height: 58px
+      line-height: 58px;
+      margin-bottom: 16px !important;
   }
 }
 
@@ -604,8 +585,14 @@ input {
 
 .SectionDescription.SectionDescription {
   font-weight: normal;
-  margin-bottom: 40px;
-  text-align: center
+  margin-bottom: 40px !important;
+  text-align: center;
+}
+@media (min-width: 1024px) {
+  .SectionDescription.SectionDescription {
+      margin-bottom: 48px !important;
+      text-align: center;
+  }
 }
 
 @media(min-width: 768px) {
@@ -616,7 +603,8 @@ input {
   }
 
   .SectionDescription.SectionDescription {
-      margin-bottom: 32px
+      margin-bottom: 32px !important;
+      text-align: center;
   }
 }
 
@@ -628,7 +616,8 @@ input {
   }
 
   .SectionDescription.SectionDescription {
-      margin-bottom: 48px;
+      margin-bottom: 48px !important;
+      text-align: center;
   }
 }
 
@@ -642,13 +631,11 @@ input {
   display: grid;
   align-items: center;
   padding-bottom: 0;
-  padding-top: 90px
 }
 
 @media(min-width: 768px) {
   .Features__content {
       margin-bottom:12px;
-      padding-top: 80px;
       grid-template-columns: repeat(2, minmax(auto, 50%));
       grid-gap: 20px
   }
@@ -750,8 +737,9 @@ input {
 }
 
 .FeaturesContent__description {
-  line-height: 24px;
-  margin-top: 16px
+  line-height: 30px;
+  margin-top: 16px;
+  font-size: 20px;
 }
 
 .FeaturesContent__featuresList {
@@ -871,8 +859,8 @@ input {
 
 @media (min-width: 768px){
 .DownloadApp {
-    padding-top: 72px;
-    margin-bottom: 20px !important;
+  padding-top: 72px;
+  margin-bottom: 20px !important;
 }
 }
 .DownloadApp {
@@ -880,55 +868,11 @@ input {
     padding-top: 0;
     margin-bottom: 20px !important;
 }
+
 @media (min-width: 1200px){
 .StaticPageSection--maxWidth-primary {
     max-width: 1440px;
 }
-}
-@media (min-width: 1200px){
-.StaticPageSection {
-    padding: 80px var(--desktop-side-edge);
-    width: 100%;
-    margin: auto;
-}
-}
-@media (min-width: 768px){
-.StaticPageSection {
-    padding: 80px var(--tablet-side-edge);
-}
-}
-@media (min-width: 360px){
-.StaticPageSection {
-    padding: 64px var(--mobile-side-edge);
-}
-}
-.StaticPageSection {
-    padding: 64px var(--small-mobile-side-edge);
-}
-@media (min-width: 1200px){
-.StaticPageSection--maxWidth-primary {
-    max-width: 1440px;
-}
-}
-@media (min-width: 1200px){
-.StaticPageSection {
-    padding: 80px var(--desktop-side-edge);
-    width: 100%;
-    margin: auto;
-}
-}
-@media (min-width: 768px){
-.StaticPageSection {
-    padding: 80px var(--tablet-side-edge);
-}
-}
-@media (min-width: 360px){
-.StaticPageSection {
-    padding: 64px var(--mobile-side-edge);
-}
-}
-.StaticPageSection {
-    padding: 64px var(--small-mobile-side-edge);
 }
 .DownloadApp__appCardsWrapper {
   display: flex;

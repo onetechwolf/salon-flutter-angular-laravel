@@ -163,16 +163,13 @@
                         <p class="h6 sub-text small m-0 mr-3" *ngIf="item.off > 0">
                           <del>
                             <span *ngIf="util.currencySide == 'left'">
-                              {{util.currencySymbol}} {{item.price}} </span>
-                            <span *ngIf="util.currencySide == 'right'"> {{item.price}}
-                              {{util.currencySymbol}} </span>
+                              {{util.currencySymbol}}{{item.price}} </span>
+                            <span *ngIf="util.currencySide == 'right'"> {{item.price}}{{util.currencySymbol}} </span>
                           </del>
                         </p>
                         <p class="h6 f-primary m-0">
-                          <span class="ff-medium head-text" *ngIf="util.currencySide == 'left'"> {{util.currencySymbol}}
-                            {{item.off}} </span>
-                          <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{item.off}}
-                            {{util.currencySymbol}} </span>
+                          <span class="ff-medium head-text" *ngIf="util.currencySide == 'left'"> {{util.currencySymbol}}{{item.off}} </span>
+                          <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{item.off}}{{util.currencySymbol}} </span>
                         </p>
 
                         <div class="d-flex ml-auto" (click)="openPackage(item.id,item.name)">
@@ -252,19 +249,16 @@
                           <h6 class="h6 mb-0 pr-3 text-muted small">
                             <del>
                               <span *ngIf="util.currencySide == 'left'">
-                                {{util.currencySymbol}} {{item.original_price}}
+                                {{util.currencySymbol}}{{item.original_price}}
                               </span>
                               <span *ngIf="util.currencySide == 'right'">
-                                {{item.original_price}}
-                                {{util.currencySymbol}} </span>
+                                {{item.original_price}}{{util.currencySymbol}} </span>
                             </del>
                           </h6>
                           <h6 class="f-primary mb-0">
                             <span class="ff-medium head-text" *ngIf="util.currencySide == 'left'">
-                              {{util.currencySymbol}}
-                              {{item.sell_price}} </span>
-                            <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{item.sell_price}}
-                              {{util.currencySymbol}} </span>
+                              {{util.currencySymbol}}{{item.sell_price}} </span>
+                            <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{item.sell_price}}{{util.currencySymbol}} </span>
                           </h6>
                         </div>
 
@@ -454,10 +448,8 @@
                   <div class="d-flex">
                     <p class="small f-primary m-0">
                       <span class="ff-medium" *ngIf="util.currencySide == 'left'">
-                        {{util.currencySymbol}}
-                        {{item.off}} </span>
-                      <span class="ff-medium" *ngIf="util.currencySide == 'right'"> {{item.off}}
-                        {{util.currencySymbol}} </span>
+                        {{util.currencySymbol}}{{item.off}} </span>
+                      <span class="ff-medium" *ngIf="util.currencySide == 'right'"> {{item.off}}{{util.currencySymbol}} </span>
                     </p>
                   </div>
                 </div>
@@ -474,10 +466,8 @@
                   <div class="d-flex">
                     <p class="small f-primary m-0">
                       <span class="ff-medium" *ngIf="util.currencySide == 'left'">
-                        {{util.currencySymbol}}
-                        {{item.off}} </span>
-                      <span class="ff-medium" *ngIf="util.currencySide == 'right'"> {{item.off}}
-                        {{util.currencySymbol}} </span>
+                        {{util.currencySymbol}}{{item.off}} </span>
+                      <span class="ff-medium" *ngIf="util.currencySide == 'right'"> {{item.off}}{{util.currencySymbol}} </span>
                     </p>
                   </div>
                 </div>
@@ -491,11 +481,9 @@
                   </div>
                   <h6 class="f-primary h5">
                     <span class="ff-medium" *ngIf="util.currencySide == 'left'">
-                      {{util.currencySymbol}}
-                      {{serviceCart.totalPrice}} </span>
+                      {{util.currencySymbol}}{{serviceCart.totalPrice}} </span>
                     <span class="ff-medium" *ngIf="util.currencySide == 'right'">
-                      {{serviceCart.totalPrice}}
-                      {{util.currencySymbol}} </span>
+                      {{serviceCart.totalPrice}}{{util.currencySymbol}} </span>
                   </h6>
                 </div>
               </div>
@@ -530,11 +518,9 @@
                   <div class="d-flex">
                     <p class="small f-primary m-0">
                       <span class="ff-medium" *ngIf="util.currencySide == 'left'">
-                        {{util.currencySymbol}}
-                        {{item.sell_price}} </span>
+                        {{util.currencySymbol}}{{item.sell_price}} </span>
                       <span class="ff-medium" *ngIf="util.currencySide == 'right'">
-                        {{item.sell_price}}
-                        {{util.currencySymbol}} </span>
+                        {{item.sell_price}}{{util.currencySymbol}} </span>
                     </p>
                   </div>
                 </div>
@@ -548,11 +534,9 @@
                   </div>
                   <h6 class="f-primary h5">
                     <span class="ff-medium" *ngIf="util.currencySide == 'left'">
-                      {{util.currencySymbol}}
-                      {{productCart.totalPrice}} </span>
+                      {{util.currencySymbol}}{{productCart.totalPrice}} </span>
                     <span class="ff-medium" *ngIf="util.currencySide == 'right'">
-                      {{productCart.totalPrice}}
-                      {{util.currencySymbol}} </span>
+                      {{productCart.totalPrice}}{{util.currencySymbol}} </span>
                   </h6>
                 </div>
               </div>
@@ -701,16 +685,13 @@
                     <p class="h6 sub-text small m-0 mr-3" *ngIf="item.off > 0">
                       <del>
                         <span *ngIf="util.currencySide == 'left'">
-                          {{util.currencySymbol}} {{item.price}} </span>
-                        <span *ngIf="util.currencySide == 'right'"> {{item.price}}
-                          {{util.currencySymbol}} </span>
+                          {{util.currencySymbol}}{{item.price}} </span>
+                        <span *ngIf="util.currencySide == 'right'"> {{item.price}}{{util.currencySymbol}} </span>
                       </del>
                     </p>
                     <p class="h6 f-primary m-0">
-                      <span class="ff-medium head-text" *ngIf="util.currencySide == 'left'"> {{util.currencySymbol}}
-                        {{item.off}} </span>
-                      <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{item.off}}
-                        {{util.currencySymbol}} </span>
+                      <span class="ff-medium head-text" *ngIf="util.currencySide == 'left'"> {{util.currencySymbol}}{{item.off}} </span>
+                      <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{item.off}}{{util.currencySymbol}} </span>
                     </p>
 
                     <div class="d-flex ml-auto" (click)="openPackage(item.id,item.name)">
@@ -790,19 +771,16 @@
                       <h6 class="h6 mb-0 pr-3 text-muted small">
                         <del>
                           <span *ngIf="util.currencySide == 'left'">
-                            {{util.currencySymbol}} {{item.original_price}}
+                            {{util.currencySymbol}}{{item.original_price}}
                           </span>
                           <span *ngIf="util.currencySide == 'right'">
-                            {{item.original_price}}
-                            {{util.currencySymbol}} </span>
+                            {{item.original_price}}{{util.currencySymbol}} </span>
                         </del>
                       </h6>
                       <h6 class="f-primary mb-0">
                         <span class="ff-medium head-text" *ngIf="util.currencySide == 'left'">
-                          {{util.currencySymbol}}
-                          {{item.sell_price}} </span>
-                        <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{item.sell_price}}
-                          {{util.currencySymbol}} </span>
+                          {{util.currencySymbol}}{{item.sell_price}} </span>
+                        <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{item.sell_price}}{{util.currencySymbol}} </span>
                       </h6>
                     </div>
 
@@ -1033,16 +1011,13 @@
                   <p class="h6 sub-text small m-0 mr-3">
                     <del>
                       <span *ngIf="util.currencySide == 'left'">
-                        {{util.currencySymbol}} {{item.price}} </span>
-                      <span *ngIf="util.currencySide == 'right'"> {{item.price}}
-                        {{util.currencySymbol}} </span>
+                        {{util.currencySymbol}}{{item.price}} </span>
+                      <span *ngIf="util.currencySide == 'right'"> {{item.price}}{{util.currencySymbol}} </span>
                     </del>
                   </p>
                   <p class="h6 f-primary m-0">
-                    <span class="ff-medium head-text" *ngIf="util.currencySide == 'left'"> {{util.currencySymbol}}
-                      {{item.off}} </span>
-                    <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{item.off}}
-                      {{util.currencySymbol}} </span>
+                    <span class="ff-medium head-text" *ngIf="util.currencySide == 'left'"> {{util.currencySymbol}}{{item.off}} </span>
+                    <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{item.off}}{{util.currencySymbol}} </span>
                   </p>
 
                   <div class="d-flex ml-auto">
@@ -1123,16 +1098,13 @@
             <p class="h6 sub-text small m-0 mr-3" *ngIf="packageDiscount > 0">
               <del>
                 <span *ngIf="util.currencySide == 'left'" class="ff-medium head-text">
-                  {{util.currencySymbol}} {{packagePrice}} </span>
-                <span *ngIf="util.currencySide == 'right'" class="ff-medium head-text"> {{packagePrice}}
-                  {{util.currencySymbol}} </span>
+                  {{util.currencySymbol}}{{packagePrice}} </span>
+                <span *ngIf="util.currencySide == 'right'" class="ff-medium head-text"> {{packagePrice}}{{util.currencySymbol}} </span>
               </del>
             </p>
             <p class="h6 f-primary m-0">
-              <span class="ff-medium head-text" *ngIf="util.currencySide == 'left'"> {{util.currencySymbol}}
-                {{packageOff}} </span>
-              <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{packageOff}}
-                {{util.currencySymbol}} </span>
+              <span class="ff-medium head-text" *ngIf="util.currencySide == 'left'"> {{util.currencySymbol}}{{packageOff}} </span>
+              <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{packageOff}}{{util.currencySymbol}} </span>
             </p>
           </div>
         </div>
