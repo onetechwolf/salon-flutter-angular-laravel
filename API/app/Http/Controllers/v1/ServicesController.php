@@ -68,7 +68,7 @@ class ServicesController extends Controller
 
         $data = Services::find($request->id);
         if($data && $data->cate_id && $data->cate_id !=null){
-            $cats = CategoryType::where('id',$data->cate_id)->first();
+            $cats = CategoryType::with('parent')->where('id',$data->cate_id)->first();
             $data->web_cates_data = $cats;
         }
 

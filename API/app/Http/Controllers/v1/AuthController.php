@@ -375,6 +375,34 @@ class AuthController extends Controller
         return response()->json($response, 200);
     }
 
+    public function uploadVideo(Request $request){
+        $validator = Validator::make($request->all(), [
+            'video' => 'required|mimetypes:video/mp4,video/avi|max:1048576'
+        ]);
+        if ($validator->fails()) {
+            $response = [
+                'success' => false,
+                'message' => 'Validation Error.', $validator->errors(),
+                'status'=> 500
+            ];
+            return response()->json($response, 505);
+        }
+        Artisan::call('storage:link', []);
+        $uploadFolder = 'videos';
+        $video = $request->file('video');
+        $video_uploaded_path = $video->store($uploadFolder, 'public');
+        $uploadedVideoResponse = array(
+            "video_name" => basename($video_uploaded_path),
+            "mime" => $video->getClientMimeType()
+        );
+        $response = [
+            'data'=>$uploadedVideoResponse,
+            'success' => true,
+            'status' => 200,
+        ];
+        return response()->json($response, 200);
+    }
+
     public function createSalonAccount(Request $request){
         $validator = Validator::make($request->all(), [
             'email' => 'required',

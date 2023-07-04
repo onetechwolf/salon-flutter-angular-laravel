@@ -71,6 +71,7 @@ Route::prefix('/v1')->group(function () {
     Route::post('auth/create_user_account', [AuthController::class, 'create_user_account']);
     Route::post('auth/adminLogin', [AuthController::class, 'adminLogin']);
     Route::post('uploadImage', [AuthController::class, 'uploadImage']);
+    Route::post('uploadVideo', [AuthController::class, 'uploadVideo']);
     Route::post('auth/createSalonAccount', [AuthController::class, 'createSalonAccount']);
     Route::post('auth/createIndividualAccount', [AuthController::class, 'createIndividualAccount']);
     Route::post('auth/verifyEmailForReset', [AuthController::class, 'verifyEmailForReset']);

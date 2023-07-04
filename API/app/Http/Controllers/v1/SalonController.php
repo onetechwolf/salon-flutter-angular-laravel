@@ -566,7 +566,7 @@ class SalonController extends Controller
             return response()->json($response, 404);
         }
         $salon = Salon::find($request->id);
-        if (is_null($salon)) {
+        if (is_null($salon) || empty($salon)) {
             $response = [
                 'success' => false,
                 'message' => 'Data not found.',
