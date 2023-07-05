@@ -32,13 +32,13 @@
                 <th>{{util.translate('Cover')}}</th>
                 <th>{{util.translate('Salon/Beautician')}}</th>
                 <th>{{util.translate('Treatment Type')}}</th>
-                <th>{{util.translate('Name')}}</th>
-                <th>{{util.translate('Duration')}}</th>
-                <th>{{util.translate('Price')}}</th>
-                <th>{{util.translate('Off')}}</th>
+                <th [class.sort-asc]="sort['name'] == 'asc'" [class.sort-desc]="sort['name'] == 'desc'"><a (click)="sortOn('name')" style="cursor: pointer;">{{util.translate('Name')}}</a></th>
+                <th [class.sort-asc]="sort['duration'] == 'asc'" [class.sort-desc]="sort['duration'] == 'desc'"><a (click)="sortOn('duration')" style="cursor: pointer;">{{util.translate('Duration')}}</a></th>
+                <th [class.sort-asc]="sort['price'] == 'asc'" [class.sort-desc]="sort['price'] == 'desc'"><a (click)="sortOn('price')" style="cursor: pointer;">{{util.translate('Price')}}</a></th>
+                <th [class.sort-asc]="sort['off'] == 'asc'" [class.sort-desc]="sort['off'] == 'desc'"><a (click)="sortOn('off')" style="cursor: pointer;">{{util.translate('Off')}}</a></th>
                 <th>{{util.translate('Dismount')}}</th>
                 <th>{{util.translate('Description')}}</th>
-                <th>{{util.translate('Action')}}</th>
+                <!-- <th>{{util.translate('Action')}}</th> -->
               </tr>
             </thead>
             <tbody>
@@ -47,7 +47,7 @@
                   <ngx-skeleton-loader count="1" appearance="line"></ngx-skeleton-loader>
                 </td>
               </tr>
-              <tr *ngFor="let item of list | paginate: {id:'pagin1', itemsPerPage: 5, currentPage: page }">
+              <tr *ngFor="let item of list | paginate: {id:'pagin1', itemsPerPage: itemsPerPage, currentPage: page }">
                 <td>
                   <img class="img-responsive" style="height: 40px;width: 40px; object-fit: cover;"
                     [src]="api.imageUrl + item.cover" onError="this.src='assets/img/dummy.jpeg'">
@@ -64,7 +64,7 @@
                 <td>{{item.off}}</td>
                 <td>{{item.dismount}}</td>
                 <td>{{item.descriptions}}</td>
-                <td>
+                <!-- <td>
                   <c-badge [color]="item.status == 1?'success':'dark'"
                     [class]="item.status == 1 ? 'me-1 badge bg-success':'me-1 badge bg-dark'"
                     (click)="statusUpdate(item)">
@@ -79,15 +79,23 @@
                     {{ util.translate('Delete')}}
                   </c-badge>
 
-                </td>
+                </td> -->
               </tr>
             </tbody>
           </table>
 
-          <div *ngIf="list?.length > 0">
-            <pagination-controls id="pagin1" (pageChange)="page = $event"></pagination-controls>
+          <div class="table-tools" *ngIf="list?.length > 0" >
+            <div class="table-pagination">
+              <pagination-controls  class="custom-pagination" id="pagin1" (pageChange)="page = $event"></pagination-controls>
+              <input class="form-control page-number" [(ngModel)]="page" [ngModelOptions]="{standalone: true}"
+                [placeholder]="util.translate('Page')">
+            </div>
+            <select id="view_count" [(ngModel)]="itemsPerPage" name="view_count" class="form-select ng-valid ng-dirty ng-touched view-count ">
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+            </select>
           </div>
-
         </div>
       </div>
     </div>

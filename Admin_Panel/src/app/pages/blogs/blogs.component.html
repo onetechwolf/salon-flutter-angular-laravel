@@ -37,7 +37,7 @@
                                 </td>
                             </tr>
                             <tr
-                                *ngFor="let item of blogs | paginate: {id:'pagin1', itemsPerPage: 10, currentPage: page };let i = index;">
+                                *ngFor="let item of blogs | paginate: {id:'pagin1', itemsPerPage: itemsPerPage, currentPage: page };let i = index;">
                                 <td><a href="javascript:;"><img class="img-responsive"
                                             style="height: 100px;width: 100px;" [src]="api.imageUrl+ item.cover"
                                             onError="this.src='assets/img/dummy.jpeg'" alt="chat-user"></a>
@@ -65,8 +65,17 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div *ngIf="blogs?.length > 0">
-                        <pagination-controls id="pagin1" (pageChange)="page = $event"></pagination-controls>
+                    <div class="table-tools" *ngIf="blogs?.length > 0" >
+                        <div class="table-pagination">
+                          <pagination-controls  class="custom-pagination" id="pagin1" (pageChange)="page = $event"></pagination-controls>
+                          <input class="form-control page-number" [(ngModel)]="page" [ngModelOptions]="{standalone: true}"
+                            [placeholder]="util.translate('Page')">
+                        </div>
+                        <select id="view_count" [(ngModel)]="itemsPerPage" name="view_count" class="form-select ng-valid ng-dirty ng-touched view-count ">
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
                     </div>
                 </div>
             </div>

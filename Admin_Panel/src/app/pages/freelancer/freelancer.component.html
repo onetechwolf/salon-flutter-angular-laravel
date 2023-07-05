@@ -51,7 +51,7 @@
                                 </td>
                             </tr>
                             <tr
-                                *ngFor="let item of individuals | paginate: {id:'pagin1', itemsPerPage: 10, currentPage: page };let i = index;">
+                                *ngFor="let item of individuals | paginate: {id:'pagin1', itemsPerPage: itemsPerPage, currentPage: page };let i = index;">
                                 <th scope="row">
                                     {{item.id}}
                                 </th>
@@ -129,9 +129,18 @@
                         </tbody>
                     </table>
 
-                    <div *ngIf="individuals?.length > 0">
-                        <pagination-controls id="pagin1" (pageChange)="page = $event"></pagination-controls>
-                    </div>
+                    <div class="table-tools" *ngIf="individuals?.length > 0" >
+                        <div class="table-pagination">
+                          <pagination-controls  class="custom-pagination" id="pagin1" (pageChange)="page = $event"></pagination-controls>
+                          <input class="form-control page-number" [(ngModel)]="page" [ngModelOptions]="{standalone: true}"
+                            [placeholder]="util.translate('Page')">
+                        </div>
+                        <select id="view_count" [(ngModel)]="itemsPerPage" name="view_count" class="form-select ng-valid ng-dirty ng-touched view-count ">
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                      </div>
 
                 </div>
             </div>

@@ -53,7 +53,9 @@ export class SalonRequestComponent implements OnInit {
   policy: any='';
   type: any='';
   sub_type: any='';
-
+  sort: any = [];
+  itemsPerPage: number = 10;
+  
   constructor(
     public util: UtilService,
     public api: ApiService
@@ -309,5 +311,22 @@ export class SalonRequestComponent implements OnInit {
     else
       this.zoomTitle = 'Qualification';
     this.imageZoomModal.show();
+  }
+  sortOn(column: string) {
+    this.sort[column] = (this.sort[column] == '' || this.sort[column] == 'desc') ? 'asc' : 'desc';
+    this.sortByColumn(column, this.sort[column]);
+  }
+
+  sortByColumn(column:string, direction = 'desc'): any[] {
+    let sortedArray = (this.freelancers || []).sort((a,b)=>{
+      if(a[column] > b[column]){
+        return (direction === 'desc') ? 1 : -1;
+      }
+      if(a[column] < b[column]){
+        return (direction === 'desc') ? -1 : 1;
+      }
+      return 0;
+    })
+    return sortedArray;
   }
 }

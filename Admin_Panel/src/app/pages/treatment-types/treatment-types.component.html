@@ -73,7 +73,7 @@
               <tr>
                 <th>{{util.translate('Cover')}}</th>
                 <th>{{util.translate('Treatment Name')}}</th>
-                <th>{{util.translate('Treatment Type Name')}}</th>
+                <th [class.sort-asc]="sort['name'] == 'asc'" [class.sort-desc]="sort['name'] == 'desc'"><a (click)="sortOn('name')" style="cursor: pointer;">{{util.translate('Treatment Type Name')}}</a></th>
                 <th>{{util.translate('Action')}}</th>
               </tr>
             </thead>
@@ -83,7 +83,7 @@
                   <ngx-skeleton-loader count="1" appearance="line"></ngx-skeleton-loader>
                 </td>
               </tr>
-              <tr *ngFor="let item of list | paginate: {id:'pagin1', itemsPerPage: 5, currentPage: page }">
+              <tr *ngFor="let item of list | paginate: {id:'pagin1', itemsPerPage: itemsPerPage, currentPage: page }">
                 <td>
                   <img class="img-responsive" style="height: 40px;width: 40px; object-fit: cover;"
                     [src]="api.imageUrl + item.cover" onError="this.src='assets/img/dummy.jpeg'">
@@ -110,8 +110,17 @@
             </tbody>
           </table>
 
-          <div *ngIf="list?.length > 0">
-            <pagination-controls id="pagin1" (pageChange)="page = $event"></pagination-controls>
+          <div class="table-tools" *ngIf="list?.length > 0" >
+            <div class="table-pagination">
+              <pagination-controls  class="custom-pagination" id="pagin1" (pageChange)="page = $event"></pagination-controls>
+              <input class="form-control page-number" [(ngModel)]="page" [ngModelOptions]="{standalone: true}"
+                [placeholder]="util.translate('Page')">
+            </div>
+            <select id="view_count" [(ngModel)]="itemsPerPage" name="view_count" class="form-select ng-valid ng-dirty ng-touched view-count ">
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+            </select>
           </div>
 
         </div>

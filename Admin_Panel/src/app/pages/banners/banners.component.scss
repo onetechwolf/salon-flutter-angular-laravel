@@ -23,3 +23,37 @@
     margin-left: 15px;
   }
 }
+.table-tools {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-pagination {
+  padding-top: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.custom-pagination {
+  margin-bottom: -13px !important;
+}
+
+.page-number {
+  width: 50px;
+  height: 38px;
+}
+
+.view-count {
+  width: 7%;
+  height: 38px;
+}
+
+th.sort-asc::after {
+  content: ' ▲';
+}
+
+th.sort-desc::after {
+  content: ' ▼';
+}

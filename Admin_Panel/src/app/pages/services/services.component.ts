@@ -6,10 +6,13 @@
   terms found in the Website https://cosonas.com/license
   Copyright and Good Faith Purchasers © 2022-present cosonas.
 */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Renderer2  } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { UtilService } from '../../services/util.service';
-import Swal from 'sweetalert2';
+import { combineLatest, BehaviorSubject } from 'rxjs';
+import { map, scan } from 'rxjs/operators';
+// import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-categories',
   templateUrl: './Services.component.html',
@@ -24,9 +27,13 @@ export class ServicesComponent implements OnInit {
   cover: any = '';
   page: number = 1;
   cateId: any = '';
+  sort: any = [];
+  itemsPerPage: number = 10;
+
   constructor(
     public api: ApiService,
-    public util: UtilService
+    public util: UtilService,
+    private renderer: Renderer2
   ) {
     this.getAll();
   }
@@ -79,6 +86,23 @@ export class ServicesComponent implements OnInit {
     this.list = this.dummyList;
   }
 
+  sortOn(column: string) {
+    this.sort[column] = (this.sort[column] == '' || this.sort[column] == 'desc') ? 'asc' : 'desc';
+    this.sortByColumn(column, this.sort[column]);
+  }
+
+  sortByColumn(column:string, direction = 'desc'): any[] {
+    let sortedArray = (this.list || []).sort((a,b)=>{
+      if(a[column] > b[column]){
+        return (direction === 'desc') ? 1 : -1;
+      }
+      if(a[column] < b[column]){
+        return (direction === 'desc') ? -1 : 1;
+      }
+      return 0;
+    })
+    return sortedArray;
+  }
   // deleteItem(item: any) {
   //   Swal.fire({
   //     title: this.util.translate('Are you sure?'),

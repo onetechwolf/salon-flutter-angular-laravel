@@ -21,6 +21,10 @@ export class AppointmentsComponent implements OnInit {
   list: any[] = [];
   dummyList: any[] = [];
   page: number = 1;
+  
+  sort: any = [];
+  itemsPerPage: number = 10;
+  
   orderStatusNames = [
     this.util.translate('Created'), // 0
     this.util.translate('Accepted'), // 1
@@ -91,5 +95,23 @@ export class AppointmentsComponent implements OnInit {
       }
     }
     this.router.navigate(['appointments-details'], param);
+  }
+
+  sortOn(column: string) {
+    this.sort[column] = (this.sort[column] == '' || this.sort[column] == 'desc') ? 'asc' : 'desc';
+    this.sortByColumn(column, this.sort[column]);
+  }
+
+  sortByColumn(column:string, direction = 'desc'): any[] {
+    let sortedArray = (this.list || []).sort((a,b)=>{
+      if(a[column] > b[column]){
+        return (direction === 'desc') ? 1 : -1;
+      }
+      if(a[column] < b[column]){
+        return (direction === 'desc') ? -1 : 1;
+      }
+      return 0;
+    })
+    return sortedArray;
   }
 }

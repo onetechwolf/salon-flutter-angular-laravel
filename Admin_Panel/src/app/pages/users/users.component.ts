@@ -23,6 +23,8 @@ export class UsersComponent implements OnInit {
   dummyUsers: any[] = [];
   users: any[] = [];
   page: number = 1;
+  sort: any = [];
+  itemsPerPage: number = 10;
 
   constructor(
     private router: Router,
@@ -189,5 +191,23 @@ export class UsersComponent implements OnInit {
     });
     const name = 'users';
     this.util.downloadFile(data, name, ['id', 'first_name', 'last_name', 'cover', 'country_code', 'mobile', 'email']);
+  }
+
+  sortOn(column: string) {
+    this.sort[column] = (this.sort[column] == '' || this.sort[column] == 'desc') ? 'asc' : 'desc';
+    this.sortByColumn(column, this.sort[column]);
+  }
+
+  sortByColumn(column:string, direction = 'desc'): any[] {
+    let sortedArray = (this.users || []).sort((a,b)=>{
+      if(a[column] > b[column]){
+        return (direction === 'desc') ? 1 : -1;
+      }
+      if(a[column] < b[column]){
+        return (direction === 'desc') ? -1 : 1;
+      }
+      return 0;
+    })
+    return sortedArray;
   }
 }
