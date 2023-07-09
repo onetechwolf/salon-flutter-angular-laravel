@@ -24,8 +24,6 @@ export class SearchComponent implements OnInit {
   lat: string=''; lng: string=''; address: string=''; placeId: string=''; treatmentCategory: string='';categoryId: string=''; categoryType: string='';
   zoom = 12; // example zoom level
   isDropdownOpen = false;
-  GoogleAutocomplete;
-  geocoder: any;
   salonList: any[] = [];
   iconUrl: any = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
   places = [];
@@ -44,8 +42,6 @@ export class SearchComponent implements OnInit {
     private router: Router,
   ) {
     this.autocompleteLocationItems = [];
-    this.geocoder = new google.maps.Geocoder();
-    this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
   }
 
   ngOnInit(): void {
@@ -134,7 +130,7 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    this.GoogleAutocomplete.getPlacePredictions({ input: this.address }, (predictions, status) => {
+    this.util.GoogleAutocomplete.getPlacePredictions({ input: this.address }, (predictions, status) => {
       console.log(predictions);
       if (predictions && predictions.length > 0) {
         this.autocompleteLocationItems = predictions;
@@ -146,7 +142,7 @@ export class SearchComponent implements OnInit {
   selectSearchLocationResult(placeId, address) {
     this.autocompleteLocationItems = [];
     this.address = address;
-    this.geocoder.geocode({ placeId: placeId }, (results, status) => {
+    this.util.geocoder.geocode({ placeId: placeId }, (results, status) => {
       if (status == 'OK' && results[0]) {
         this.lat = results[0].geometry.location.lat();
         this.lng = results[0].geometry.location.lng();

@@ -13,6 +13,8 @@ import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TranslateService } from '@ngx-translate/core';
+declare var google: any;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -110,6 +112,9 @@ export class UtilService {
     }
   ];
 
+  geocoder: any;
+  GoogleAutocomplete;
+
   public partnerTypes: any[] =
           ['Mobile Beautician', 'Hair & Nails Salon', 'Barber Shop', 'Wellness & Spa', 'Beauty Clinics', 'Products Only'];
 
@@ -121,6 +126,8 @@ export class UtilService {
     this.app_name = environment.app_name;
     this.websiteName = environment.websiteName;
     this.websiteURL = environment.websiteURL;
+    this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
+    this.geocoder = new google.maps.Geocoder();
   }
 
   publishAddress(data: any) {
@@ -350,6 +357,9 @@ export class UtilService {
     } else {
       this.errorMessage(this.translate('Something went wrong'));
     }
+  }
 
+  getLocation(lat, lng) {
+    return new google.maps.LatLng(lat, lng);
   }
 }

@@ -131,9 +131,9 @@ export class CheckoutComponent implements OnInit {
     this.processing_fee =this.deposit * this.util.processing_fee/100;
     this.payNow = this.deposit + this.util.booking_fee + this.processing_fee;
     this.payAt = this.subtotal - this.deposit;
-    this.billDetails.processing_fee = this.processing_fee.toFixed(2);
-    this.billDetails.payNow = this.payNow.toFixed(2);
-    this.billDetails.payAt = this.payAt.toFixed(2);
+    this.billDetails.processing_fee = this.processing_fee.toFixed(3);
+    this.billDetails.payNow = this.payNow.toFixed(3);
+    this.billDetails.payAt = this.payAt.toFixed(3);
   }
 
   changeServiceAt(at: any) {
@@ -1160,7 +1160,7 @@ export class CheckoutComponent implements OnInit {
     console.log(savedPayment);
     if (savedPayment.length > 0) {
       var param = {
-        'amount': parseInt(this.serviceCart.grandTotal),
+        'amount': Math.floor(this.payNow),
         'currency': savedPayment[0].currency_code,
         'customer': this.stripeKey,
         'card': this.selectedCard

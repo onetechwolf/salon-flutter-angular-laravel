@@ -12,8 +12,6 @@ import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AppComponent } from 'src/app/app.component';
-declare var google: any;
-
 
 @Component({
   selector: 'app-welcome',
@@ -24,13 +22,11 @@ export class WelcomeComponent implements OnInit {
   autocomplete1: { 'query_treatment': string, 'query_location': string };
   autocompleteTreatmentItems: any = [];
   autocompleteLocationItems: any = [];
-  GoogleAutocomplete;
   selectedLat: any;
   selectedLng: any;
   selectedTreatmentCategoryId: any;
   selectedTreatmentCategoryType: any;
   selectedPlaceId: any;
-  geocoder: any;
 
   @ViewChild('downloadLocation') downloadLocation: ElementRef;
 
@@ -41,8 +37,6 @@ export class WelcomeComponent implements OnInit {
     public api: ApiService,
     public appComponent: AppComponent,
   ) {
-    this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
-    this.geocoder = new google.maps.Geocoder();
     this.autocomplete1 = { query_treatment: '', query_location: '' };
     this.autocompleteLocationItems = [];
     this.getBlogs();
@@ -129,7 +123,7 @@ export class WelcomeComponent implements OnInit {
       return;
     }
 
-    this.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete1.query_location }, (predictions, status) => {
+    this.util.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete1.query_location }, (predictions, status) => {
       console.log(predictions);
       if (predictions && predictions.length > 0) {
         this.autocompleteLocationItems = predictions;
@@ -144,7 +138,7 @@ export class WelcomeComponent implements OnInit {
     this.autocompleteLocationItems = [];
     this.autocomplete1.query_location = item.description;
     this.selectedPlaceId = item.place_id;
-    this.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
+    this.util.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
       if (status == 'OK' && results[0]) {
         console.log(status);
         this.selectedLat = results[0].geometry.location.lat();
@@ -157,9 +151,7 @@ export class WelcomeComponent implements OnInit {
 
   getAddress(lat, lng) {
     this.util.stop();
-    const geocoder = new google.maps.Geocoder();
-    const location = new google.maps.LatLng(lat, lng);
-    geocoder.geocode({ 'location': location }, (results, status) => {
+    this.util.geocoder.geocode({ 'location': this.util.getLocation(lat, lng) }, (results, status) => {
       console.log(results);
       console.log('status', status);
       if (results && results.length) {

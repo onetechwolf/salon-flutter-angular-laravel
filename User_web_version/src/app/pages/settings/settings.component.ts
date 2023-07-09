@@ -48,8 +48,6 @@ export class SettingsComponent implements OnInit {
   // autocomplete1: { 'query': string };
   query: any = '';
   autocompleteLocationItems: any = [];
-  GoogleAutocomplete;
-  geocoder: any;
   addressSelected: boolean;
 
   editClicked: boolean;
@@ -76,8 +74,6 @@ export class SettingsComponent implements OnInit {
       const id = this.route.snapshot.paramMap.get('id');
       console.log(id);
       this.tabId = this.route.snapshot.paramMap.get('from');
-      this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
-      this.geocoder = new google.maps.Geocoder();
       this.query = '';
       this.gender = this.util.userInfo.gender;
       this.first_name = this.util.userInfo.first_name;
@@ -468,7 +464,7 @@ export class SettingsComponent implements OnInit {
       return;
     }
 
-    this.GoogleAutocomplete.getPlacePredictions({ input: this.query }, (predictions, status) => {
+    this.util.GoogleAutocomplete.getPlacePredictions({ input: this.query }, (predictions, status) => {
       console.log(predictions);
       if (predictions && predictions.length > 0) {
         this.autocompleteLocationItems = predictions;
@@ -482,7 +478,7 @@ export class SettingsComponent implements OnInit {
     localStorage.setItem('addsSelected', 'true');
     this.autocompleteLocationItems = [];
     this.query = item.description;
-    this.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
+    this.util.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
       if (status == 'OK' && results[0]) {
         console.log(status);
         this.address = this.query;

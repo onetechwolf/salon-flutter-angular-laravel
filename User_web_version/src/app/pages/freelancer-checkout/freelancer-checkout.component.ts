@@ -122,9 +122,9 @@ export class FreelancerCheckoutComponent implements OnInit {
     this.processing_fee =this.deposit * this.util.processing_fee/100;
     this.payNow = this.deposit + this.util.booking_fee + this.processing_fee;
     this.payAt = this.subtotal - this.deposit;
-    this.billDetails.processing_fee = this.processing_fee.toFixed(2);
-    this.billDetails.payNow = this.payNow.toFixed(2);
-    this.billDetails.payAt = this.payAt.toFixed(2);
+    this.billDetails.processing_fee = this.processing_fee.toFixed(3);
+    this.billDetails.payNow = this.payNow.toFixed(3);
+    this.billDetails.payAt = this.payAt.toFixed(3);
   }
 
   removeService(item: any) {

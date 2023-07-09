@@ -5126,6 +5126,14 @@ ngx-spinner@^14.0.0:
   dependencies:
     tslib "^2.3.0"
 
+ngx-typed-js@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/ngx-typed-js/-/ngx-typed-js-2.1.1.tgz#8c43fb9fadc4dffaf3b5d6e5e21a53f7156c3095"
+  integrity sha512-j/S5SdYy+Wjw+ad6OEfgk3QfucdqgS48XmKv34k0QII2MyRSwYvMxJ9ax60WdwRQCAG0xmu67FAN8tww7XwTEQ==
+  dependencies:
+    tslib "^2.3.0"
+    typed.js "^2.0.12"
+
 ngx-useful-swiper@^10.0.1:
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/ngx-useful-swiper/-/ngx-useful-swiper-10.0.1.tgz#1f4840c17508fbd3f8da1d4b646cfb87fef5c661"
@@ -6936,6 +6944,11 @@ typed-assert@^1.0.8:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/typed-assert/-/typed-assert-1.0.9.tgz#8af9d4f93432c4970ec717e3006f33f135b06213"
   integrity sha512-KNNZtayBCtmnNmbo5mG47p1XsCyrx6iVqomjcZnec/1Y5GGARaxPs6r49RnSPeUP3YjNYiU9sQHAtY4BBvnZwg==
+
+typed.js@^2.0.12:
+  version "2.0.16"
+  resolved "https://registry.yarnpkg.com/typed.js/-/typed.js-2.0.16.tgz#2ba416821ec8a59521466f405784077eddb1d95e"
+  integrity sha512-IBB52GlJiTUOnomwdVVf7lWgC6gScn8md+26zTHj5oJWA+4pSuclHE76rbGI2hnyO+NT+QXdIUHbfjAY5nEtcw==
 
 typescript@~4.7.2:
   version "4.7.4"

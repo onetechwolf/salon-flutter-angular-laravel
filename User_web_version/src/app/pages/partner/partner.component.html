@@ -6,26 +6,26 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2022-present initappz.
  -->
-<div class="hero">
-  <div class="hero__backgroundWrapper">
-     <div class="hero__content">
-        <h1 class="Text hero__title">The Salon owners, wellness experts and mobile beauticians love Bunitas</h1>
-        <h2 class="Text hero__subtitle">It's the only one you need. Join the best destination for your beauty and wellness needs</h2>
-        <div class="hero__topBtnWrapper"><a (click)="appComponent.showRegisterPartnerDailog()" class="button hero__button signupLink button--blue-600 button--size-default" id="hero-button" style="color: white">Become a Partner</a></div>
-        <picture>
-           <source width="270" height="479" media="(max-width: 767px)" srcset="https://cdn-static-business-pages-spa.fresha.com/build/_assets/for-business-header-mobile-6E675IGX.webp" type="image/webp">
-           <source width="270" height="479" media="(max-width: 767px)" srcset="https://cdn-static-business-pages-spa.fresha.com/build/_assets/for-business-header-mobile-Y7HOSDQR.png" type="image/png">
-           <source width="1440" height="875" media="(min-width: 768px)" srcset="https://cdn-static-business-pages-spa.fresha.com/build/_assets/for-business-header-non-mobile-X7EXKOKB.webp" type="image/webp">
-           <source width="1440" height="875" media="(min-width: 768px)" srcset="https://cdn-static-business-pages-spa.fresha.com/build/_assets/for-business-header-non-mobile-ENFLAVJE.png" type="image/png">
-           <img width="1440" height="875" class="hero__image" src="https://cdn-static-business-pages-spa.fresha.com/build/_assets/for-business-header-non-mobile-ENFLAVJE.png" alt="Fresha - Software for Salons and Spas">
-        </picture>
-     </div>
-     <div class="hero__shadow"></div>
-     <div class="hero__background"></div>
+ <section id="home" class="text-left hero-section bg-gredient">
+  <div class="container">
+      <div class="row align-items-center">
+        <div class="hero-content col-lg-9 p-175px-tb lg-p-175px-t lg-p-100px-b md-p-100px-t md-p-50px-b">
+            <h2 class="Text hero__title" data-wow-delay=".1s" style="margin-bottom: 15px;">The salon owners, barbers, mobile beauticians, wellness experts, and Beauty owners love Bunitas<br>
+            </h2>
+            <ngx-typed-js [loop]="true" [shuffle]="true" [typeSpeed]="70" [showCursor]="false" [strings]="['The ultimate platform for your business success!']">
+              <h3 class="typing"></h3>
+            </ngx-typed-js>
+            <a class="primary-btn wow fadeInLeft" data-wow-delay=".3s" style="margin-top: 100px" style="color: white;background:#9C0278" (click)="appComponent.showRegisterPartnerDailog()">Join Us Now</a>
+        </div>
+        <div class="promo-image d-none d-lg-block" *ngIf="util.deviceType=='desktop'">
+            <img class="img-fluid" data-wow-delay=".3s" src="assets/imgs/partner-banner.jpg" alt="" style="width: 500px;"/>
+        </div>
+        <div class="promo-image " *ngIf="util.deviceType!='desktop'">
+          <img class="img-fluid" data-wow-delay=".3s" src="assets/imgs/partner-banner.jpg" alt="" style="width: 300px;"/>
+        </div>
+      </div>
   </div>
-  <div class="hero__bottomBtnWrapper"><a href="https://www.fresha.com/user-flow" class="button hero__button signupLink button--blue-600 button--size-default" id="hero-button">Become a Partner</a></div>
-</div>
-
+</section>
 
 <div class="container">
   <div class="StaticPageSection StaticPageSection--maxWidth-primary SoftwareSolution">
@@ -107,11 +107,11 @@
   </div>
 </div>
 
-<div style="background: #f5f5f5;">
+<div style="background: #f5f5f5;padding: 50px 0px;">
   <div class="container">
     <div class="StaticPageSection StaticPageSection--maxWidth-primary SoftwareSolution">
       <div class="Features__content">
-        <div>
+        <div style="padding: 20px 0px;">
             <!-- <h2 class="Text Text--color-orange-600 Text--transform-uppercase FeaturesContent__title">Online Booking</h2> -->
             <h3 class="Text FeaturesContent__subtitle">Grow your business and attract new clients</h3>
             <p class="Text FeaturesContent__description">Showcase your brand, availability, and services on Bunitas and connect with thousands of clients in your area.</p><br/>
@@ -136,18 +136,18 @@
             </ul> -->
         </div>
         <picture class="Features__picture">
-            <img style="width: 90% !important;height: auto;" src="assets/imgs/home-4.jpg" alt="Fresha is the top-rated salon software allowing you to enhance your salon's online presence with powerful marketing and promotional tools, designed to attract new clients and strengthen relationships with existing customers.">
+            <img style="width: 100% !important;height: auto;" src="assets/imgs/home-4.jpg" alt="Fresha is the top-rated salon software allowing you to enhance your salon's online presence with powerful marketing and promotional tools, designed to attract new clients and strengthen relationships with existing customers.">
         </picture>
       </div>
     </div>
   </div>
 </div>
 
-<div class="container">
+<div class="container" style="padding: 50px 0px;">
   <div class="StaticPageSection StaticPageSection--maxWidth-primary SoftwareSolution">
     <p class="Text SectionTitle SectionTitle--40 SoftwareSolution__title">PRICING</p>
     <div class="row" style="margin: 0px !important;">
-      <div class="col-lg-6">
+      <div class="col-lg-6" style="padding: 20px 0px;">
         <div class="CheckList FeaturesContent__featuresList">
           <div class="CheckList__item" style="display:block;">
             <p class="Text FeaturesContent__description" style="font-size: 20px;"><img width="20" height="20" src="https://cdn-static-business-pages-spa.fresha.com/icons/tick.svg" class="Icon CheckList__item__icon" alt="icon"> Free Registration</p>
@@ -173,14 +173,14 @@
       </div>
       <div class="col-lg-6">
         <picture class="Features__picture">
-          <img style="width: 90%;height: auto;" src="assets/imgs/home-5.jpg">
+          <img style="width: 100%;height: auto;" src="assets/imgs/home-5.jpg">
         </picture>
       </div>
     </div>
   </div>
 </div>
 
-<div style="background: #f5f5f5;">
+<div style="background: #f5f5f5;padding: 50px 0px;">
   <div class="container">
     <div class="StaticPageSection StaticPageSection--maxWidth-primary">
       <p class="Text SectionTitle SectionTitle--40">Download the Bunitas App</p>

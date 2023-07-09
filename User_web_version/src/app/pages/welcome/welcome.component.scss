@@ -195,6 +195,7 @@ label {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 15px;
 
     .head_lbl {
       font-size: 40px;
@@ -545,6 +546,7 @@ label {
       margin-bottom: 48px;
   }
 }
+
 .anim-container {
   color: #e5e5e5;
   font-size: 2.26rem;
@@ -557,13 +559,13 @@ label {
   margin-left: 0px;
 }
 
-.animation {
+.anim-container .animation {
   height:50px;
   overflow:hidden;
   margin-left: 1rem;
 }
 
-.animation > div > div {
+.anim-container .animation > div > div {
   padding: 0.25rem 0.75rem;
   height:2.73rem;
   margin-bottom: 2.80rem;
@@ -571,7 +573,50 @@ label {
   color: #9C0278;
 }
 
-.animation div:first-child {
+.anim-container .animation div:first-child {
+  animation: text-animation 8s infinite;
+}
+
+@keyframes text-animation {
+  0% {margin-top: -0.15rem;}
+  10% {margin-top: -0.15rem;}
+  20% {margin-top: -5.42rem;}
+  30% {margin-top: -5.42rem;}
+  40% {margin-top: -10.82rem;}
+  60% {margin-top: -10.82rem;}
+  70% {margin-top: -5.42rem;}
+  80% {margin-top: -5.42rem;}
+  90% {margin-top: -0.15rem;}
+  100% {margin-top: -0.15rem;}
+}
+
+.anim-container-mobile {
+  color: #e5e5e5;
+  font-size: 2rem;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+}
+
+.anim-container-mobile section {
+  margin-left: 0px;
+}
+
+.anim-container-mobile .animation {
+  height:50px;
+  overflow:hidden;
+  margin-left: 1rem;
+}
+
+.anim-container-mobile .animation > div > div {
+  padding: 0.25rem 0.75rem;
+  height:2.73rem;
+  margin-bottom: 2.80rem;
+  display:inline-block;
+  color: #9C0278;
+}
+
+.anim-container-mobile .animation div:first-child {
   animation: text-animation 8s infinite;
 }
 

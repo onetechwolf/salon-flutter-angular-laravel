@@ -158,8 +158,13 @@
 .location_body {
   padding: 20px;
 
+  .custom-file-button {
+    border: 1px solid #ced4da;
+  }
   label {
     display: block;
+
+    color: #a9abb2;
   }
 
   .frg {

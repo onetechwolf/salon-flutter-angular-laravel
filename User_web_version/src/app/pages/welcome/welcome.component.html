@@ -13,7 +13,17 @@
         <div class="container">
           <div class="row  justify-content-md-center">
             <div class="col-xl-10 col-lg-8">
-              <div class="bold_lbl anim-container">
+              <div class="bold_lbl anim-container" *ngIf="util.deviceType =='desktop'">
+                <p style="text-wrap: nowrap">Get The BEST </p>
+                <section class="animation">
+                  <div class="first"><div style="text-wrap: nowrap">SALONS</div></div>
+                  <div class="second"><div style="text-wrap: nowrap">MOBILE BEAUTICIANS</div></div>
+                  <div class="third"><div style="text-wrap: nowrap">BEAUTY PRODUCTS</div></div>
+                </section>
+                <p style="text-wrap: nowrap"> Near You!</p>
+              </div>
+
+              <div class="bold_lbl anim-container-mobile" *ngIf="util.deviceType !='desktop'">
                 <p style="text-wrap: nowrap">Get The BEST </p>
                 <section class="animation">
                   <div class="first"><div style="text-wrap: nowrap">SALONS</div></div>
@@ -133,9 +143,22 @@
   </div>
 </div>
 
-<div style="padding-top: 40px;">
+<div style="padding: 40px 0px;">
   <div class="container">
-    <div class="row getapp_div">
+    <div class="row getapp_div" *ngIf="util.deviceType =='desktop'">
+      <div class="col-lg-6 getapp_content">
+        <label class="head_lbl">{{util.translate('Looking for a New Look?')}}</label>
+        <label class="small_lbl">
+          {{util.translate("Want to pamper yourself with a relaxing treatment? Don't waste time searching online. Find your nearby favourite salon and beauty specialist in minutes. Whether you need a haircut, a manicure, a facial or a massage, we have it all.")}}
+        </label>
+        <label class="small_lbl" style="text-align: center;margin-top: 30px">Book now and get ready to shine!</label>
+        <button mdbBtn class="round_btn" (click)="goToRest()" style="align-self: center;">{{util.translate('Search Treatments')}}</button>
+      </div>
+      <div class="col-lg-6">
+        <img src="assets/imgs/home-1.jpg" style="width: 90%;">
+      </div>
+    </div>
+    <div class="row getapp_div" *ngIf="util.deviceType !='desktop'">
       <div class="col-lg-6 getapp_content">
         <label class="head_lbl">{{util.translate('Looking for a New Look?')}}</label>
         <label class="small_lbl">
@@ -152,7 +175,7 @@
 </div>
 
 
-<div style="background: #f5f5f5;padding: 60px;margin-top: 60px;">
+<div style="background: #f5f5f5;padding: 60px 0px;">
   <div class="container">
     <div class="row getapp_div">
       <div class="col-lg-6">
@@ -176,7 +199,7 @@
   </div>
 </div>
 
-<div style="padding-top: 60px;;">
+<div style="padding: 60px 0px;">
   <div class="container">
     <div class="row getapp_div">
       <div class="col-lg-6 getapp_content">
@@ -196,7 +219,7 @@
   </div>
 </div>
 
-<div style="padding: 60px;background: #f5f5f5;margin-top: 60px" id="downloadLocation" #downloadLocation>
+<div style="background: #f5f5f5;padding: 60px 0px;" id="downloadLocation" #downloadLocation>
   <div class="container" >
     <div class="StaticPageSection StaticPageSection--maxWidth-primary DownloadApp">
       <p class="Text SectionTitle SectionTitle--40">Download the Bunitas App</p>

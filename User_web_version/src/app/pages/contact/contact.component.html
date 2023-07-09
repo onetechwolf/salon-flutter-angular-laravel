@@ -6,6 +6,9 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2022-present initappz.
  -->
+
+<script src='https://js.zohostatic.eu/support/app/js/jqueryandencoder.ffa5afd5124fbedceea9.js'></script>
+
 <div class="container">
 
   <div class="head_title">
@@ -16,12 +19,30 @@
 
     <div class="col-lg-6">
 
-      <input type="text" class="form-control" [(ngModel)]="contact.name" [placeholder]="util.translate('Full Name')">
+      <input type="text" class="form-control" [(ngModel)]="contact['First Name']" [placeholder]="util.translate('Full Name')">
 
-      <input type="text" class="form-control" [(ngModel)]="contact.email" [placeholder]="util.translate('Email ID')">
+      <input [(ngModel)]="contact['Phone']" type="text" [placeholder]="util.translate('Mobile Number')"
+          name="phone" #phone="ngModel" spellcheck="false" autocapitalize="off" required class="form-control">
 
-      <textarea class="form-control" rows="5" [(ngModel)]="contact.message"
+      <input type="text" class="form-control" [(ngModel)]="contact['Email']" [placeholder]="util.translate('Email ID')">
+
+      <input type="text" class="form-control" [(ngModel)]="contact['Subject']" [placeholder]="util.translate('Subject')">
+
+      <textarea class="form-control" rows="5" [(ngModel)]="contact['Description']"
         [placeholder]="util.translate('Write Message..')"></textarea>
+
+      <div style="display: flex;justify-content:space-between">
+        <div *ngIf="captchaUrl == ''"><strong>Captcha Loading...<br><br></strong></div>
+        <div *ngIf="captchaUrl != ''">
+          <img [src]='captchaUrl' id='zsCaptchaUrl' name="zsCaptchaImage">
+          <a href='javascript:;' style='color:#00a3fe; cursor:pointer; margin-left:10px; vertical-align:middle;text-decoration: none;' class='zsFontClass'
+            (click)='getCaptchaCode()'>Refresh
+          </a>
+        </div>
+        <div>
+          <input type="text" class="form-control" [(ngModel)]="contact['zsWebFormCaptchaWord']" [placeholder]="util.translate('Captcha')">
+        </div>
+      </div>
 
       <button type="button" mdbWavesEffect mdbBtn class="btn" (click)="submit()">{{util.translate('Submit')}}
       </button>
@@ -58,3 +79,4 @@
     </div>
   </div>
 </div>
+
