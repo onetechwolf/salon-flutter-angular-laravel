@@ -377,7 +377,7 @@ class AuthController extends Controller
 
     public function uploadVideo(Request $request){
         $validator = Validator::make($request->all(), [
-            'video' => 'required|mimetypes:video/mp4,video/avi|max:1048576'
+            'video' => 'required|mimetypes:video/mp4,video/avi|max:15728640'
         ]);
         if ($validator->fails()) {
             $response = [
