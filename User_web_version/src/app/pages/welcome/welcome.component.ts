@@ -6,14 +6,12 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2022-present initappz.
 */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AppComponent } from 'src/app/app.component';
-declare var google: any;
-
 
 @Component({
   selector: 'app-welcome',
@@ -24,12 +22,13 @@ export class WelcomeComponent implements OnInit {
   autocomplete1: { 'query_treatment': string, 'query_location': string };
   autocompleteTreatmentItems: any = [];
   autocompleteLocationItems: any = [];
-  GoogleAutocomplete;
   selectedLat: any;
   selectedLng: any;
-  selectedAddress: any;
-  selectedTreatment: any;
-  geocoder: any;
+  selectedTreatmentCategoryId: any;
+  selectedTreatmentCategoryType: any;
+  selectedPlaceId: any;
+
+  @ViewChild('downloadLocation') downloadLocation: ElementRef;
 
   blogs: any;
   constructor(
@@ -38,8 +37,6 @@ export class WelcomeComponent implements OnInit {
     public api: ApiService,
     public appComponent: AppComponent,
   ) {
-    this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
-    this.geocoder = new google.maps.Geocoder();
     this.autocomplete1 = { query_treatment: '', query_location: '' };
     this.autocompleteLocationItems = [];
     this.getBlogs();
@@ -80,34 +77,29 @@ export class WelcomeComponent implements OnInit {
   locate() {
     const param: NavigationExtras = {
       queryParams: {
-        treatment: this.selectedTreatment,
-        lat: this.selectedLat,
-        lng: this.selectedLng,
-        address: this.selectedAddress,
+        category: this.autocomplete1.query_treatment,
+        category_id: this.selectedTreatmentCategoryId,
+        category_type: this.selectedTreatmentCategoryType,   // 0: main category, 1: sub category
+        address: this.autocomplete1.query_location,
+        place_id: this.selectedPlaceId,
       }
     }
     this.router.navigate(['search'], param);
   }
 
-  onSearchChangeTreatment(event) {
-    console.log(event);
-    if (this.autocomplete1.query_treatment == '') {
-      this.autocompleteTreatmentItems = [];
-      return;
-    }
-    // const addsSelected = localStorage.getItem('treatment');
-    // if (addsSelected && addsSelected != null) {
-    //   localStorage.removeItem('treatmentSelected');
-    //   return;
-    // }
+  onSearchChangeTreatmentCategory(event) {
+    this.autocompleteTreatmentItems = [];
 
     let query = this.autocomplete1.query_treatment;
-    this.autocompleteTreatmentItems = this.util.services.map(function(service) {
-      if (service.name.includes(query)) {
-        return service;
+    this.util.categories.forEach(category => {
+      if (category.name.includes(query)) {
+        category.type = 0; // parent
+        this.autocompleteTreatmentItems.push(category);
+        category.types.forEach(type => {
+          type.type = 1; // child
+          this.autocompleteTreatmentItems.push(type);
+        });
       }
-    }).filter(function(item) {
-      return item !== undefined;
     });
   }
 
@@ -115,9 +107,8 @@ export class WelcomeComponent implements OnInit {
     console.log('select', item);
     this.autocompleteTreatmentItems = [];
     this.autocomplete1.query_treatment = item.name;
-    this.selectedTreatment = item.id;
-    localStorage.setItem('treatmentSelected', 'true');
-    localStorage.setItem('treatment', 'item.name');
+    this.selectedTreatmentCategoryType = item.type;
+    this.selectedTreatmentCategoryId = item.id;
   }
 
   onSearchChangeLocation(event) {
@@ -132,7 +123,7 @@ export class WelcomeComponent implements OnInit {
       return;
     }
 
-    this.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete1.query_location }, (predictions, status) => {
+    this.util.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete1.query_location }, (predictions, status) => {
       console.log(predictions);
       if (predictions && predictions.length > 0) {
         this.autocompleteLocationItems = predictions;
@@ -146,22 +137,21 @@ export class WelcomeComponent implements OnInit {
     localStorage.setItem('addsSelected', 'true');
     this.autocompleteLocationItems = [];
     this.autocomplete1.query_location = item.description;
-    this.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
+    this.selectedPlaceId = item.place_id;
+    this.util.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
       if (status == 'OK' && results[0]) {
         console.log(status);
         this.selectedLat = results[0].geometry.location.lat();
         this.selectedLng = results[0].geometry.location.lng();
         this.selectedLng = results[0].geometry.location.lng();
-        this.selectedAddress = this.autocomplete1.query_location;
+
       }
     });
   }
 
   getAddress(lat, lng) {
     this.util.stop();
-    const geocoder = new google.maps.Geocoder();
-    const location = new google.maps.LatLng(lat, lng);
-    geocoder.geocode({ 'location': location }, (results, status) => {
+    this.util.geocoder.geocode({ 'location': this.util.getLocation(lat, lng) }, (results, status) => {
       console.log(results);
       console.log('status', status);
       if (results && results.length) {
@@ -189,15 +179,19 @@ export class WelcomeComponent implements OnInit {
     return moment(item).format('MMM');
   }
 
-  removeTreatmentSearchKey() {
+  removeTreatmentCategorySearchKey() {
     this.autocomplete1.query_treatment = '';
     this.autocompleteTreatmentItems = [];
-    this.selectedTreatment = '';
+    this.selectedTreatmentCategoryId = '';
   }
 
   removeLocationSearchKey() {
     this.autocomplete1.query_location = '';
     this.autocompleteLocationItems = [];
     this.selectedLat = ''; this.selectedLng = '';
+  }
+
+  scrollToDownload() {
+    this.downloadLocation.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 }

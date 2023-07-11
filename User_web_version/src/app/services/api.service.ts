@@ -177,6 +177,22 @@ export class ApiService {
     });
   }
 
+  public postExternal(url, body): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      const header = {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+      };
+      const param = this.JSON_to_URLEncoded(body);
+      console.log(param);
+      this.http.post(url, param, header).subscribe((data) => {
+        resolve(data);
+      }, error => {
+        resolve(error);
+      });
+    });
+  }
+
   public post_private(url, body): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       const header = {

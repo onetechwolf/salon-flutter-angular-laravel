@@ -7,7 +7,7 @@ use App\Http\Controllers\v1\CitiesController;
 use App\Http\Controllers\v1\TimeslotController;
 use App\Http\Controllers\v1\SalonController;
 use App\Http\Controllers\v1\CategoryController;
-use App\Http\Controllers\v1\PreCategoryController;
+use App\Http\Controllers\v1\CategoryTypeController;
 use App\Http\Controllers\v1\IndividualController;
 use App\Http\Controllers\v1\BannersController;
 use App\Http\Controllers\v1\ProductCategoryController;
@@ -71,6 +71,7 @@ Route::prefix('/v1')->group(function () {
     Route::post('auth/create_user_account', [AuthController::class, 'create_user_account']);
     Route::post('auth/adminLogin', [AuthController::class, 'adminLogin']);
     Route::post('uploadImage', [AuthController::class, 'uploadImage']);
+    Route::post('uploadVideo', [AuthController::class, 'uploadVideo']);
     Route::post('auth/createSalonAccount', [AuthController::class, 'createSalonAccount']);
     Route::post('auth/createIndividualAccount', [AuthController::class, 'createIndividualAccount']);
     Route::post('auth/verifyEmailForReset', [AuthController::class, 'verifyEmailForReset']);
@@ -104,9 +105,9 @@ Route::prefix('/v1')->group(function () {
         Route::post('salon/create', [SalonController::class, 'save']);
         Route::post('salon/update', [SalonController::class, 'update']);
         Route::post('salon/updatePolicy', [SalonController::class, 'updatePolicy']);
+        Route::post('salon/getPolicy', [SalonController::class, 'getPolicy']);
         Route::post('salon/destroy', [SalonController::class, 'delete']);
         Route::post('salon/getById', [SalonController::class, 'getById']);
-
         Route::get('salon/getListForOffers', [SalonController::class, 'getListForOffers']);
 
         // individual Routes
@@ -125,16 +126,7 @@ Route::prefix('/v1')->group(function () {
         Route::post('blogs/destroy', [BlogsController::class, 'delete']);
         Route::post('blogs/getById', [BlogsController::class, 'getById']);
 
-        // Pre-Category Routes
-        Route::get('pre_category/getAll', [PreCategoryController::class, 'getAll']);
-        Route::get('pre_category/getStores', [PreCategoryController::class, 'getStores']);
-        Route::post('pre_category/create', [PreCategoryController::class, 'save']);
-        Route::post('pre_category/update', [PreCategoryController::class, 'update']);
-        Route::post('pre_category/destroy', [PreCategoryController::class, 'delete']);
-        Route::post('pre_category/getById', [PreCategoryController::class, 'getById']);
-        Route::get('pre_category/getActiveItem', [PreCategoryController::class, 'getActiveItem']);
-        Route::post('pre_category/updateStatus', [PreCategoryController::class, 'updateStatus']);
-        // Category Routes
+        // Treatments Routes
         Route::get('category/getAll', [CategoryController::class, 'getAll']);
         Route::get('category/getStores', [CategoryController::class, 'getStores']);
         Route::post('category/create', [CategoryController::class, 'save']);
@@ -145,6 +137,16 @@ Route::prefix('/v1')->group(function () {
         Route::post('category/updateStatus', [CategoryController::class, 'updateStatus']);
         Route::post('salon/getMySelectedCategory', [CategoryController::class, 'getMySelectedCategory']);
         Route::post('individual/getMySavedCategory', [CategoryController::class, 'getMySavedCategory']);
+
+        // Treatment Types Routes
+        Route::get('category_type/getAll', [CategoryTypeController::class, 'getAll']);
+        Route::get('category_type/getStores', [CategoryTypeController::class, 'getStores']);
+        Route::post('category_type/create', [CategoryTypeController::class, 'save']);
+        Route::post('category_type/update', [CategoryTypeController::class, 'update']);
+        Route::post('category_type/destroy', [CategoryTypeController::class, 'delete']);
+        Route::post('category_type/getById', [CategoryTypeController::class, 'getById']);
+        Route::post('category_type/getByTreatmentId', [CategoryTypeController::class, 'getByTreatmentId']);
+        Route::get('category_type/getActiveItem', [CategoryTypeController::class, 'getActiveItem']);
 
 
         // Banners Routes
@@ -398,11 +400,13 @@ Route::prefix('/v1')->group(function () {
     Route::post('salon/getHomeData', [SalonController::class, 'getHomeData']);
     Route::post('salon/getHomeDataWeb', [SalonController::class, 'getHomeDataWeb']);
     Route::post('salon/getSearchResult', [SalonController::class, 'getSearchResult']);
+    Route::post('salon/search', [SalonController::class, 'search']);
     Route::post('salon/getDataFromCategory', [SalonController::class, 'getDataFromCategory']);
     Route::post('salon/getDataFromCategoryWeb', [SalonController::class, 'getDataFromCategoryWeb']);
     Route::post('salon/getTopFreelancer', [SalonController::class, 'getTopFreelancer']);
     Route::post('salon/getTopSalon', [SalonController::class, 'getTopSalon']);
     Route::get('category/getAllCategories', [CategoryController::class, 'getActiveItem']);
+    Route::get('treatments/getAllCategories', [TreatmentsController::class, 'getActiveItem']);
     Route::post('specialist/getActiveSpecialist', [SpecialistController::class, 'getActiveSpecialist']);
     Route::post('salon/salonDetails', [SalonController::class, 'salonDetails']);
     Route::post('freelancer_services/getByCategoryId', [ServicesController::class, 'getByCategoryId']);

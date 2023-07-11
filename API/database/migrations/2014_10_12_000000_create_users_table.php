@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('cover')->nullable();
             $table->tinyInteger('gender')->nullable();
             $table->string('type')->nullable(); //admin // user // salon // freelancer
+            $table->string('sub_type')->nullable(); //'Mobile Beautifician','Hair & Nails Salon','Barber Shop','Wellness & Spa','Beauty Clinics','Products Only'
             $table->text('fcm_token')->nullable();
             $table->text('stripe_key')->nullable();
             $table->text('extra_field')->nullable();

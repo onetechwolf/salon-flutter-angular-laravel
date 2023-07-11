@@ -52,18 +52,14 @@
                 <p class="item-name text-uppercase" style="margin: 0px !important;font-size: 12px;font-family: 'bold';">
                   {{sub.name}}</p>
                 <p *ngIf="sub.discount == 0" style="margin: 0px !important;">
-                  <span *ngIf="util.currencySide == 'left'"> - {{util.currencySymbol}}
-                    {{sub.price}}</span>
+                  <span *ngIf="util.currencySide == 'left'"> - {{util.currencySymbol}}{{sub.price}}</span>
                   <span *ngIf="util.currencySide == 'right'">
-                    - {{sub.price}}
-                    {{util.currencySymbol}}</span>
+                    - {{sub.price}}{{util.currencySymbol}}</span>
                 </p>
                 <p *ngIf="sub.discount > 0" style="margin: 0px !important;">
-                  <span *ngIf="util.currencySide == 'left'"> - {{util.currencySymbol}}
-                    {{sub.off}}</span>
+                  <span *ngIf="util.currencySide == 'left'"> - {{util.currencySymbol}}{{sub.off}}</span>
                   <span *ngIf="util.currencySide == 'right'">
-                    - {{sub.off}}
-                    {{util.currencySymbol}}</span>
+                    - {{sub.off}}{{util.currencySymbol}}</span>
                 </p>
               </div>
             </div>
@@ -81,18 +77,14 @@
                   </p>
                 </div>
                 <p *ngIf="sub.discount == 0" style="margin: 0px !important;">
-                  <span *ngIf="util.currencySide == 'left'"> - {{util.currencySymbol}}
-                    {{sub.price}}</span>
+                  <span *ngIf="util.currencySide == 'left'"> - {{util.currencySymbol}}{{sub.price}}</span>
                   <span *ngIf="util.currencySide == 'right'">
-                    - {{sub.price}}
-                    {{util.currencySymbol}}</span>
+                    - {{sub.price}}{{util.currencySymbol}}</span>
                 </p>
                 <p *ngIf="sub.discount > 0" style="margin: 0px !important;">
-                  <span *ngIf="util.currencySide == 'left'"> - {{util.currencySymbol}}
-                    {{sub.off}}</span>
+                  <span *ngIf="util.currencySide == 'left'"> - {{util.currencySymbol}}{{sub.off}}</span>
                   <span *ngIf="util.currencySide == 'right'">
-                    - {{sub.off}}
-                    {{util.currencySymbol}}</span>
+                    - {{sub.off}}{{util.currencySymbol}}</span>
                 </p>
               </div>
             </div>
@@ -102,61 +94,49 @@
             <div class="d-flex mb-2">
               <h6> {{util.translate('Item Total')}} </h6>
               <h6 class="ml-auto">
-                <span *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                  {{itemTotal}}</span>
+                <span *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}{{itemTotal}}</span>
                 <span *ngIf="util.currencySide == 'right'">
-                  {{itemTotal}}
-                  {{util.currencySymbol}}</span>
+                  {{itemTotal}}{{util.currencySymbol}}</span>
               </h6>
             </div>
             <div class="d-flex mb-2">
               <h6>{{util.translate('Taxes & charges')}}</h6>
               <h6 class="ml-auto">
-                <span *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                  {{taxCharge}}</span>
+                <span *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}{{taxCharge}}</span>
                 <span *ngIf="util.currencySide == 'right'">
-                  {{taxCharge}}
-                  {{util.currencySymbol}}</span>
+                  {{taxCharge}}{{util.currencySymbol}}</span>
               </h6>
             </div>
             <div class="d-flex mb-2">
               <h6>{{util.translate('Delivery Cost')}}</h6>
               <h6 class="ml-auto">
-                <span *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                  {{distance_cost}}</span>
+                <span *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}{{distance_cost}}</span>
                 <span *ngIf="util.currencySide == 'right'">
-                  {{distance_cost}}
-                  {{util.currencySymbol}}</span>
+                  {{distance_cost}}{{util.currencySymbol}}</span>
               </h6>
             </div>
             <div class="d-flex mb-2">
               <h6>{{util.translate('Discount')}}</h6>
               <h6 class="ml-auto">
-                <span *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                  {{discount}}</span>
+                <span *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}{{discount}}</span>
                 <span *ngIf="util.currencySide == 'right'">
-                  {{discount}}
-                  {{util.currencySymbol}}</span>
+                  {{discount}}{{util.currencySymbol}}</span>
               </h6>
             </div>
             <div class="d-flex mb-3">
               <h6>{{util.translate('Wallet Discount')}}</h6>
               <h6 class="ml-auto">
-                <span *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                  {{wallet_price}} </span>
+                <span *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}{{wallet_price}} </span>
                 <span *ngIf="util.currencySide == 'right'">
-                  {{wallet_price}}
-                  {{util.currencySymbol}}</span>
+                  {{wallet_price}}{{util.currencySymbol}}</span>
               </h6>
             </div>
             <div class="d-flex mb-3">
               <h6 class="bold-text">{{util.translate('Grand Total')}}</h6>
               <h6 class="ml-auto bold-text">
-                <span *ngIf="util.currencySide == 'left'" class="bold-text">{{util.currencySymbol}}
-                  {{grand_total}}</span>
+                <span *ngIf="util.currencySide == 'left'" class="bold-text">{{util.currencySymbol}}{{grand_total}}</span>
                 <span *ngIf="util.currencySide == 'right'" class="bold-text">
-                  {{grand_total}}
-                  {{util.currencySymbol}}</span>
+                  {{grand_total}}{{util.currencySymbol}}</span>
               </h6>
             </div>
           </div>

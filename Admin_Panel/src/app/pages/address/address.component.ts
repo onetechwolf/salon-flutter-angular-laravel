@@ -23,6 +23,9 @@ export class AddressComponent implements OnInit {
   list: any[] = [];
   dummyList: any[] = [];
   page: number = 1;
+  sort: any = [];
+  itemsPerPage: number = 10;
+
   constructor(
     public util: UtilService,
     public api: ApiService
@@ -92,5 +95,23 @@ export class AddressComponent implements OnInit {
   getTitle(num: any) {
     const title = [this.util.translate('Home'), this.util.translate('Work'), this.util.translate('Others')];
     return title[num];
+  }
+
+  sortOn(column: string) {
+    this.sort[column] = (this.sort[column] == '' || this.sort[column] == 'desc') ? 'asc' : 'desc';
+    this.sortByColumn(column, this.sort[column]);
+  }
+
+  sortByColumn(column:string, direction = 'desc'): any[] {
+    let sortedArray = (this.list || []).sort((a,b)=>{
+      if(a[column] > b[column]){
+        return (direction === 'desc') ? 1 : -1;
+      }
+      if(a[column] < b[column]){
+        return (direction === 'desc') ? -1 : 1;
+      }
+      return 0;
+    })
+    return sortedArray;
   }
 }

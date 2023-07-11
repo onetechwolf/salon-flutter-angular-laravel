@@ -21,6 +21,7 @@ class RegisterRequest extends Model
         'cover',
         'gender',
         'type',
+        'sub_type',
         'zipcode',
         'categories',
         'extra_field',

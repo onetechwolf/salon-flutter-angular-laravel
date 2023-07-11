@@ -32,6 +32,10 @@ export class AdministratorComponent implements OnInit {
   password: any = '';
   mobile: any = '';
   country_code: any = '';
+
+  sort: any = [];
+  itemsPerPage: number = 10;
+
   constructor(
     private router: Router,
     public api: ApiService,
@@ -245,5 +249,23 @@ export class AdministratorComponent implements OnInit {
         this.util.error(this.util.translate('Something went wrong'));
       }
     });
+  }
+
+  sortOn(column: string) {
+    this.sort[column] = (this.sort[column] == '' || this.sort[column] == 'desc') ? 'asc' : 'desc';
+    this.sortByColumn(column, this.sort[column]);
+  }
+
+  sortByColumn(column:string, direction = 'desc'): any[] {
+    let sortedArray = (this.users || []).sort((a,b)=>{
+      if(a[column] > b[column]){
+        return (direction === 'desc') ? 1 : -1;
+      }
+      if(a[column] < b[column]){
+        return (direction === 'desc') ? -1 : 1;
+      }
+      return 0;
+    })
+    return sortedArray;
   }
 }

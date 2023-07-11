@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('cover')->nullable();
             $table->tinyInteger('gender')->nullable();
             $table->string('type')->nullable(); //admin // user // salon // freelancer
+            $table->string('sub_type')->nullable();
             $table->text('zipcode')->nullable();
             $table->text('categories')->nullable();
             $table->text('address')->nullable();

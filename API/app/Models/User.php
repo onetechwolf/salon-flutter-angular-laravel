@@ -28,6 +28,7 @@ class User extends Authenticatable implements JWTSubject, Wallet
         'cover',
         'gender',
         'type',
+        'sub_type',
         'fcm_token',
         'stripe_key',
         'extra_field',

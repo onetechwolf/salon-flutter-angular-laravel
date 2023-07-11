@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Services;
 use Validator;
-use App\Models\Category;
+use App\Models\CategoryType;
 use App\Models\User;
 use DB;
 
@@ -19,11 +19,11 @@ class ServicesController extends Controller
             'cate_id' => 'required',
             'duration' => 'required',
             'price' => 'required',
-            'off' => 'required',
-            'discount' => 'required',
+            // 'off' => 'required',
+            // 'discount' => 'required',
             'images' => 'required',
             'cover' => 'required',
-            'extra_field' => 'required',
+            // 'extra_field' => 'required',
             'status' => 'required',
             'descriptions'=>'required'
         ]);
@@ -68,7 +68,7 @@ class ServicesController extends Controller
 
         $data = Services::find($request->id);
         if($data && $data->cate_id && $data->cate_id !=null){
-            $cats = Category::where('id',$data->cate_id)->first();
+            $cats = CategoryType::with('parent')->where('id',$data->cate_id)->first();
             $data->web_cates_data = $cats;
         }
 
@@ -136,7 +136,7 @@ class ServicesController extends Controller
         $data = Services::where('uid',$request->id)->get();
         foreach($data as $loop){
             if($loop && $loop->cate_id && $loop->cate_id !=null){
-                $cats = Category::where('id',$loop->cate_id)->first();
+                $cats = CategoryType::where('id',$loop->cate_id)->first();
                 $loop->web_cates_data = $cats;
             }
         }
@@ -222,7 +222,7 @@ class ServicesController extends Controller
         foreach($data as $loop){
             if($loop && $loop->cate_id && $loop->cate_id !=null){
                 $ids = explode(',',$loop->cate_id);
-                $cats = Category::WhereIn('id',$ids)->get();
+                $cats = CategoryType::WhereIn('id',$ids)->get();
                 $loop->category = $cats;
             }
             if($loop && $loop->uid && $loop->uid !=null){

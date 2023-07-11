@@ -196,7 +196,7 @@ class SettingsController extends Controller
         $settings = Settings::first();
         $support = User::select('id','first_name','last_name')->where('type','admin')->first();
         $cities = Cities::all();
-        $categories = Category::all();
+        $categories = Category::with('types')->get();
         $services = Services::all();
         $data = [
             'settings'=>$settings,

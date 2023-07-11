@@ -33,9 +33,9 @@
                         <thead *ngIf="list?.length">
                             <tr>
                                 <th>{{util.translate('ID')}}</th>
-                                <th>{{util.translate('Name')}}</th>
-                                <th>{{util.translate('Email')}}</th>
-                                <th>{{util.translate('Message')}}</th>
+                                <th [class.sort-asc]="sort['name'] == 'asc'" [class.sort-desc]="sort['name'] == 'desc'"><a (click)="sortOn('name')" style="cursor: pointer;">{{util.translate('Name')}}</a></th>
+                                <th [class.sort-asc]="sort['email'] == 'asc'" [class.sort-desc]="sort['email'] == 'desc'"><a (click)="sortOn('email')" style="cursor: pointer;">{{util.translate('Email')}}</a></th>
+                                <th [class.sort-asc]="sort['message'] == 'asc'" [class.sort-desc]="sort['message'] == 'desc'"><a (click)="sortOn('message')" style="cursor: pointer;">{{util.translate('Message')}}</a></th>
                                 <th>{{util.translate('Action')}}</th>
                             </tr>
                         </thead>
@@ -46,7 +46,7 @@
                                 </td>
                             </tr>
                             <tr
-                                *ngFor="let item of list | paginate: {id:'pagin1', itemsPerPage: 10, currentPage: page }">
+                                *ngFor="let item of list | paginate: {id:'pagin1', itemsPerPage: itemsPerPage, currentPage: page }">
                                 <td>{{item.id}}</td>
 
                                 <td>{{item.name}}</td>
@@ -61,8 +61,17 @@
                         </tbody>
                     </table>
 
-                    <div *ngIf="list?.length > 0">
-                        <pagination-controls id="pagin1" (pageChange)="page = $event"></pagination-controls>
+                    <div class="table-tools" *ngIf="list?.length > 0" >
+                        <div class="table-pagination">
+                          <pagination-controls  class="custom-pagination" id="pagin1" (pageChange)="page = $event"></pagination-controls>
+                          <input class="form-control page-number" [(ngModel)]="page" [ngModelOptions]="{standalone: true}"
+                            [placeholder]="util.translate('Page')">
+                        </div>
+                        <select id="view_count" [(ngModel)]="itemsPerPage" name="view_count" class="form-select ng-valid ng-dirty ng-touched view-count ">
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
                     </div>
 
                 </div>

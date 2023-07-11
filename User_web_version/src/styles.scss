@@ -126,7 +126,8 @@ button {
 
 .form-control:focus {
   border-color: #ced4da;
-  box-shadow: 0px 4px 5px 2px rgb(0 0 0 / 5%);
+  // box-shadow: 0px 4px 5px 2px rgb(0 0 0 / 5%);
+  box-shadow: unset;
 }
 
 p {

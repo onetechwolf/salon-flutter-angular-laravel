@@ -32,17 +32,18 @@
                                 <th scope="col">{{util.translate('Id Card')}}</th>
                                 <th scope="col">{{util.translate('Qualification')}}</th>
                                 <th scope="col">{{util.translate('Policy')}}</th>
+                                <th scope="col">{{util.translate('Salon Type')}}</th>
                                 <th scope="col">{{util.translate('Action')}}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of dummyFreelacer">
-                                <td *ngFor="let item of [1,2,3,4,1,2,3,4,5,5,6]">
+                                <td *ngFor="let item of [1,2,3,4,1,2,3,4,5,5,6,7]">
                                     <ngx-skeleton-loader count="1" appearance="line"></ngx-skeleton-loader>
                                 </td>
                             </tr>
                             <tr
-                                *ngFor="let item of freelancers | paginate: {id:'pagin1', itemsPerPage: 10, currentPage: page }">
+                                *ngFor="let item of freelancers | paginate: {id:'pagin1', itemsPerPage: itemsPerPage, currentPage: page }">
                                 <th scope="row">
                                     {{item.id}}
                                 </th>
@@ -77,11 +78,9 @@
                                         [src]="this.api.imageUrl + item.qualification" onError="this.src='assets/img/dummy.jpeg'"  (click)="clickZoom(this.api.imageUrl + item.qualification, 1)"/>
                                 </td>
                                 <td>
-                                    Cancellation: {{item.policy.cancellation}}<br/>
-                                    Late: {{item.policy.late}}<br/>
-                                    No-show: {{item.policy.no_show}}<br/>
-                                    Reschedule: {{item.policy.reschedule}}
+                                    {{ item.policy }}
                                 </td>
+                                <td>{{ item.sub_type }}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
 
@@ -104,9 +103,18 @@
                         <label>{{util.translate('No Data Found..')}}</label>
                     </div>
 
-                    <div *ngIf="freelancers?.length > 0">
-                        <pagination-controls id="pagin1" (pageChange)="page = $event"></pagination-controls>
-                    </div>
+                    <div class="table-tools" *ngIf="freelancers?.length > 0" >
+                        <div class="table-pagination">
+                          <pagination-controls  class="custom-pagination" id="pagin1" (pageChange)="page = $event"></pagination-controls>
+                          <input class="form-control page-number" [(ngModel)]="page" [ngModelOptions]="{standalone: true}"
+                            [placeholder]="util.translate('Page')">
+                        </div>
+                        <select id="view_count" [(ngModel)]="itemsPerPage" name="view_count" class="form-select ng-valid ng-dirty ng-touched view-count ">
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                      </div>
 
                 </div>
             </div>

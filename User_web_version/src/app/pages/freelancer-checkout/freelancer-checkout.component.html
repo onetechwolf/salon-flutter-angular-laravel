@@ -40,18 +40,15 @@
                           <p class="h6 text-muted small m-0 mr-3">
                             <del>
                               <span *ngIf="util.currencySide == 'left'">
-                                {{util.currencySymbol}} {{item.price}} </span>
-                              <span *ngIf="util.currencySide == 'right'"> {{item.price}}
-                                {{util.currencySymbol}}
+                                {{util.currencySymbol}}{{item.price}} </span>
+                              <span *ngIf="util.currencySide == 'right'"> {{item.price}}{{util.currencySymbol}}
                               </span>
                             </del>
                           </p>
                           <p class="h5 ff-medium f-primary m-0">
                             <span class="ff-medium head-text" *ngIf="util.currencySide == 'left'">
-                              {{util.currencySymbol}}
-                              {{item.off}} </span>
-                            <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{item.off}}
-                              {{util.currencySymbol}} </span>
+                              {{util.currencySymbol}}{{item.off}} </span>
+                            <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{item.off}}{{util.currencySymbol}} </span>
                           </p>
 
                           <div class="d-flex ml-auto">
@@ -75,18 +72,15 @@
                           <p class="h6 text-muted small m-0 mr-3">
                             <del>
                               <span *ngIf="util.currencySide == 'left'">
-                                {{util.currencySymbol}} {{item.price}} </span>
-                              <span *ngIf="util.currencySide == 'right'"> {{item.price}}
-                                {{util.currencySymbol}}
+                                {{util.currencySymbol}}{{item.price}} </span>
+                              <span *ngIf="util.currencySide == 'right'"> {{item.price}}{{util.currencySymbol}}
                               </span>
                             </del>
                           </p>
                           <p class="h5 ff-medium f-primary m-0">
                             <span class="ff-medium head-text" *ngIf="util.currencySide == 'left'">
-                              {{util.currencySymbol}}
-                              {{item.off}} </span>
-                            <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{item.off}}
-                              {{util.currencySymbol}} </span>
+                              {{util.currencySymbol}}{{item.off}} </span>
+                            <span class="ff-medium head-text" *ngIf="util.currencySide == 'right'"> {{item.off}}{{util.currencySymbol}} </span>
                           </p>
 
                           <div class="d-flex ml-auto">
@@ -127,9 +121,7 @@
                     </div>
                   </div>
                   <p class="text-muted m-0 mt-2 small">
-                    {{serviceCart.deliveredAddress.address}} {{serviceCart.deliveredAddress.house}}
-                    {{serviceCart.deliveredAddress.landmark}} -
-                    {{serviceCart.deliveredAddress.pincode}},</p>
+                    {{serviceCart.deliveredAddress.address}}</p>
                 </div>
               </div>
 
@@ -244,10 +236,8 @@
                           <div>
                             <h6 class="m-0 text-capitalize ff-medium">
                               {{util.translate('Grand Total')}}
-                              <span *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                                {{serviceCart.grandTotal}}</span>
-                              <span *ngIf="util.currencySide == 'right'">{{serviceCart.grandTotal}}
-                                {{util.currencySymbol}}</span>
+                              <span *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}{{this.billDetails.payNow}}</span>
+                              <span *ngIf="util.currencySide == 'right'">{{this.billDetails.payNow}}{{util.currencySymbol}}</span>
                             </h6>
                             <p class="m-0 text-capitalize">
                               {{util.translate('Proceed to Checkout')}} </p>
@@ -303,76 +293,60 @@
                 <div class="bg-white px-3 py-2">
                   <p class="ff-bold small">{{util.translate('Bill Details')}}</p>
                   <p class="mb-1"> {{util.translate('Service Cost')}}
-                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                      {{serviceCart.totalPrice}}</span>
-                    <span class="float-right text-dark" *ngIf="util.currencySide == 'right'">{{serviceCart.totalPrice}}
-                      {{util.currencySymbol}}</span>
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}{{serviceCart.totalPrice}}</span>
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'right'">{{serviceCart.totalPrice}}{{util.currencySymbol}}</span>
                   </p>
                   <p class="mb-1">{{util.translate('Distance Charge')}}<sup class="bill-tooltip" title="Beautician charges for travel">(i)</sup>
-                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                      {{serviceCart.deliveryCharge}}</span>
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}{{serviceCart.deliveryCharge}}</span>
                     <span class="float-right text-dark"
-                      *ngIf="util.currencySide == 'right'">{{serviceCart.deliveryCharge}}
-                      {{util.currencySymbol}}</span>
+                      *ngIf="util.currencySide == 'right'">{{serviceCart.deliveryCharge}}{{util.currencySymbol}}</span>
                   </p>
                   <p class="mb-1"> {{util.translate('Total Discount')}}
                     <span class="float-right text-danger" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
                       -{{serviceCart.discount}}</span>
-                    <span class="float-right text-danger" *ngIf="util.currencySide == 'right'">-{{serviceCart.discount}}
-                      {{util.currencySymbol}}</span>
+                    <span class="float-right text-danger" *ngIf="util.currencySide == 'right'">-{{serviceCart.discount}}{{util.currencySymbol}}</span>
                   </p>
 
                   <p class="mb-2" style="font-weight: bold;"> {{util.translate('Subtotal')}}
-                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}} {{ subtotal }}</span>
-                    <span class="float-right text-dark" *ngIf="util.currencySide == 'right'">{{ subtotal }} {{util.currencySymbol}}</span>
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}{{ subtotal }}</span>
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'right'">{{ subtotal }}{{util.currencySymbol}}</span>
                   </p>
                   <p class="mb-1">{{util.translate("Deposit") + '(' + util.deposit_now + '%)' }}<sup class="bill-tooltip" title="Deposit to secure your treatment">(ii)</sup>
-                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                      {{deposit}}</span>
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}{{deposit}}</span>
                     <span class="float-right text-dark"
-                      *ngIf="util.currencySide == 'right'">{{deposit}} {{util.currencySymbol}}</span>
+                      *ngIf="util.currencySide == 'right'">{{deposit}}{{util.currencySymbol}}</span>
                   </p>
 
                   <p class="mb-1">{{util.translate("Booking Fees")}}<sup class="bill-tooltip" title="Booking Fee to covers our costs of connecting you to your salon/beautician">(iii)</sup>
-                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                      {{util.booking_fee}}</span>
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}{{util.booking_fee}}</span>
                     <span class="float-right text-dark"
-                      *ngIf="util.currencySide == 'right'">{{util.booking_fee}}
-                      {{util.currencySymbol}}</span>
+                      *ngIf="util.currencySide == 'right'">{{util.booking_fee}}{{util.currencySymbol}}</span>
                   </p>
 
                   <p class="mb-2">{{util.translate("Processing Fees") + '(' + util.processing_fee + '%)' }}<sup class="bill-tooltip" title="Processing Fee covers the cost of processing this transaction">(iv)</sup>
-                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                      {{this.billDetails.processing_fee}}</span>
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}{{this.billDetails.processing_fee}}</span>
                     <span class="float-right text-dark"
-                      *ngIf="util.currencySide == 'right'">{{this.billDetails.processing_fee}}
-                      {{util.currencySymbol}}</span>
+                      *ngIf="util.currencySide == 'right'">{{this.billDetails.processing_fee}}{{util.currencySymbol}}</span>
                   </p>
                   <p class="mb-2" style="font-weight: bold;">{{util.translate('To Pay Now')}}
-                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                      {{this.billDetails.payNow}}</span>
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}{{this.billDetails.payNow}}</span>
                     <span class="float-right text-dark"
-                      *ngIf="util.currencySide == 'right'">{{ this.billDetails.payNow }}
-                      {{util.currencySymbol}}</span>
+                      *ngIf="util.currencySide == 'right'">{{ this.billDetails.payNow }}{{util.currencySymbol}}</span>
                   </p>
 
                   <p class="mb-1" style="font-weight: bold;">{{util.translate("Pay at Salon/Beautician") }}
-                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                      {{this.billDetails.payAt}}</span>
+                    <span class="float-right text-dark" *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}{{this.billDetails.payAt}}</span>
                     <span class="float-right text-dark"
-                      *ngIf="util.currencySide == 'right'">{{this.billDetails.payAt}}
-                      {{util.currencySymbol}}</span>
+                      *ngIf="util.currencySide == 'right'">{{this.billDetails.payAt}}{{util.currencySymbol}}</span>
                   </p>
                 </div>
 
                 <!-- <div class="p-3 border-top">
                   <h6 class="m-0 ff-medium h5">{{util.translate('To Pay')}}
                     <span class="float-right ff-medium h5 f-primary"
-                      *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}
-                      {{serviceCart.grandTotal}}</span>
+                      *ngIf="util.currencySide == 'left'">{{util.currencySymbol}}{{serviceCart.grandTotal}}</span>
                     <span class="float-right ff-medium h5 f-primary"
-                      *ngIf="util.currencySide == 'right'">{{serviceCart.grandTotal}}
-                      {{util.currencySymbol}}</span>
+                      *ngIf="util.currencySide == 'right'">{{serviceCart.grandTotal}}{{util.currencySymbol}}</span>
                   </h6>
                 </div> -->
               </div>
@@ -400,25 +374,25 @@
         </button>
       </div>
       <div class="modal-body mx-3">
-        <div class="md-form mb-5">
+        <!-- <div class="md-form mb-5">
           <input type="text" id="form34" class="form-control" mdbInput [(ngModel)]="house"
             [ngModelOptions]="{standalone: true}">
           <label for="form34">{{util.translate('House / Flat NO')}} </label>
-        </div>
+        </div> -->
         <div class="md-form mb-5">
           <input type="text" id="form34" class="form-control" mdbInput [(ngModel)]="address"
             [ngModelOptions]="{standalone: true}">
           <label for="form34">{{util.translate('Address')}} </label>
         </div>
-        <div class="md-form mb-5">
+        <!-- <div class="md-form mb-5">
           <input type="text" id="form29" class="form-control" mdbInput [(ngModel)]="landmark"
             [ngModelOptions]="{standalone: true}">
           <label for="form29">{{util.translate('Landmark')}} </label>
-        </div>
+        </div> -->
         <div class="md-form mb-5">
           <input type="text" id="form32" class="form-control" mdbInput [(ngModel)]="zipcode"
             [ngModelOptions]="{standalone: true}">
-          <label for="form32">{{util.translate('Pincode')}} </label>
+          <label for="form32">{{util.translate('Post Code')}} </label>
         </div>
         <div class="md-form">
           <select class="custom-select" [(ngModel)]="title">

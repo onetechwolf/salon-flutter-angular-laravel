@@ -47,22 +47,22 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'categories',
-        loadChildren: () => import('./pages/pre-categories/pre-categories.module').then(m => m.PreCategoriesModule),
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'sub_categories',
-        loadChildren: () => import('./pages/categories/categories.module').then(m => m.CategoriesModule),
-        canActivate: [AuthGuard]
-      },
-      {
         path: 'treatments',
         loadChildren: () => import('./pages/treatments/treatments.module').then(m => m.TreatmentsModule),
         canActivate: [AuthGuard]
       },
       {
-        path: 'freelancer',
+        path: 'treatment_types',
+        loadChildren: () => import('./pages/treatment-types/treatment-types.module').then(m => m.TreatmentTypesModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'treatment_services',
+        loadChildren: () => import('./pages/services/services.module').then(m => m.ServicesModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'beautician',
         loadChildren: () => import('./pages/freelancer/freelancer.module').then(m => m.FreelancerModule),
         canActivate: [AuthGuard]
       },
@@ -107,7 +107,7 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'freelancer-request',
+        path: 'beautician-request',
         loadChildren: () => import('./pages/freelancer-request/freelancer-request.module').then(m => m.FreelancerRequestModule),
         canActivate: [AuthGuard]
       },
@@ -142,7 +142,7 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'freelancer-stats',
+        path: 'beautician-stats',
         loadChildren: () => import('./pages/freelancer-stats/freelancer-stats.module').then(m => m.FreelancerStatsModule),
         canActivate: [AuthGuard]
       },
@@ -203,22 +203,22 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'salons',
+        path: 'partners',
         loadChildren: () => import('./pages/salons/salons.module').then(m => m.SalonsModule),
         canActivate: [AuthGuard]
       },
       {
-        path: 'freelancer-appointments',
+        path: 'beautician-appointments',
         loadChildren: () => import('./pages/freelancer-appointments/freelancer-appointments.module').then(m => m.FreelancerAppointmentsModule),
         canActivate: [AuthGuard]
       },
       {
-        path: 'salon-stats',
+        path: 'partner-stats',
         loadChildren: () => import('./pages/salon-stats/salon-stats.module').then(m => m.SalonStatsModule),
         canActivate: [AuthGuard]
       },
       {
-        path: 'salon-request',
+        path: 'partner-request',
         loadChildren: () => import('./pages/salon-request/salon-request.module').then(m => m.SalonRequestModule),
         canActivate: [AuthGuard]
       }

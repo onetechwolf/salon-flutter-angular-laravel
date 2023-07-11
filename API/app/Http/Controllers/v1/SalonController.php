@@ -283,8 +283,6 @@ class SalonController extends Controller
         //     $loop->userInfo = User::select('first_name','last_name','cover')->find($loop->uid);
         // }
 
-        $categories =  Category::where('status',1)->get();
-
         $cities  = Cities::select(DB::raw('cities.id as id,cities.name as name, ( '.$values.' * acos( cos( radians('.$request->lat.') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('.$request->lng.') ) + sin( radians('.$request->lat.') ) * sin( radians( lat ) ) ) ) AS distance'))
         ->having('distance', '<', (int)$searchQuery->allowDistance)
         ->orderBy('distance')
@@ -459,6 +457,7 @@ class SalonController extends Controller
             'lat' => 'required',
             'lng' => 'required',
             'id' => 'required',
+            'type' => 'required',
         ]);
         if ($validator->fails()) {
             $response = [
@@ -469,7 +468,7 @@ class SalonController extends Controller
             return response()->json($response, 404);
         }
         $searchQuery = Settings::select('allowDistance','searchResultKind')->first();
-        $categories = Category::where(['status'=>1])->get();
+
         if($searchQuery->searchResultKind == 1){
             $values = 3959; // miles
             $distanceType = 'miles';
@@ -482,9 +481,20 @@ class SalonController extends Controller
         salon.total_rating as total_rating,salon.address as address,salon.cover as cover,salon.categories, ( '.$values.' * acos( cos( radians('.$request->lat.') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('.$request->lng.') ) + sin( radians('.$request->lat.') ) * sin( radians( lat ) ) ) ) AS distance'))
         ->having('distance', '<', (int)$searchQuery->allowDistance)
         ->orderBy('distance')
-        ->where(['salon.status'=>1,'salon.in_home'=>1])
-        ->whereRaw("find_in_set('".$request->id."',salon.categories)")
-        ->get();
+        ->where(['salon.status'=>1,'salon.in_home'=>1]);
+        if ($request->type == 0) {// main category
+            $categories = Category::where(['parent_id'=>$request->id])->get();
+
+            $salon = $salon->where(function($query) use ($categories) {
+                foreach ($categories as $key => $category) {
+                    $query->orWhereRaw("find_in_set('".$category->id."',salon.categories)");
+                }
+            });
+        } else if($request->type == 1) {
+            $salon = $salon->whereRaw("find_in_set('".$request->id."',salon.categories)");
+        }
+
+        $salon = $salon->get();
         foreach($salon as $loop){
             $ids = explode(',',$loop->categories);
             $loop->categories = Category::select('id','name','cover')->WhereIn('id',$ids)->get();
@@ -556,7 +566,7 @@ class SalonController extends Controller
             return response()->json($response, 404);
         }
         $salon = Salon::find($request->id);
-        if (is_null($salon)) {
+        if (is_null($salon) || empty($salon)) {
             $response = [
                 'success' => false,
                 'message' => 'Data not found.',
@@ -570,7 +580,7 @@ class SalonController extends Controller
 
         $interval = $date1->diff($date2);
 
-        if ($interval->format('%a') < 30) {
+        if ($salon->policy_date && $interval->format('%a') < 30) {
             $response = [
                 'success' => false,
                 'message' => 'Not allowed to change.',
@@ -584,6 +594,28 @@ class SalonController extends Controller
 
         $response = [
             'data'=>$salon,
+            'success' => true,
+            'status' => 200,
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function getPolicy(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $response = [
+                'success' => false,
+                'message' => 'Validation Error.', $validator->errors(),
+                'status'=> 500
+            ];
+            return response()->json($response, 404);
+        }
+        $salon = Salon::find($request->id);
+
+        $response = [
+            'data'=>$salon->policy,
             'success' => true,
             'status' => 200,
         ];
@@ -754,7 +786,7 @@ class SalonController extends Controller
         foreach($categories as $loop){
             $loop->services = Services::where(['status'=>1,'cate_id'=>$loop->id,'uid'=>$request->id])->count();
         }
-        $packages =Packages::where('uid',$request->id)->get();
+        $packages = Packages::where('uid',$request->id)->get();
         $response = [
             'data'=>$data,
             'categories'=>$categories,
@@ -764,5 +796,86 @@ class SalonController extends Controller
             'status' => 200,
         ];
         return response()->json($response, 200);
+    }
+
+    function search(Request $request) {
+        // $validator = Validator::make($request->all(), [
+        //     'lat' => 'required',
+        //     'lng' => 'required',
+        //     'treatment_id' => 'required',
+        //     'treatment_type' => 'required',
+        // ]);
+        // if ($validator->fails()) {
+        //     $response = [
+        //         'success' => false,
+        //         'message' => 'Validation Error.', $validator->errors(),
+        //         'status'=> 500
+        //     ];
+        //     return response()->json($response, 404);
+        // }
+        $data = '';
+        if (isset($request->lat) && isset($request->lng)) {
+            $searchQuery = Settings::select('allowDistance','searchResultKind')->first();
+            $categories = Category::where(['status'=>1])->get();
+            if($searchQuery->searchResultKind == 1){
+                $values = 3959; // miles
+                $distanceType = 'miles';
+            }else{
+                $values = 6371; // km
+                $distanceType = 'km';
+            }
+
+            $data = Salon::select(DB::raw('salon.id as id,salon.uid as uid,salon.name as name,salon.rating as rating,salon.lat as lat,salon.lng as lng,
+            salon.total_rating as total_rating,salon.address as address,salon.cover as cover,salon.categories as categories, ( '.$values.' * acos( cos( radians('.$request->lat.') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('.$request->lng.') ) + sin( radians('.$request->lat.') ) * sin( radians( lat ) ) ) ) AS distance'))
+            ->having('distance', '<', (int)$searchQuery->allowDistance)
+            ->where(['salon.status'=>1,'salon.in_home'=>1]);
+
+
+            // foreach($data as $loop){
+            //     $ids = explode(',',$loop->categories);
+            //     $loop->categories = Category::select('id','name','cover')->WhereIn('id',$ids)->get();
+            // }
+        }
+
+        if (isset($request->category_id) && isset($request->category_type)) {
+            if ($request->category_type == 0) { // main category
+                // TODO
+                $categories = Category::where('parent_id', $request->category_id);
+            } else if ($request->category_type == 1) { // sub category
+                if ($data === '') {
+                    $data = Salon::whereRaw("find_in_set('".$request->category_id."',categories)");
+                } else {
+                    $data = $data->whereRaw("find_in_set('".$request->category_id."',categories)");
+                }
+            }
+        }
+
+
+
+        if ($data != '') {
+            if (isset($request->sort)) {
+                switch($request->sort) {
+                    case 0: // recommended
+                        // $data = $data->orderBy('distance');
+                        break;
+                    case 1: // nearest
+                        $data = $data->orderBy('distance', 'desc');
+                        break;
+                    case 2: // top-rated
+                        $data = $data->orderBy('rating', 'desc');
+                        break;
+                }
+
+            }
+            $data = $data->get();
+        }
+
+        $response = [
+            'data'=>$data,
+            'success' => true,
+            'status' => 200,
+        ];
+        return response()->json($response, 200);
+
     }
 }

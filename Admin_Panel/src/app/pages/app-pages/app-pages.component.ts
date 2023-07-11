@@ -26,6 +26,10 @@ export class AppPagesComponent implements OnInit {
   content: any = '';
   name: any = '';
   ckeConfig: any;
+
+  sort: any = [];
+  itemsPerPage: number = 10;
+
   constructor(
     public api: ApiService,
     public util: UtilService
@@ -108,5 +112,23 @@ export class AppPagesComponent implements OnInit {
       this.util.hide();
       this.util.apiErrorHandler(error);
     });
+  }
+
+  sortOn(column: string) {
+    this.sort[column] = (this.sort[column] == '' || this.sort[column] == 'desc') ? 'asc' : 'desc';
+    this.sortByColumn(column, this.sort[column]);
+  }
+
+  sortByColumn(column:string, direction = 'desc'): any[] {
+    let sortedArray = (this.list || []).sort((a,b)=>{
+      if(a[column] > b[column]){
+        return (direction === 'desc') ? 1 : -1;
+      }
+      if(a[column] < b[column]){
+        return (direction === 'desc') ? -1 : 1;
+      }
+      return 0;
+    })
+    return sortedArray;
   }
 }

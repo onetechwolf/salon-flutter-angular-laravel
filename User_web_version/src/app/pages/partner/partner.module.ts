@@ -14,6 +14,7 @@ import { PartnerComponent } from './partner.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
+import { NgxTypedJsModule } from 'ngx-typed-js';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { IvyCarouselModule } from 'angular-responsive-carousel';
     MDBBootstrapModule.forRoot(),
     SharedModule,
     IvyCarouselModule,
+    NgxTypedJsModule
   ]
 })
 export class PartnerModule { }

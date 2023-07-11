@@ -76,7 +76,7 @@
                     <table class="table table-responsive-sm table-hover mb-0">
                         <thead *ngIf="cities?.length > 0">
                             <tr>
-                                <th>{{util.translate('City Name')}}</th>
+                                <th [class.sort-asc]="sort['name'] == 'asc'" [class.sort-desc]="sort['name'] == 'desc'"><a (click)="sortOn('name')" style="cursor: pointer;">{{util.translate('City Name')}}</a></th>
                                 <th>{{util.translate('Action')}}</th>
                             </tr>
                         </thead>
@@ -87,7 +87,7 @@
                                 </td>
                             </tr>
                             <tr
-                                *ngFor="let item of cities | paginate: {id:'pagin1', itemsPerPage: 5, currentPage: page }">
+                                *ngFor="let item of cities | paginate: {id:'pagin1', itemsPerPage: itemsPerPage, currentPage: page }">
 
                                 <td>{{item.name}}</td>
                                 <td>
@@ -110,8 +110,17 @@
                         </tbody>
                     </table>
 
-                    <div *ngIf="cities?.length > 0">
-                        <pagination-controls id="pagin1" (pageChange)="page = $event"></pagination-controls>
+                    <div class="table-tools" *ngIf="cities?.length > 0" >
+                        <div class="table-pagination">
+                          <pagination-controls  class="custom-pagination" id="pagin1" (pageChange)="page = $event"></pagination-controls>
+                          <input class="form-control page-number" [(ngModel)]="page" [ngModelOptions]="{standalone: true}"
+                            [placeholder]="util.translate('Page')">
+                        </div>
+                        <select id="view_count" [(ngModel)]="itemsPerPage" name="view_count" class="form-select ng-valid ng-dirty ng-touched view-count ">
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
                     </div>
 
                 </div>

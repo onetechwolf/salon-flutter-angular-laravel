@@ -28,7 +28,7 @@ import { environment } from 'src/environments/environment';
     SharedModule,
     AgmCoreModule.forRoot({
       apiKey: environment.googleMapsKeys
-    }),
+    })
   ]
 })
 export class SearchModule { }

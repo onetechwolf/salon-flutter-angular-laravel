@@ -28,8 +28,6 @@ import * as firebase from 'firebase';
 import { ProductCartService } from './services/product-cart.service';
 import { ServiceCartService } from './services/service-cart.service';
 
-declare var google: any;
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -89,7 +87,7 @@ export class AppComponent {
     mobile: '',
     cid: '',
     fcm_token: '',
-    type: 0,
+    type: -1,
     lat: '',
     lng: '',
     cover: '',
@@ -126,9 +124,8 @@ export class AppComponent {
   viewAcc = false;
   autocomplete1: string;
   autocompleteLocationItems: any = [];
-  GoogleAutocomplete;
-  geocoder: any;
   submitted = false;
+  partnerSubmitted = false;
   ccCode: any;
   userCode: any = '';
   resendCode: boolean;
@@ -220,8 +217,6 @@ export class AppComponent {
       this.loginModal.show();
     })
     this.resendCode = false;
-    this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
-    this.geocoder = new google.maps.Geocoder();
     this.autocomplete1 = '';
     this.autocompleteLocationItems = [];
     this.util.subscribeAddressPopup().subscribe(() => {
@@ -477,7 +472,7 @@ export class AppComponent {
       return;
     }
 
-    this.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete1 }, (predictions, status) => {
+    this.util.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete1 }, (predictions, status) => {
       console.log(predictions);
       if (predictions && predictions.length > 0) {
         this.autocompleteLocationItems = predictions;
@@ -491,7 +486,7 @@ export class AppComponent {
     localStorage.setItem('addsSelected', 'true');
     this.autocompleteLocationItems = [];
     this.autocomplete1 = item.description;
-    this.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
+    this.util.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
       if (status == 'OK' && results[0]) {
         localStorage.setItem('location', 'true');
         localStorage.setItem('lat', results[0].geometry.location.lat());
@@ -969,7 +964,7 @@ export class AppComponent {
               cid: this.registerPartnerForm.cid,
               id_card: this.registerPartnerForm.idCard,
               qualification: this.registerPartnerForm.qualification,
-              type: this.registerPartnerForm.type == 0 ? 'salon' : 'individual',
+              type: this.util.partnerTypes[this.registerPartnerForm.type],
               categories: categories,
               lat: this.registerPartnerForm.lat,
               lng: this.registerPartnerForm.lng,
@@ -1122,8 +1117,11 @@ export class AppComponent {
     console.log(form);
     console.log(this.util.user_verify_with);
     console.log(this.util.twillo);
-    this.submitted = true;
     this.registerType = registerType;
+    if (this.registerType == 0)
+      this.submitted = true;
+    else
+      this.partnerSubmitted = true;
     if (form.valid &&
       (this.registerType == 0 && this.registerForm.checkTermsAndCondition && this.registerForm.checkAge && this.registerForm.email && this.registerForm.password && this.registerForm.first_name
         && this.registerForm.last_name && this.registerForm.mobile && this.registerForm.cc && this.registerForm.dob && this.registerForm.location) ||
@@ -1349,7 +1347,7 @@ export class AppComponent {
             cid: this.registerPartnerForm.cid,
             id_card: this.registerPartnerForm.idCard,
             qualification: this.registerPartnerForm.qualification,
-            type: this.registerPartnerForm.type == 0 ? 'salon' : 'individual',
+            type: this.util.partnerTypes[this.registerPartnerForm.type],
             categories: categories,
             lat: this.registerPartnerForm.lat,
             lng: this.registerPartnerForm.lng,
@@ -1832,5 +1830,13 @@ export class AppComponent {
 
   public showRegisterPartnerDailog() {
     this.registerPartnerModal.show();
+  }
+
+  removeLocation() {
+    localStorage.removeItem('location');
+    localStorage.removeItem('lat');
+    localStorage.removeItem('lng');
+    localStorage.removeItem('address');
+    location.href = location.href;
   }
 }

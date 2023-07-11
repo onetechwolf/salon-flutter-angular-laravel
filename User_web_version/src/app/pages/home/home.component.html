@@ -83,9 +83,9 @@
             </a>
           </div>
         </div>
-        <div class="col-12" *ngIf="salonList.length > 4" style="text-align: right;">
-          <a class="waves-light" mdbWavesEffect (click)="gotoSalonList()">
-            <label>{{util.translate('Load More..')}}</label>
+        <div class="col-12" *ngIf="salonList.length > 8" style="text-align: right;">
+          <a class="waves-light" mdbWavesEffect (click)="gotoSalonList()" style="border: 1px solid grey;border-radius: 8px;padding: 2px 5px;">
+            {{util.translate('Read More>>')}}
           </a>
         </div>
       </div>
@@ -173,20 +173,16 @@
 
                 <h6 class="h6 mb-0 small pr-3 text-muted">
                   <del>
-                    <span *ngIf="util.currencySide == 'left'"> {{util.currencySymbol}}
-                      {{item.original_price}} </span>
-                    <span *ngIf="util.currencySide == 'right'"> {{item.original_price}}
-                      {{util.currencySymbol}} </span>
+                    <span *ngIf="util.currencySide == 'left'"> {{util.currencySymbol}}{{item.original_price}} </span>
+                    <span *ngIf="util.currencySide == 'right'"> {{item.original_price}}{{util.currencySymbol}} </span>
                   </del>
                 </h6>
 
                 <h6 class="f-primary mb-0">
                   <span class="ff-bold head-text" *ngIf="util.currencySide == 'left'">
-                    {{util.currencySymbol}}
-                    {{item.sell_price}} </span>
+                    {{util.currencySymbol}}{{item.sell_price}} </span>
                   <span class="ff-bold head-text" *ngIf="util.currencySide == 'right'">
-                    {{item.sell_price}}
-                    {{util.currencySymbol}} </span>
+                    {{item.sell_price}}{{util.currencySymbol}} </span>
                 </h6>
               </div>
 

@@ -67,8 +67,8 @@ export class FreelancerCheckoutComponent implements OnInit {
   addressId = 0;
   title = '';
   address = '';
-  house = '';
-  landmark = '';
+  // house = '';
+  // landmark = '';
   zipcode = '';
   lat = 0;
   lng = 0;
@@ -121,10 +121,10 @@ export class FreelancerCheckoutComponent implements OnInit {
     this.deposit = this.subtotal * this.util.deposit_now / 100;
     this.processing_fee =this.deposit * this.util.processing_fee/100;
     this.payNow = this.deposit + this.util.booking_fee + this.processing_fee;
-    this.payAt = this.subtotal - this.payNow;
-    this.billDetails.processing_fee = this.processing_fee.toFixed(2);
-    this.billDetails.payNow = this.payNow.toFixed(2);
-    this.billDetails.payAt = this.payAt.toFixed(2);
+    this.payAt = this.subtotal - this.deposit;
+    this.billDetails.processing_fee = this.processing_fee.toFixed(3);
+    this.billDetails.payNow = this.payNow.toFixed(3);
+    this.billDetails.payAt = this.payAt.toFixed(3);
   }
 
   removeService(item: any) {
@@ -178,14 +178,13 @@ export class FreelancerCheckoutComponent implements OnInit {
   }
 
   getLatLngFromAddress() {
-    if (this.address == '' || this.house == '' ||
-      this.landmark == '' || this.zipcode == '') {
+    if (this.address == '' || this.zipcode == '') {
       this.util.apiErrorHandler(this.util.translate('all fields are required'));
       return false;
     }
     const geocoder = new google.maps.Geocoder;
     this.util.start();
-    geocoder.geocode({ address: this.house + ' ' + this.landmark + ' ' + this.address + ' ' + this.zipcode }, (results, status) => {
+    geocoder.geocode({ address: this.address }, (results, status) => {
       console.log(results, status);
       if (status == 'OK' && results && results.length) {
         this.lat = results[0].geometry.location.lat();
@@ -206,8 +205,7 @@ export class FreelancerCheckoutComponent implements OnInit {
   }
 
   saveAddress() {
-    if (this.address == '' || this.house == '' ||
-      this.landmark == '' || this.zipcode == '') {
+    if (this.address == '' || this.zipcode == '') {
       this.util.apiErrorHandler(this.util.translate('all fields are required'));
       return false;
     }
@@ -215,8 +213,6 @@ export class FreelancerCheckoutComponent implements OnInit {
       uid: localStorage.getItem('uid'),
       title: this.title,
       address: this.address,
-      house: this.house,
-      landmark: this.landmark,
       pincode: this.zipcode,
       lat: this.lat,
       lng: this.lng,
@@ -246,8 +242,6 @@ export class FreelancerCheckoutComponent implements OnInit {
 
   addNewAddress() {
     this.isNewAddress = true;
-    this.house = '';
-    this.landmark = '';
     this.address = '';
     this.addressId = 0;
     this.zipcode = '';
@@ -258,8 +252,6 @@ export class FreelancerCheckoutComponent implements OnInit {
     this.addressId = item.id;
     this.isNewAddress = false;
     this.address = item.address;
-    this.house = item.house;
-    this.landmark = item.landmark;
     this.zipcode = item.pincode;
     this.title = item.title;
     this.deliveryAddress.show();
@@ -271,8 +263,6 @@ export class FreelancerCheckoutComponent implements OnInit {
       title: this.title,
       address: this.address,
       id: this.addressId,
-      house: this.house,
-      landmark: this.landmark,
       pincode: this.zipcode,
       lat: this.lat,
       lng: this.lng,

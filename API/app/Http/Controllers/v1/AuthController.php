@@ -375,6 +375,34 @@ class AuthController extends Controller
         return response()->json($response, 200);
     }
 
+    public function uploadVideo(Request $request){
+        $validator = Validator::make($request->all(), [
+            'video' => 'required|mimetypes:video/mp4,video/avi|max:15728640'
+        ]);
+        if ($validator->fails()) {
+            $response = [
+                'success' => false,
+                'message' => 'Validation Error.', $validator->errors(),
+                'status'=> 500
+            ];
+            return response()->json($response, 505);
+        }
+        Artisan::call('storage:link', []);
+        $uploadFolder = 'videos';
+        $video = $request->file('video');
+        $video_uploaded_path = $video->store($uploadFolder, 'public');
+        $uploadedVideoResponse = array(
+            "video_name" => basename($video_uploaded_path),
+            "mime" => $video->getClientMimeType()
+        );
+        $response = [
+            'data'=>$uploadedVideoResponse,
+            'success' => true,
+            'status' => 200,
+        ];
+        return response()->json($response, 200);
+    }
+
     public function createSalonAccount(Request $request){
         $validator = Validator::make($request->all(), [
             'email' => 'required',
@@ -387,6 +415,8 @@ class AuthController extends Controller
             'cover' => 'required',
             'dob' => 'required',
             'cid' => 'required',
+            'type' => 'required',
+            'sub_type' => 'required',
         ]);
         if ($validator->fails()) {
             $response = [
@@ -407,6 +437,7 @@ class AuthController extends Controller
                     'first_name'=>$request->first_name,
                     'last_name'=>$request->last_name,
                     'type'=>'salon',
+                    'sub_type'=>$request->sub_type,
                     'status'=>1,
                     'mobile'=>$request->mobile,
                     'cover'=>$request->cover,
@@ -445,6 +476,7 @@ class AuthController extends Controller
             'cover' => 'required',
             'cid' => 'required',
             'dob' => 'required',
+            'sub_type' => 'required'
         ]);
         if ($validator->fails()) {
             $response = [
@@ -465,6 +497,7 @@ class AuthController extends Controller
                     'first_name'=>$request->first_name,
                     'last_name'=>$request->last_name,
                     'type'=>'individual',
+                    'sub_type'=>$request->sub_type,
                     'status'=>1,
                     'mobile'=>$request->mobile,
                     'cover'=>$request->cover,

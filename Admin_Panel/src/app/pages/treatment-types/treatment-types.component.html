@@ -12,7 +12,7 @@
     <div class="col-lg-4">
       <div class="card">
         <div class="card-header">
-          {{util.translate('Treatment Sub Category Information')}}
+          {{util.translate('Treatment Types')}}
         </div>
         <div class="card-body">
           <div class="logoContainer">
@@ -26,25 +26,25 @@
             {{util.translate('Files types accepted: .jpg, .jpeg, .png, .bmp recommended size (512 X 512) pixels')}} </p>
           <form>
             <div class="form-group">
-              <label class="modal_lbl">{{util.translate('Category Name')}}</label>
+              <label class="modal_lbl">{{util.translate('Type Name')}}</label>
               <input class="form-control" [(ngModel)]="name" [ngModelOptions]="{standalone: true}"
-                [placeholder]="util.translate('Category Name')">
+                [placeholder]="util.translate('Type Name')">
             </div>
           </form>
           <br>
           <div class="col-lg-12">
             <div class="form-group">
-                <label class="form-control-label" for="input-username"> {{util.translate("Main Category")}}
+                <label class="form-control-label" for="input-username"> {{util.translate("Treatment")}}
                 </label>
-                <select id="select2" [(ngModel)]="mainCateId" name="select2"
+                <select id="select2" [(ngModel)]="treatmentId" name="select2"
                     class="form-control form-control-alternative">
-                    <option [value]="item.id" *ngFor="let item of category"> {{item.name}} </option>
+                    <option [value]="item.id" *ngFor="let item of treatments"> {{item.name}} </option>
                 </select>
             </div>
           </div>
-          <button type="button" class="btn btn-success" *ngIf="this.action == 'create'" (click)="createCategory()">
+          <button type="button" class="btn btn-success" *ngIf="this.action == 'create'" (click)="createType()">
             {{util.translate('Save')}}</button>
-          <button type="button" class="btn btn btn-primary" *ngIf="this.action == 'update'" (click)="updateCategory()">
+          <button type="button" class="btn btn btn-primary" *ngIf="this.action == 'update'" (click)="updateType()">
             {{util.translate('Update')}}</button>
 
         </div>
@@ -53,13 +53,13 @@
     <div class="col-lg-8">
       <div class="card">
         <div class="card-header">
-          {{util.translate('All Sub Categories')}}
+          {{util.translate('All Treatment Types')}}
         </div>
         <div class="card-body">
 
           <div class="row flex_row">
             <div class="col-lg-12">
-              <input type="text" class="form-control" id="name" [placeholder]="util.translate('Search Category')"
+              <input type="text" class="form-control" id="name" [placeholder]="util.translate('Search Type')"
                 (input)="search($event.target.value)">
             </div>
           </div>
@@ -72,8 +72,8 @@
             <thead *ngIf="list?.length > 0">
               <tr>
                 <th>{{util.translate('Cover')}}</th>
-                <th>{{util.translate('Category Name')}}</th>
-                <th>{{util.translate('Sub Category Name')}}</th>
+                <th>{{util.translate('Treatment Name')}}</th>
+                <th [class.sort-asc]="sort['name'] == 'asc'" [class.sort-desc]="sort['name'] == 'desc'"><a (click)="sortOn('name')" style="cursor: pointer;">{{util.translate('Treatment Type Name')}}</a></th>
                 <th>{{util.translate('Action')}}</th>
               </tr>
             </thead>
@@ -83,7 +83,7 @@
                   <ngx-skeleton-loader count="1" appearance="line"></ngx-skeleton-loader>
                 </td>
               </tr>
-              <tr *ngFor="let item of list | paginate: {id:'pagin1', itemsPerPage: 5, currentPage: page }">
+              <tr *ngFor="let item of list | paginate: {id:'pagin1', itemsPerPage: itemsPerPage, currentPage: page }">
                 <td>
                   <img class="img-responsive" style="height: 40px;width: 40px; object-fit: cover;"
                     [src]="api.imageUrl + item.cover" onError="this.src='assets/img/dummy.jpeg'">
@@ -110,8 +110,17 @@
             </tbody>
           </table>
 
-          <div *ngIf="list?.length > 0">
-            <pagination-controls id="pagin1" (pageChange)="page = $event"></pagination-controls>
+          <div class="table-tools" *ngIf="list?.length > 0" >
+            <div class="table-pagination">
+              <pagination-controls  class="custom-pagination" id="pagin1" (pageChange)="page = $event"></pagination-controls>
+              <input class="form-control page-number" [(ngModel)]="page" [ngModelOptions]="{standalone: true}"
+                [placeholder]="util.translate('Page')">
+            </div>
+            <select id="view_count" [(ngModel)]="itemsPerPage" name="view_count" class="form-select ng-valid ng-dirty ng-touched view-count ">
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+            </select>
           </div>
 
         </div>

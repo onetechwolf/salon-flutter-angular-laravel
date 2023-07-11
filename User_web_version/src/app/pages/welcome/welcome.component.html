@@ -6,52 +6,6 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2022-present initappz.
  -->
- <style>
-
-  .anim-container {
-    color: #e5e5e5;
-    font-size: 2.26rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .anim-container section {
-    margin-left: 0px;
-  }
-
-  .animation {
-    height:50px;
-    overflow:hidden;
-    margin-left: 1rem;
-  }
-
-  .animation > div > div {
-    padding: 0.25rem 0.75rem;
-    height:2.73rem;
-    margin-bottom: 2.80rem;
-    display:inline-block;
-    color: #9C0278;
-  }
-
-  .animation div:first-child {
-    animation: text-animation 8s infinite;
-  }
-
-  @keyframes text-animation {
-    0% {margin-top: -0.15rem;}
-    10% {margin-top: -0.15rem;}
-    20% {margin-top: -5.42rem;}
-    30% {margin-top: -5.42rem;}
-    40% {margin-top: -10.82rem;}
-    60% {margin-top: -10.82rem;}
-    70% {margin-top: -5.42rem;}
-    80% {margin-top: -5.42rem;}
-    90% {margin-top: -0.15rem;}
-    100% {margin-top: -0.15rem;}
-  }
-
-</style>
 <div class="row_div">
   <div class="row">
     <div class="col-lg-12 col-sm-4 back_image bg_image" [style.backgroundImage]="'url(assets/imgs/back.png)'">
@@ -59,7 +13,17 @@
         <div class="container">
           <div class="row  justify-content-md-center">
             <div class="col-xl-10 col-lg-8">
-              <div class="bold_lbl anim-container">
+              <div class="bold_lbl anim-container" *ngIf="util.deviceType =='desktop'">
+                <p style="text-wrap: nowrap">Get The BEST </p>
+                <section class="animation">
+                  <div class="first"><div style="text-wrap: nowrap">SALONS</div></div>
+                  <div class="second"><div style="text-wrap: nowrap">MOBILE BEAUTICIANS</div></div>
+                  <div class="third"><div style="text-wrap: nowrap">BEAUTY PRODUCTS</div></div>
+                </section>
+                <p style="text-wrap: nowrap"> Near You!</p>
+              </div>
+
+              <div class="bold_lbl anim-container-mobile" *ngIf="util.deviceType !='desktop'">
                 <p style="text-wrap: nowrap">Get The BEST </p>
                 <section class="animation">
                   <div class="first"><div style="text-wrap: nowrap">SALONS</div></div>
@@ -73,10 +37,10 @@
                 <div class="row col-11">
                   <div class="col-6">
                     <div class="input_div">
-                      <img src="assets/imgs/search.png" style="width: 18px;height: 18px;">
+                      <!-- <img src="assets/imgs/search.png" style="width: 18px;height: 18px;"> -->
                       <input type="text" style="font-size: 16px;" class="form-control" [(ngModel)]="autocomplete1.query_treatment"
-                        [placeholder]="util.translate('Any Treatment')" (ngModelChange)="onSearchChangeTreatment($event)">
-                      <img src="assets/imgs/remove.png" style="width: 20px;height: 20px;cursor: pointer;" *ngIf="autocomplete1.query_treatment != ''" (click)="removeTreatmentSearchKey()">
+                        [placeholder]="util.translate('Search Treatment')" (ngModelChange)="onSearchChangeTreatmentCategory($event)">
+                      <img src="assets/imgs/remove.png" style="width: 20px;height: 20px;cursor: pointer;" *ngIf="autocomplete1.query_treatment != ''" (click)="removeTreatmentCategorySearchKey()">
                     </div>
                   </div>
                   <div class="col-6">
@@ -114,9 +78,9 @@
                 <div class="row col-11">
                   <div class="col-6" style="padding-right: 0px;">
                     <div class="treatment_list" *ngIf="autocompleteTreatmentItems.length > 0 && this.autocomplete1.query_treatment != ''">
-                      <div class="treatment_name" *ngFor="let item of autocompleteTreatmentItems"
+                      <div ngClass="treatment_name" *ngFor="let item of autocompleteTreatmentItems"
                         (click)="selectSearchTreatmentResult(item)">
-                        <img class="treatment_icon" [src]="api.mediaURL + item.cover">
+                        <img class="treatment_icon" [src]="api.mediaURL + item.cover" [style]="item.type==1 ? 'margin-left: 15px' : ''">
                         {{ item.name }}
                       </div>
                     </div>
@@ -172,16 +136,29 @@
 </div> -->
 
 <div style="padding-top: 20px;">
-  <div class="container">
+  <div class="container" style="font-size: 17px;">
     <marquee behavior="scroll" direction="left">
-      Book Locally Beauty treatments and wellness services.  <a href="#">Download</a> the Bunitas App Now.
+      Book Locally Beauty treatments and wellness services.  <a style="color: #9C0278;" (click)="scrollToDownload()">Download</a> the Bunitas App Now.
     </marquee>
   </div>
 </div>
 
-<div style="padding-top: 40px;">
+<div style="padding: 40px 0px;">
   <div class="container">
-    <div class="row getapp_div">
+    <div class="row getapp_div" *ngIf="util.deviceType =='desktop'">
+      <div class="col-lg-6 getapp_content">
+        <label class="head_lbl">{{util.translate('Looking for a New Look?')}}</label>
+        <label class="small_lbl">
+          {{util.translate("Want to pamper yourself with a relaxing treatment? Don't waste time searching online. Find your nearby favourite salon and beauty specialist in minutes. Whether you need a haircut, a manicure, a facial or a massage, we have it all.")}}
+        </label>
+        <label class="small_lbl" style="text-align: center;margin-top: 30px">Book now and get ready to shine!</label>
+        <button mdbBtn class="round_btn" (click)="goToRest()" style="align-self: center;">{{util.translate('Search Treatments')}}</button>
+      </div>
+      <div class="col-lg-6">
+        <img src="assets/imgs/home-1.jpg" style="width: 90%;">
+      </div>
+    </div>
+    <div class="row getapp_div" *ngIf="util.deviceType !='desktop'">
       <div class="col-lg-6 getapp_content">
         <label class="head_lbl">{{util.translate('Looking for a New Look?')}}</label>
         <label class="small_lbl">
@@ -198,7 +175,7 @@
 </div>
 
 
-<div style="background: #f5f5f5;padding: 60px;margin-top: 60px;">
+<div style="background: #f5f5f5;padding: 60px 0px;">
   <div class="container">
     <div class="row getapp_div">
       <div class="col-lg-6">
@@ -222,7 +199,7 @@
   </div>
 </div>
 
-<div style="padding-top: 60px;;">
+<div style="padding: 60px 0px;">
   <div class="container">
     <div class="row getapp_div">
       <div class="col-lg-6 getapp_content">
@@ -242,7 +219,7 @@
   </div>
 </div>
 
-<div style="padding: 60px;background: #f5f5f5;margin-top: 60px">
+<div style="background: #f5f5f5;padding: 60px 0px;" id="downloadLocation" #downloadLocation>
   <div class="container" >
     <div class="StaticPageSection StaticPageSection--maxWidth-primary DownloadApp">
       <p class="Text SectionTitle SectionTitle--40">Download the Bunitas App</p>
@@ -250,29 +227,33 @@
       <p class="Text SectionDescription" style="margin: 10px 0px 0px 0px !important;">- Easily manage your Business</p>
       <p class="Text SectionDescription" style="margin: 10px 0px 40px 0px !important;">- Book your beautiful treatments anytime, anywhere</p>
       <div class="DownloadApp__appCardsWrapper">
-        <div class="AppCard AppCard--background-gray" style="display: block;text-align: center;padding-bottom: 20px;">
-          <h3 class="Text Text--color-white AppCard__marketplaceTitle" style="margin-bottom: 42px;">Bunitas App for Customers</h3>
-          <img src="assets/imgs/download_user.png" style="width: 100%;">
-          <div class="AppCard__storeIconWrapper" style="margin: auto;margin-top: 20px;">
-            <a [href]="util.apple_appstore" target="_blank">
-              <img src="assets/imgs/appstore.svg" alt="" style="height: 45px;">
-            </a>
-            <a [href]="util.google_playstore" target="_blank">
-              <img src="assets/imgs/google.svg" alt="" style="height: 45px;">
-            </a>
+        <div class="AppCard AppCard--background-gray" style="display: flex;text-align: center;padding-bottom: 20px;">
+          <img src="assets/imgs/mobile-user.jpg" style="width: 50%;">
+          <div>
+            <h3 class="Text Text--color-white AppCard__marketplaceTitle" style="margin-bottom: 42px;white-space: break-spaces;color: black">Bunitas App for Customers</h3>
+            <div class="AppCard__storeIconWrapper" style="margin: auto;margin-top: 80px;">
+              <a [href]="util.apple_appstore" target="_blank">
+                <img src="assets/imgs/appstore.svg" alt="" style="height: 45px;">
+              </a>
+              <a [href]="util.google_playstore" target="_blank">
+                <img src="assets/imgs/google.svg" alt="" style="height: 45px;">
+              </a>
+            </div>
           </div>
         </div>
-        <div class="AppCard AppCard--background-yellow"  style="display: block;text-align: center;padding-bottom: 20px;">
-          <h3 class="Text Text--color-black AppCard__marketplaceTitle" style="margin-bottom: 0px;">Bunitas App for Partners</h3>
-          <p class="Text SectionDescription" style="margin: 0px 0px 10px 0px !important;font-size: 20px;color: black">Salon Owners & Mobile Beauticians</p>
-          <img src="assets/imgs/download_owner.png" style="width: 100%;">
-          <div class="AppCard__storeIconWrapper" style="margin: auto;margin-top: 20px;">
-            <a [href]="util.apple_appstore" target="_blank">
-              <img src="assets/imgs/appstore.svg" alt="" style="height: 45px;">
-            </a>
-            <a [href]="util.google_playstore" target="_blank">
-              <img src="assets/imgs/google.svg" alt="" style="height: 45px;">
-            </a>
+        <div class="AppCard AppCard--background-yellow"  style="display: flex;text-align: center;padding-bottom: 20px;">
+          <img src="assets/imgs/mobile-owner.jpg" style="width: 50%;">
+          <div>
+            <h3 class="Text Text--color-black AppCard__marketplaceTitle" style="margin-bottom: 0px;white-space: break-spaces;">Bunitas App for Partners</h3>
+            <p class="Text SectionDescription" style="margin: 0px 0px 10px 0px !important;font-size: 20px;white-space: break-spaces;color: black">Salon Owners & Mobile Beauticians</p>
+            <div class="AppCard__storeIconWrapper" style="margin: auto;margin-top: 20px;">
+              <a [href]="util.apple_appstore" target="_blank">
+                <img src="assets/imgs/appstore.svg" alt="" style="height: 45px;">
+              </a>
+              <a [href]="util.google_playstore" target="_blank">
+                <img src="assets/imgs/google.svg" alt="" style="height: 45px;">
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -40,11 +40,9 @@
               </div>
               <h5 class="h5-responsive f-primary">
                 <span class="ff-bold head-text" *ngIf="util.currencySide == 'left'">
-                  {{util.currencySymbol}}
-                  {{item.hourly_price}} </span>
+                  {{util.currencySymbol}}{{item.hourly_price}} </span>
                 <span class="ff-bold head-text" *ngIf="util.currencySide == 'right'">
-                  {{item.hourly_price}}
-                  {{util.currencySymbol}} </span>
+                  {{item.hourly_price}}{{util.currencySymbol}} </span>
               </h5>
             </div>
           </a>

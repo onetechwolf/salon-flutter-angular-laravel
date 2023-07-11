@@ -83,12 +83,19 @@
     <div class="modal-content">
       <div class="modal-body location_body">
         <div>
-          <img src="assets/imgs/cancel.png" style="width: 20px;" (click)="locationModal.hide()">
+          <div style="display: flex;justify-content: space-between;">
+            <img src="assets/imgs/cancel.png" style="width: 20px;height: 20px;" (click)="locationModal.hide()">
+            <a (click)="removeLocation()">
+              <img src="assets/imgs/placeholder.png" style="width: 20px;" >
+              Clear
+            </a>
+          </div>
+
           <div class="form_div">
             <input type="text" [(ngModel)]="autocomplete1" [placeholder]="util.translate('Choose your Location')"
               (ngModelChange)="onSearchChange($event)" class="form-control">
-            <div class="addressList">
-              <div class="select_addr" *ngFor="let item of autocompleteLocationItems" (click)="selectSearchResult1(item)">
+            <div class="location_list" *ngIf="autocompleteLocationItems.length > 0">
+              <div class="location_name" *ngFor="let item of autocompleteLocationItems" (click)="selectSearchResult1(item)">
                 <mdb-icon fas icon="map-marker-alt" style="color: gray; margin-right: 10px;"></mdb-icon>
                 {{ item.description }}
               </div>
@@ -482,7 +489,7 @@
                 </div>
               </div>
 
-              <label>{{util.translate('Location/City')}} <span style="color: red;">*</span> </label>
+              <!-- <label>{{util.translate('Location/City')}} <span style="color: red;">*</span> </label> -->
               <select [(ngModel)]="registerForm.location" required style="border: 1px solid lightgray;width: 100%;"
                 [ngModelOptions]="{standalone: true}" #location="ngModel">
                 <option *ngFor="let item of util.cities" [value]="item.id">{{item.name}}</option>
@@ -573,7 +580,7 @@
               <input type="email" [placeholder]="util.translate('Email')" name="partner_email" #partner_email="ngModel"
                 spellcheck="false" autocapitalize="off" required [(ngModel)]="registerPartnerForm.email"
                 class="form-control frm" [ngModelOptions]="{standalone: true}">
-              <p [hidden]="partner_email.valid || submitted == false" class="redAlert">
+              <p [hidden]="partner_email.valid || partnerSubmitted == false" class="redAlert">
                 {{util.translate('Email is required')}}
               </p>
               <div class="row">
@@ -591,38 +598,39 @@
                     class="form-control frm" (keydown)="handleKeyDown($event)" min="1000000000" max="9999999999">
                 </div>
               </div>
-              <p [hidden]="partner_mobile.valid || submitted == false" class="redAlert">
+              <p [hidden]="partner_mobile.valid || partnerSubmitted == false" class="redAlert">
                 {{util.translate('Phone number is required')}}
               </p>
               <select [(ngModel)]="registerPartnerForm.type" required style="border: 1px solid lightgray;width: 100%;padding: 0 8px 0 8px;"
-                [ngModelOptions]="{standalone: true}" #type="ngModel">
-                <option value="0"> {{util.translate('Salon Owner')}}</option>
-                <option value="1"> {{util.translate('Mobile Beautifician')}} </option>
+                [ngModelOptions]="{standalone: true}" #partnerType="ngModel">
+                <option *ngFor="let item of util.partnerTypes; let i = index" value="{{ i }}"> {{ item }} </option>
               </select>
-              <p [hidden]="type.valid || submitted == false" class="redAlert">
+              <p [hidden]="partnerType.valid || partnerSubmitted == false" class="redAlert">
                 {{util.translate('Type of Partner is required')}}
               </p>
 
-              <input [(ngModel)]="registerPartnerForm.salon_name" type="text" [placeholder]="util.translate('Salon Name')"
-                name="salon_name" #salon_name="ngModel" spellcheck="false" autocapitalize="off" *ngIf="registerPartnerForm.type==0"
-                class="form-control frm">
+              <input [(ngModel)]="registerPartnerForm.salon_name" type="text" [placeholder]="util.translate('Business Name')"
+                name="business_name" #business_name="ngModel" spellcheck="false" autocapitalize="off" class="form-control frm">
+              <p [hidden]="business_name.valid || partnerSubmitted == false" class="redAlert">
+                {{util.translate('Business Name is required')}}
+              </p>
 
               <input [(ngModel)]="registerPartnerForm.first_name" type="text" [placeholder]="util.translate('First Name')"
                 name="partner_first_name" #partner_first_name="ngModel" spellcheck="false" autocapitalize="off" required
                 class="form-control frm">
-              <p [hidden]="partner_first_name.valid || submitted == false" class="redAlert">
+              <p [hidden]="partner_first_name.valid || partnerSubmitted == false" class="redAlert">
                 {{util.translate('First Name is required')}}
               </p>
               <input type="text" [placeholder]="util.translate('Last Name')" [(ngModel)]="registerPartnerForm.last_name"
                 name="partner_last_name" #partner_last_name="ngModel" spellcheck="false" autocapitalize="off" required
                 class="form-control frm">
-              <p [hidden]="partner_last_name.valid || submitted == false" class="redAlert">
+              <p [hidden]="partner_last_name.valid || partnerSubmitted == false" class="redAlert">
                 {{util.translate('Last Name is required')}}
               </p>
               <input name="partner_password" [placeholder]="util.translate('Password')" type="password" #partner_password="ngModel"
                 required [(ngModel)]="registerPartnerForm.password" class="form-control frm"
                 [ngModelOptions]="{standalone: true}">
-              <p [hidden]="partner_password.valid || submitted == false" class="redAlert">
+              <p [hidden]="partner_password.valid || partnerSubmitted == false" class="redAlert">
                 {{util.translate('Password is required')}}
               </p>
               <select [(ngModel)]="registerPartnerForm.gender" required style="border: 1px solid lightgray;width: 100%;padding: 0 8px 0 8px;"
@@ -632,28 +640,28 @@
                 <option value="2"> {{util.translate('Others')}} </option>
               </select>
               <input type="date" [(ngModel)]="registerPartnerForm.dob" name="partner_dob" #partner_dob="ngModel" autocomplete="cc-exp" ccExp
-                [ngModelOptions]="{standalone: true}" mdbInput class="form-control frm" required style="padding: 0 8px 0 11px;">
-              <p [hidden]="partner_dob.valid || submitted == false" class="redAlert">
+                [ngModelOptions]="{standalone: true}" mdbInput class="form-control frm" required style="padding: 0 1px 0 11px;">
+              <p [hidden]="partner_dob.valid || partnerSubmitted == false" class="redAlert">
                 {{util.translate('Dob Date is required')}}
               </p>
               <!-- <input name="fee_start" [placeholder]="util.translate('Fee Started Price')" type="number" #fee_start="ngModel"
                 required [(ngModel)]="registerPartnerForm.fee_start" class="form-control frm"
                 [ngModelOptions]="{standalone: true}">
-              <p [hidden]="fee_start.valid || submitted == false" class="redAlert">
+              <p [hidden]="fee_start.valid || partnerSubmitted == false" class="redAlert">
                 {{util.translate('Fee Started Price is required')}}
               </p> -->
               <input name="about" [placeholder]="util.translate('About you / your salon')" type="text" #about="ngModel"
                 required [(ngModel)]="registerPartnerForm.about" class="form-control frm"
                 [ngModelOptions]="{standalone: true}">
-              <p [hidden]="about.valid || submitted == false" class="redAlert">
+              <p [hidden]="about.valid || partnerSubmitted == false" class="redAlert">
                 {{util.translate('About you / your salon required')}}
               </p>
-              <ng-multiselect-dropdown [placeholder]="util.translate('Category')" [ngModelOptions]="{standalone: true}"
+              <ng-multiselect-dropdown [placeholder]="util.translate('Treatments')" [ngModelOptions]="{standalone: true}"
                   maxHeight="100" [data]="util.categories" [(ngModel)]="registerPartnerForm.category"
                   [settings]="dropdownSettings" #category="ngModel" >
               </ng-multiselect-dropdown>
-              <p [hidden]="category.valid || submitted == false" class="redAlert">
-                {{util.translate('Category is required')}}
+              <p [hidden]="category.valid || partnerSubmitted == false" class="redAlert">
+                {{util.translate('Treatment is required')}}
               </p>
 
               <select [(ngModel)]="registerPartnerForm.cid" required style="border: 1px solid lightgray;width: 100%;margin-top: 10px;padding: 0 8px 0 8px;"
@@ -661,19 +669,19 @@
                 <option disabled selected value="" style="display: none">{{util.translate('Location/City')}}</option>
                 <option *ngFor="let item of util.cities" [value]="item.id">{{item.name}}</option>
               </select>
-              <p [hidden]="cid.valid || submitted == false" class="redAlert">
+              <p [hidden]="cid.valid || partnerSubmitted == false" class="redAlert">
                 {{util.translate('Location/City is required')}}
               </p>
               <input name="address" [placeholder]="util.translate('Address')" type="text" #address="ngModel"
                 required [(ngModel)]="registerPartnerForm.address" class="form-control frm"
                 [ngModelOptions]="{standalone: true}">
-              <p [hidden]="address.valid || submitted == false" class="redAlert">
+              <p [hidden]="address.valid || partnerSubmitted == false" class="redAlert">
                 {{util.translate('Address is required')}}
               </p>
               <input name="zipcode" [placeholder]="util.translate('Post Code')" type="text" #zipcode="ngModel"
                 required [(ngModel)]="registerPartnerForm.zipcode" class="form-control frm"
                 [ngModelOptions]="{standalone: true}" (change)="getLatLngWithPostCode($event)">
-              <p [hidden]="zipcode.valid || submitted == false" class="redAlert">
+              <p [hidden]="zipcode.valid || partnerSubmitted == false" class="redAlert">
                 {{util.translate('Post Code is required')}}
               </p>
               <div class="file-input-container">
@@ -681,7 +689,7 @@
                   (change)="changeAttachment($event.target.files, 0)" #idcard="ngModel" [(ngModel)]="registerPartnerForm.idCard">
                 <label for="idCard" class="custom-file-button">{{this.idCardTitle}}</label>
               </div>
-              <p [hidden]="idcard.valid || submitted == false" class="redAlert">
+              <p [hidden]="idcard.valid || partnerSubmitted == false" class="redAlert">
                 {{util.translate('Id Card is required')}}
               </p>
               <div class="file-input-container" style="margin-top: 12px;">
@@ -697,14 +705,14 @@
                 <div class="col-6">
                   <input name="lat" [placeholder]="util.translate('Your Latitude')" type="number" #lat="ngModel"
                     [(ngModel)]="registerPartnerForm.lat" class="form-control frm" [ngModelOptions]="{standalone: true}" required>
-                  <p [hidden]="lat.valid || submitted == false" class="redAlert">
+                  <p [hidden]="lat.valid || partnerSubmitted == false" class="redAlert">
                     {{util.translate('Latitude is required')}}
                   </p>
                 </div>
                 <div class="col-6">
                   <input name="lng" [placeholder]="util.translate('Your Longitude')" type="number" #lng="ngModel"
                     [(ngModel)]="registerPartnerForm.lng" class="form-control frm" [ngModelOptions]="{standalone: true}" required>
-                  <p [hidden]="lng.valid || submitted == false" class="redAlert">
+                  <p [hidden]="lng.valid || partnerSubmitted == false" class="redAlert">
                     {{util.translate('Langitude is required')}}
                   </p>
                 </div>

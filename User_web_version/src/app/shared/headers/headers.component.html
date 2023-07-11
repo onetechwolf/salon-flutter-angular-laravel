@@ -40,7 +40,7 @@
 
         <a class="nav-link waves-light" mdbWavesEffect (click)="gotoPartner()"
           *ngIf="haveSigned() ==false">
-          <label [class.active]="activeTab == 'partner'">{{util.translate('   For Partner')}}</label>
+          <label [class.active]="activeTab == 'partner'">&nbsp;&nbsp;{{util.translate('For Partner')}}</label>
         </a>
 
         <!-- <a class="nav-link waves-light" mdbWavesEffect (click)="goToHelp();" *ngIf="haveSigned() == false">

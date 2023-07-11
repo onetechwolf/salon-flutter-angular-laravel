@@ -58,6 +58,8 @@ export class UtilService {
     }
   ];
 
+  public partnerTypes: any[] = ['Mobile Beautician', 'Hair & Nails Salon', 'Barber Shop', 'Wellness & Spa', 'Beauty Clinics', 'Products Only'];
+
   paidMethods = [
     'Index',
     'COD',

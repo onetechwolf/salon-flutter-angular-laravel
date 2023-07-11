@@ -13,7 +13,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    {{util.translate('All Freelancers')}}
+                    {{util.translate('All Mobile Beauticians')}}
                     <div class="card-header-actions">
                         <button type="submit" class="btn btn-sm btn-primary" style="float: right;margin: 0px 5px;"
                             (click)="createNew()">
@@ -46,12 +46,12 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of dummyIndivuduals">
-                                <td *ngFor="let item of [1,2,3,4,1,2,3,4,5,5]">
+                                <td *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,11,12]">
                                     <ngx-skeleton-loader count="1" appearance="line"></ngx-skeleton-loader>
                                 </td>
                             </tr>
                             <tr
-                                *ngFor="let item of individuals | paginate: {id:'pagin1', itemsPerPage: 10, currentPage: page };let i = index;">
+                                *ngFor="let item of individuals | paginate: {id:'pagin1', itemsPerPage: itemsPerPage, currentPage: page };let i = index;">
                                 <th scope="row">
                                     {{item.id}}
                                 </th>
@@ -115,7 +115,7 @@
 
                                         <c-badge color="info" class="me-1 badge bg-info"
                                             (click)="updateInfo(item.id,item.uid)">
-                                            {{ util.translate('View')}}
+                                            {{ util.translate('Edit')}}
                                         </c-badge>
 
                                         <c-badge color="danger" class="me-1 badge bg-danger" (click)="deleteItem(item)">
@@ -129,9 +129,18 @@
                         </tbody>
                     </table>
 
-                    <div *ngIf="individuals?.length > 0">
-                        <pagination-controls id="pagin1" (pageChange)="page = $event"></pagination-controls>
-                    </div>
+                    <div class="table-tools" *ngIf="individuals?.length > 0" >
+                        <div class="table-pagination">
+                          <pagination-controls  class="custom-pagination" id="pagin1" (pageChange)="page = $event"></pagination-controls>
+                          <input class="form-control page-number" [(ngModel)]="page" [ngModelOptions]="{standalone: true}"
+                            [placeholder]="util.translate('Page')">
+                        </div>
+                        <select id="view_count" [(ngModel)]="itemsPerPage" name="view_count" class="form-select ng-valid ng-dirty ng-touched view-count ">
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                      </div>
 
                 </div>
             </div>
@@ -144,7 +153,7 @@
     <div class="modal-dialog modal-primary modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{util.translate('Manage Freelancer')}} </h5>
+                <h5 class="modal-title">{{util.translate('Manage Mobile Beautician')}} </h5>
                 <button type="button" class="close" (click)="myModal2.hide()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -242,7 +251,7 @@
 
                     <div class="card-header text-center border-0">
                         <div class="d-flex justify-content-start">
-                            <h4> {{util.translate("Freelancer Details")}} </h4>
+                            <h4> {{util.translate("Mobile Beautician Details")}} </h4>
                         </div>
                     </div>
                     <div class="card-body">
@@ -262,7 +271,7 @@
 
                                         <textarea class="form-control form-control-alternative" rows="3"
                                             [(ngModel)]="about"
-                                            [placeholder]="util.translate('Brief of Individual')"></textarea>
+                                            [placeholder]="util.translate('Brief of Mobile Beautician')"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -273,7 +282,7 @@
 
                                         <textarea class="form-control form-control-alternative" rows="3"
                                             [(ngModel)]="address"
-                                            [placeholder]="util.translate('Individual Address')"></textarea>
+                                            [placeholder]="util.translate('Mobile Beautician Address')"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -374,7 +383,7 @@
                 <button type="button" class="btn btn-primary" (click)="updateSalon()" *ngIf="action == 'update'">
                     {{util.translate("Save changes")}}
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="myModal2.close()">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="myModal2.hide()">
                     {{util.translate("Close")}}
                 </button>
             </div>

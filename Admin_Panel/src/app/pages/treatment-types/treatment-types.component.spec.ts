@@ -8,19 +8,19 @@
 */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CategoriesComponent } from './categories.component';
+import { TreatmentTypesComponent } from './treatment-types.component';
 
-describe('CategoriesComponent', () => {
-  let component: CategoriesComponent;
-  let fixture: ComponentFixture<CategoriesComponent>;
+describe('TreatmentTypesComponent', () => {
+  let component: TreatmentTypesComponent;
+  let fixture: ComponentFixture<TreatmentTypesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CategoriesComponent]
+      declarations: [TreatmentTypesComponent]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(CategoriesComponent);
+    fixture = TestBed.createComponent(TreatmentTypesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

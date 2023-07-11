@@ -7,7 +7,7 @@
   Copyright and Good Faith Purchasers © 2022-present initappz.
  -->
 <div class="container">
-  <h5 class="ff-medium mt-3" *ngIf="categoryCalled == true">{{util.translate('Categories')}}</h5>
+  <h5 class="ff-medium mt-3" *ngIf="categoryCalled == true">{{util.translate('Treatments')}}</h5>
 
   <div *ngIf="categoryCalled == false">
     <ngx-skeleton-loader appearance="line" [theme]="{  height: '20px',width:'150px'}">
@@ -23,8 +23,35 @@
 
   <div class="slider_row" *ngIf="categoryCalled == true">
     <div class="container" style="width: 100%;" *ngIf="categoryList?.length">
-      <carousel [cellWidth]="120" [height]="140" [autoplay]="true" style="z-index: unset;">
+      <carousel [cellWidth]="140" [height]="160" [autoplay]="true" style="z-index: unset;">
         <div class="carousel-cell" *ngFor="let item of categoryList" (click)="onCateId(item.id,item.name)">
+          <div class="slider_back_cate bg_image "
+            [ngStyle]="{'background-image':'url('+api.mediaURL+item.cover+'),url(assets/placeholder.jpg)'}">
+          </div>
+          <label class="cate_name">{{ (item.name.length>25)? (item.name | slice:0:25)+'..':(item.name) }} </label>
+        </div>
+      </carousel>
+    </div>
+  </div>
+
+  <h5 class="ff-medium mt-3" *ngIf="subCategoryCalled == true">{{util.translate('Treatment Types')}}</h5>
+
+  <div *ngIf="subCategoryCalled == false">
+    <ngx-skeleton-loader appearance="line" [theme]="{  height: '20px',width:'150px'}">
+    </ngx-skeleton-loader>
+  </div>
+
+  <div class="flexed" *ngIf="subCategoryCalled == false">
+    <div *ngFor="let item of  [1,2,3,4,5,6,7,8,9,10];">
+      <ngx-skeleton-loader appearance="circle" [theme]="{ 'border-radius': '50%', height: '120px',width:'120px'}">
+      </ngx-skeleton-loader>
+    </div>
+  </div>
+
+  <div class="slider_row" *ngIf="subCategoryCalled == true">
+    <div class="container" style="width: 100%;" *ngIf="subCategoryList?.length">
+      <carousel [cellWidth]="120" [height]="140" [autoplay]="true" style="z-index: unset;">
+        <div class="carousel-cell" *ngFor="let item of subCategoryList" (click)="onSubCateId(item.id,item.name)">
           <div class="slider_back_cate bg_image "
             [ngStyle]="{'background-image':'url('+api.mediaURL+item.cover+'),url(assets/placeholder.jpg)'}">
           </div>

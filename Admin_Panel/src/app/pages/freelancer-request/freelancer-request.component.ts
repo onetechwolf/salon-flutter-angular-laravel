@@ -51,6 +51,9 @@ export class FreelancerRequestComponent implements OnInit {
   id_card: any= '';
   qualification: any='';
   policy: any='';
+  sub_type: any='';
+  sort: any = [];
+  itemsPerPage: number = 10;
 
   constructor(
     public util: UtilService,
@@ -71,9 +74,6 @@ export class FreelancerRequestComponent implements OnInit {
         console.log(">>>>>", data);
         if (data.data.length > 0) {
           this.freelancers = data.data;
-          this.freelancers.forEach(element => {
-            return element.policy = JSON.parse(element.policy);
-          });
         }
       }
     }, error => {
@@ -158,6 +158,7 @@ export class FreelancerRequestComponent implements OnInit {
         this.id_card = item.id_card;
         this.qualification = item.qualification;
         this.policy = item.policy;
+        this.sub_type = item.sub_type;
         this.largeModal.show();
       }
     });
@@ -184,6 +185,7 @@ export class FreelancerRequestComponent implements OnInit {
       password: this.password,
       dob: this.dob,
       cid: this.cityID,
+      sub_type: this.sub_type
     };
     this.util.show();
     this.api.post_private('v1/auth/createIndividualAccount', param).then((data: any) => {
@@ -305,5 +307,23 @@ export class FreelancerRequestComponent implements OnInit {
     else
       this.zoomTitle = 'Qualification';
     this.imageZoomModal.show();
+  }
+
+  sortOn(column: string) {
+    this.sort[column] = (this.sort[column] == '' || this.sort[column] == 'desc') ? 'asc' : 'desc';
+    this.sortByColumn(column, this.sort[column]);
+  }
+
+  sortByColumn(column:string, direction = 'desc'): any[] {
+    let sortedArray = (this.freelancers || []).sort((a,b)=>{
+      if(a[column] > b[column]){
+        return (direction === 'desc') ? 1 : -1;
+      }
+      if(a[column] < b[column]){
+        return (direction === 'desc') ? -1 : 1;
+      }
+      return 0;
+    })
+    return sortedArray;
   }
 }

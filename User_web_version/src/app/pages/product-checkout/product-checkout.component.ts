@@ -50,8 +50,8 @@ export class ProductCheckoutComponent implements OnInit {
 
   title = '';
   address = '';
-  house = '';
-  landmark = '';
+  // house = '';
+  // landmark = '';
   zipcode = '';
   lat = 0;
   lng = 0;
@@ -201,14 +201,13 @@ export class ProductCheckoutComponent implements OnInit {
   }
 
   getLatLngFromAddress() {
-    if (this.address == '' || this.house == '' ||
-      this.landmark == '' || this.zipcode == '') {
+    if (this.address == '' || this.zipcode == '') {
       this.util.apiErrorHandler(this.util.translate('all fields are required'));
       return false;
     }
     const geocoder = new google.maps.Geocoder;
     this.util.start();
-    geocoder.geocode({ address: this.house + ' ' + this.landmark + ' ' + this.address + ' ' + this.zipcode }, (results, status) => {
+    geocoder.geocode({ address: this.address }, (results, status) => {
       console.log(results, status);
       if (status == 'OK' && results && results.length) {
         this.lat = results[0].geometry.location.lat();
@@ -229,8 +228,7 @@ export class ProductCheckoutComponent implements OnInit {
   }
 
   saveAddress() {
-    if (this.address == '' || this.house == '' ||
-      this.landmark == '' || this.zipcode == '') {
+    if (this.address == '' || this.zipcode == '') {
       this.util.apiErrorHandler(this.util.translate('all fields are required'));
       return false;
     }
@@ -238,8 +236,8 @@ export class ProductCheckoutComponent implements OnInit {
       uid: localStorage.getItem('uid'),
       title: this.title,
       address: this.address,
-      house: this.house,
-      landmark: this.landmark,
+      // house: this.house,
+      // landmark: this.landmark,
       pincode: this.zipcode,
       lat: this.lat,
       lng: this.lng,
@@ -269,8 +267,6 @@ export class ProductCheckoutComponent implements OnInit {
 
   addNewAddress() {
     this.isNewAddress = true;
-    this.house = '';
-    this.landmark = '';
     this.address = '';
     this.addressId = 0;
     this.zipcode = '';
@@ -281,8 +277,6 @@ export class ProductCheckoutComponent implements OnInit {
     this.addressId = item.id;
     this.isNewAddress = false;
     this.address = item.address;
-    this.house = item.house;
-    this.landmark = item.landmark;
     this.zipcode = item.pincode;
     this.title = item.title;
     this.deliveryAddress.show();
@@ -294,8 +288,6 @@ export class ProductCheckoutComponent implements OnInit {
       title: this.title,
       address: this.address,
       id: this.addressId,
-      house: this.house,
-      landmark: this.landmark,
       pincode: this.zipcode,
       lat: this.lat,
       lng: this.lng,
