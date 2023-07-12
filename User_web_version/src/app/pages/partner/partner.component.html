@@ -18,16 +18,16 @@
             <a class="primary-btn wow fadeInLeft" data-wow-delay=".3s" style="margin-top: 100px" style="color: white;background:#9C0278" (click)="appComponent.showRegisterPartnerDailog()">Join Us Now</a>
         </div>
         <div class="promo-image d-none d-lg-block" *ngIf="util.deviceType=='desktop'">
-            <img class="img-fluid" data-wow-delay=".3s" src="assets/imgs/partner-banner.jpg" alt="" style="width: 500px;"/>
+            <img class="img-fluid" data-wow-delay=".3s" src="assets/imgs/partner-banner.png" alt="" style="width: 500px;"/>
         </div>
         <div class="promo-image " *ngIf="util.deviceType!='desktop'">
-          <img class="img-fluid" data-wow-delay=".3s" src="assets/imgs/partner-banner.jpg" alt="" style="width: 300px;"/>
+          <img class="img-fluid" data-wow-delay=".3s" src="assets/imgs/partner-banner.png" alt="" style="width: 300px;"/>
         </div>
       </div>
   </div>
 </section>
 
-<div class="container">
+<div class="container" style="padding: 30px 0px;">
   <div class="StaticPageSection StaticPageSection--maxWidth-primary SoftwareSolution">
     <p class="Text SectionTitle SectionTitle--40 SoftwareSolution__title">The ultimate platform for your <br/>business success</p>
     <p class="Text SectionDescription">You'll love our amazing features that help you increase revenue, organize your schedule and keep your customers happy.
@@ -181,38 +181,42 @@
 </div>
 
 <div style="background: #f5f5f5;padding: 50px 0px;">
-  <div class="container">
-    <div class="StaticPageSection StaticPageSection--maxWidth-primary">
+  <div class="container" >
+    <div class="StaticPageSection StaticPageSection--maxWidth-primary DownloadApp">
       <p class="Text SectionTitle SectionTitle--40">Download the Bunitas App</p>
-      <p class="Text FeaturesContent__description" style="margin: 10px 0px 0px 0px !important;">Bunitas App is the mobile app that lets you:</p>
-      <p class="Text FeaturesContent__description" style="margin: 10px 0px 0px 0px !important;">- Easily manage your Business</p>
-      <p class="Text FeaturesContent__description" style="margin: 10px 0px 40px 0px !important;">- Book your beautiful treatments anytime, anywhere</p>
+      <p class="Text SectionDescription" style="margin: 10px 0px 0px 0px !important;">Bunitas App is the mobile app that lets you:</p>
+      <p class="Text SectionDescription" style="margin: 10px 0px 0px 0px !important;">- Easily manage your Business</p>
+      <p class="Text SectionDescription" style="margin: 10px 0px 40px 0px !important;">- Book your beautiful treatments anytime, anywhere</p>
       <div class="DownloadApp__appCardsWrapper">
-          <div class="AppCard AppCard--background-gray" style="display: block;text-align: center;padding-bottom: 20px;">
-          <h3 class="Text Text--color-white AppCard__marketplaceTitle" style="margin-bottom: 42px;">Bunitas App for Customers</h3>
-          <img src="assets/imgs/download_user.png" style="width: 100%;">
-          <div class="AppCard__storeIconWrapper" style="margin: auto;margin-top: 20px;">
-            <a [href]="util.apple_appstore" target="_blank">
-              <img src="assets/imgs/appstore.svg" alt="" style="height: 45px;">
-            </a>
-            <a [href]="util.google_playstore" target="_blank">
-              <img src="assets/imgs/google.svg" alt="" style="height: 45px;">
-            </a>
+        <div class="AppCard AppCard--background-gray" style="display: flex;text-align: center;padding-bottom: 20px;">
+          <img src="assets/imgs/mobile-user.jpg" style="width: 50%;">
+          <div>
+            <h3 class="Text Text--color-white AppCard__marketplaceTitle" style="margin-bottom: 42px;white-space: break-spaces;color: black">Bunitas App for Customers</h3>
+            <div class="AppCard__storeIconWrapper" style="margin: auto;margin-top: 80px;">
+              <a [href]="util.apple_appstore" target="_blank">
+                <img src="assets/imgs/appstore.svg" alt="" style="height: 45px;">
+              </a>
+              <a [href]="util.google_playstore" target="_blank">
+                <img src="assets/imgs/google.svg" alt="" style="height: 45px;">
+              </a>
+            </div>
           </div>
+        </div>
+        <div class="AppCard AppCard--background-yellow"  style="display: flex;text-align: center;padding-bottom: 20px;">
+          <img src="assets/imgs/mobile-owner.jpg" style="width: 50%;">
+          <div>
+            <h3 class="Text Text--color-black AppCard__marketplaceTitle" style="margin-bottom: 0px;white-space: break-spaces;">Bunitas App for Partners</h3>
+            <p class="Text SectionDescription" style="margin: 0px 0px 10px 0px !important;font-size: 20px;white-space: break-spaces;color: black">Salon Owners & Mobile Beauticians</p>
+            <div class="AppCard__storeIconWrapper" style="margin: auto;margin-top: 20px;">
+              <a [href]="util.apple_appstore" target="_blank">
+                <img src="assets/imgs/appstore.svg" alt="" style="height: 45px;">
+              </a>
+              <a [href]="util.google_playstore" target="_blank">
+                <img src="assets/imgs/google.svg" alt="" style="height: 45px;">
+              </a>
+            </div>
           </div>
-          <div class="AppCard AppCard--background-yellow"  style="display: block;text-align: center;padding-bottom: 20px;">
-          <h3 class="Text Text--color-black AppCard__marketplaceTitle" style="margin-bottom: 0px;">Bunitas App for Partners</h3>
-          <p class="Text SectionDescription" style="margin: 0px 0px 10px 0px !important;font-size: 20px;color: black">Salon Owners & Mobile Beauticians</p>
-          <img src="assets/imgs/download_owner.png" style="width: 100%;">
-          <div class="AppCard__storeIconWrapper" style="margin: auto;margin-top: 20px;">
-            <a [href]="util.apple_appstore" target="_blank">
-              <img src="assets/imgs/appstore.svg" alt="" style="height: 45px;">
-            </a>
-            <a [href]="util.google_playstore" target="_blank">
-              <img src="assets/imgs/google.svg" alt="" style="height: 45px;">
-            </a>
-          </div>
-          </div>
+        </div>
       </div>
     </div>
   </div>

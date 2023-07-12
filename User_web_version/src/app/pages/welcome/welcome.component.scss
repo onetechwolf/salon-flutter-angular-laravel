@@ -363,7 +363,7 @@ label {
 }
 }
 .AppCard--background-gray {
-  background-color: #101928;
+  background-color: #FFF0F5;
 }
 
 @media (min-width: 1200px) {
@@ -395,7 +395,7 @@ label {
 }
 
 .AppCard--background-yellow {
-    background-color: #fbd74c;
+    background-color: #E6E6FA;
 }
 @media (min-width: 1200px) {
 .AppCard--reverse {
@@ -447,18 +447,16 @@ label {
 }
 
 .AppCard__storeIconWrapper {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 16px
+  gap: 16px;
+  line-height: 65px;
 }
 
 @media(min-width: 544px) {
   .AppCard__storeIconWrapper {
-      flex-direction:row;
-      justify-content: space-between;
       max-width: 350px;
-      margin: auto
+      margin: auto;
+      line-height: 65px;
   }
 }
 
@@ -466,6 +464,7 @@ label {
   .AppCard__storeIconWrapper {
       margin:0;
       flex-wrap: wrap;
+      line-height: 65px;
   }
 }
 

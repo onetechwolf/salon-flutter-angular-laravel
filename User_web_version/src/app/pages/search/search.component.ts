@@ -24,7 +24,7 @@ export class SearchComponent implements OnInit {
   lat: string=''; lng: string=''; address: string=''; placeId: string=''; treatmentCategory: string='';categoryId: string=''; categoryType: string='';
   zoom = 12; // example zoom level
   isDropdownOpen = false;
-  salonList: any[] = [];
+  salonList: any = [];
   iconUrl: any = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
   places = [];
   autocompleteTreatmentItems: any = [];
